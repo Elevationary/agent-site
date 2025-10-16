@@ -1,0 +1,9 @@
+# robots.txt for https://agent.elevationary.com/
+
+User-agent: *
+Allow: /
+
+# (Optional) keep non-public workspaces out of indexes if you ever add them
+Disallow: /drafts/
+Disallow: /private/
+Disallow: /staging/
