@@ -2,7 +2,7 @@
 
 User-agent: *
 Allow: /
-
+Sitemap: https://agent.elevationary.com/sitemap.xml
 # (Optional) keep non-public workspaces out of indexes if you ever add them
 Disallow: /drafts/
 Disallow: /private/
