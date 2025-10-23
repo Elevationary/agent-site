@@ -75,8 +75,89 @@ This repo hosts the **agent micro-site** for AEO/ACP under `https://agent.elevat
 - Project: **agent-site2** (Cloudflare Pages)
 - Auto-deploys on push to `main`
 - Custom headers: `/_headers`
+/
+├─ _headers
+├─ index.html                 # catalog (noindex)
+├─ robots.txt
+├─ sitemap.xml
+├─ readme.md                  # this file
+├─ googlef8a11de16a66c924.html  # Search Console verification (agent subdomain)
+├─ assets/
+│  ├─ elevationary-logo-512.png
+│  └─ og-consulting-60.png
+└─ consulting-60/
+└─ index.html              # product page (index,follow) with JSON-LD
+---
 
+## 4) Security & TLS posture (Cloudflare)
 
+- **SSL/TLS mode**: Full (Strict)  
+- **Edge certificate** SANs verified (via `openssl`): `elevationary.com`, `*.elevationary.com`
+- **HSTS**: 30-day trial; no subdomains; preload off
+- **Always Use HTTPS**: On
+- **Headers** (via `/_headers`):
+  - `X-Frame-Options: DENY`
+  - `X-Content-Type-Options: nosniff`
+  - `Referrer-Policy: strict-origin-when-cross-origin`
+  - `Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()`
+  - HTML: `Cache-Control: public, max-age=600` (target)
+  - Assets: `Cache-Control: public, max-age=31536000, immutable`
+  - `https://agent-site2.pages.dev/*` → `X-Robots-Tag: noindex, nofollow`
+
+> Note: current observed header on `/consulting-60/` is `max-age=0, must-revalidate`. This is acceptable for freshness; we can tighten to 10-minute edge cache later if desired.
+
+---
+
+## 5) AEO / JSON-LD sanity (60-min page)
+
+- `<meta name="robots" content="index,follow">` on `/consulting-60/`
+- Organization `@id`: `https://www.elevationary.com/#organization`
+- Product `@id`: `https://agent.elevationary.com/consulting-60/#product`
+- `offers.url`: Google Booking link
+- `additionalProperty.paymentLink`: Stripe Pay Link
+- `image`: assets on agent subdomain (not `lh3.googleusercontent...`)
+- Canonical: `https://agent.elevationary.com/consulting-60/`
+- Root catalog (`/`) is `noindex,follow`
+
+Validators:
+- Google Rich Results Test: **OK**
+- Schema.org validator: **OK** (no JSON issues)
+
+---
+
+## 6) Search Console (agent subdomain)
+
+- Property: `https://agent.elevationary.com/` (URL-prefix)
+- Verification: **HTML file** → `googlef8a11de16a66c924.html`
+- Sitemap submitted: `https://agent.elevationary.com/sitemap.xml` (200)
+
+---
+
+## 7) Email deliverability baseline
+
+- **.com**: SPF (Google), DKIM (Workspace) **present**, DMARC (monitoring) via Cloudflare  
+- **.ai**: Cloudflare Email Routing active; SPF/DKIM/DMARC set for routing; forwarding to `@elevationary.com` **confirmed working**
+
+---
+
+## 8) Known Nuances / Next reviews
+
+- **DNSSEC**: revisit in ~1 week to enable per-domain (start with `.ai`, then `.com`).
+- **HSTS**: consider increasing `max-age` if everything is stable.
+- **Branch protection**: current pushes show “admin bypass”; formalize PR workflow if desired.
+
+---
+
+## 9) Change Log (today)
+
+- Moved **.com** and **.ai** to Cloudflare nameservers.
+- Proxied apex and `www` for **.com**; verified edge cert SANs; set **SSL Full (Strict)**.
+- Enabled **HSTS** (30 days; no subdomains; preload off).
+- Built Cloudflare **redirect rules** for all `*.elevationary.ai` → `www.elevationary.com` (path/query preserved).
+- Enabled **Cloudflare Email Routing** for `.ai`; tested forwarding works.
+- Published **Workspace DKIM** for `.com`; DMARC set to monitor.
+- Updated `/_headers` and verified cache/security headers.
+- Verified agent subdomain in **Search Console**; submitted sitemap.
 
 
 
