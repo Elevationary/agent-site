@@ -43,3 +43,10 @@ dig +short TXT _dmarc.elevationary.ai
 dig +short TXT cf2024-1._domainkey.elevationary.ai
 
 
+
+## CSS + 404 quick checks
+curl -sI https://agent.elevationary.com/assets/styles.css | grep -i cache-control
+# Expect: max-age=31536000, immutable
+
+curl -I https://agent.elevationary.com/this/does/not/exist | head -1
+# Expect: HTTP/2 404
