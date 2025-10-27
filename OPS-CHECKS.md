@@ -1,3 +1,5 @@
+_Last updated: 2025-10-26 (America/Phoenix)_
+
 # Ops Checks (quick copy/paste)
 
 ## DNS & Proxies
@@ -50,3 +52,35 @@ curl -sI https://agent.elevationary.com/assets/styles.css | grep -i cache-contro
 
 curl -I https://agent.elevationary.com/this/does/not/exist | head -1
 # Expect: HTTP/2 404
+
+---
+## Archive additions (2025-10-24)
+
+### Redirect rules (.ai → www .com)
+```bash
+curl -I "https://elevationary.ai/foo?x=1" | sed -n '1p;/^location:/Ip'
+curl -I "https://blog.elevationary.ai/test" | sed -n '1p;/^location:/Ip'
+# Expect: HTTP/2 301 and Location: https://www.elevationary.com/… (path/query preserved)
+
+### Headers / HSTS / cache
+curl -sI https://agent.elevationary.com/consulting-60/ | grep -i 'strict-transport-security\|cache-control\|content-type'
+# Expect HSTS on, HTML cache ~600s, and text/html; charset=utf-8
+
+curl -sI https://agent.elevationary.com/assets/elevationary-logo-512.png | grep -i 'cache-control'
+# Expect: max-age=31536000, immutable
+
+### JSON-LD presence (quick grep)
+curl -sL https://agent.elevationary.com/consulting-60/ | grep -i '<script type="application/ld+json"' -n
+# Expect ≥1 match (Organization + Product/Offer)
+
+### Certificate SANs (spot-check)
+openssl s_client -connect www.elevationary.com:443 -servername www.elevationary.com 2>/dev/null \
+| openssl x509 -noout -text | sed -n '/Subject:/p;/X509v3 Subject Alternative Name/,+1p'
+
+### Email auth (DNS)
+dig +short TXT _dmarc.elevationary.com
+dig +short TXT google._domainkey.elevationary.com
+dig +short TXT elevationary.ai
+# Expect DMARC p=none (CF reports), Google DKIM on .com, and CF routing SPF on .ai
+
+### 

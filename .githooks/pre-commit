@@ -1,0 +1,27 @@
+
+set -euo pipefail
+
+STAMP_DATE="$(TZ=America/Phoenix date +%Y-%m-%d)"
+
+HEADER="_Last updated: ${STAMP_DATE} (America/Phoenix)_"
+
+FILES="$(git diff --cached --name-only --diff-filter=AM | grep -E '\.(md|MD|html|HTML|njk|txt)$' || true)"
+
+for f in $FILES; do
+  [ -f "$f" ] || continue
+
+  if grep -q '^_Last updated:' "$f"; then
+    # Replace the first existing "Last updated" line
+    awk -v hdr="$HEADER" 'BEGIN{done=0}
+      { if(!done && $0 ~ /^_Last updated:/){ print hdr; done=1 } else { print } }' "$f" > "$f.tmp"
+  else
+    # Prepend a new one
+    { printf "%s\n\n" "$HEADER"; cat "$f"; } > "$f.tmp"
+  fi
+
+  mv "$f.tmp" "$f"
+  # Re-stage because we modified the file inside the hook
+  git add "$f"
+done
+exit 0
+
