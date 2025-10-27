@@ -6,7 +6,7 @@
 
 # Backlog (Now / Next / Later)
 
-_Last updated: 2025-10-26 (America/Phoenix)_
+_Last updated: 2025-10-27 (America/Phoenix)_
 
 ## NOW (low effort, scales)
 - **Eleventy scaffold**: `/src` + `.eleventy.cjs`; single source of truth (`/src/_data/offers.json`) to drive pages, JSON-LD, sitemap, buttons.
@@ -17,8 +17,8 @@ _Last updated: 2025-10-26 (America/Phoenix)_
 - **OPS docs**: keep `OPS-CHECKS.md` aligned with new endpoints, add Eleventy build check.
 - **Tagging**: release tags `vYYYY.MM.DD`; short CHANGELOG entry per tag.
 
-## NEXT (higher effort, post-POC)
 - **Dup pages**: 15/30/90 consults using the shared template; verify JSON-LD & sitemap per page.
+- **Reviews & ratings schema (optional)**: Decide policy (real reviews only; no fakes). If/when available, add `aggregateRating` and `review` JSON-LD to product pages; wire Eleventy to pull counts/averages from a single source (e.g., `/src/_data/reviews.json`). Include moderation/consent notes.
 - **Editorial workflow**: lightweight content pipeline (draft → review → publish); style guide for page copy.
 - **PR discipline**: enable PRs and status checks (HTML/JSON-LD lints).
 - **Monitoring**: synthetics (uptime, basic page content), Slack/email alerts.
