@@ -32,3 +32,4 @@ _Last updated: 2025-10-26 (America/Phoenix)_
 - **DNSSEC**: enable per domain and publish DS at registrars; validate with DNSViz.
 - **HSTS hardening**: extend max-age; consider `includeSubDomains`; evaluate preload when ready.
 - **Enterprise**: SSO/SAML (if needed later), audit logging, access reviews, SOC2 readiness notes.
+
