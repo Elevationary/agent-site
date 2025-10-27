@@ -1,4 +1,4 @@
-_Last updated: 2025-10-26 (America/Phoenix)_
+_Last updated: 2025-10-27 (America/Phoenix)_
 
 # Lessons Learned
 
@@ -80,3 +80,4 @@ openssl x509 -noout -text | sed -n '/Subject:/p;/X509v3 Subject Alternative Name
 
 **HSTS posture**
 - Start at **30 days**, **no includeSubDomains**, **no preload**. Raise scope only after confirming TLS across all needed hostnames.
+
