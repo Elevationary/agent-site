@@ -20,7 +20,9 @@ _Last updated: 2025-10-27 (America/Phoenix)_
 - **Dup pages**: 15/30/90 consults using the shared template; verify JSON-LD & sitemap per page.
 - **Reviews & ratings schema (optional)**: Decide policy (real reviews only; no fakes). If/when available, add `aggregateRating` and `review` JSON-LD to product pages; wire Eleventy to pull counts/averages from a single source (e.g., `/src/_data/reviews.json`). Include moderation/consent notes.
 - **Editorial workflow**: lightweight content pipeline (draft → review → publish); style guide for page copy.
-- **PR discipline**: enable PRs and status checks (HTML/JSON-LD lints).
+- **PR flow (two-stage)**
+  - *Middle-ground (optional, toggle when ready):* one-click PRs on demand; tiny checks (HTML/JSON-LD lint); direct pushes still allowed.
+  - *Full discipline (later):* require PRs to `main` with blocking status checks and branch protections.
 - **Monitoring**: synthetics (uptime, basic page content), Slack/email alerts.
 - **Booking/Stripe**: centralize **price** and **booking** references in `offers.json` (ids/links).
 - **Policies**: publish Refund & Cancellation texts and link from booking page(s).
