@@ -77,17 +77,25 @@ This repo hosts the **agent micro-site** for AEO/ACP under `https://agent.elevat
 - Custom headers: `/_headers`
 /
 ├─ _headers
-├─ index.html                 # catalog (noindex)
+├─ 404.html
+├─ index.html
 ├─ robots.txt
 ├─ sitemap.xml
-├─ readme.md                  # this file
-├─ googlef8a11de16a66c924.html  # Search Console verification
+├─ readme.md
+├─ BACKLOG.md
+├─ DECISIONS.md
+├─ LESSONS.md
+├─ OPS-CHECKS.md
+├─ googlef8a11de16a66c924.html
 ├─ assets/
 │  ├─ elevationary-logo-512.png
 │  ├─ og-consulting-60.png
 │  └─ styles.css
-└─ consulting-60/
-   └─ index.html              # product page (index,follow) with JSON-LD
+├─ consulting-60/
+│  └─ index.html
+└─ .github/
+   └─ pull_request_template.md
+   
 ---
 
 ## 4) Security & TLS posture (Cloudflare)
