@@ -36,6 +36,8 @@ This repo hosts the **agent micro-site** for AEO/ACP under `https://agent.elevat
 **Payments/Scheduling**
 - Google Calendar Appointment Schedules (collects payment via Stripe)
 - Stripe Pay Link retained in JSON-LD for agent/ACP
+- UTM convention for all outbound Pay Links: `?utm_source=site&utm_medium=consulting&utm_campaign=60min`
+- Stripe receipt footer note: “If you weren’t redirected, schedule here: https://calendar.app.google/FLe6Q6WzHQkHRK7v7”
 
 **Schema/AEO**
 - JSON-LD on agent pages (Organization + Product/Offer)
