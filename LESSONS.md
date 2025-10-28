@@ -2,82 +2,50 @@ _Last updated: 2025-10-27 (America/Phoenix)_
 
 # Lessons Learned
 
-- CF cache can serve old meta for minutes; purge **both** the page URL and any canonical/asset touched after SEO-critical edits.
-- Keep agent subdomain unlinked from human site to avoid blending audiences/UX.
-
-# Lessons Learned
-
-## 2025-10-24 — From MiniMVP + cutovers
-
-**Cloudflare cache**
-- Pages can serve stale HTML after meta/header edits. Use targeted purge (by URL) or version assets; expect a brief lag.
-
-**Redirect rules syntax**
-- Use **`${1}`** capture groups (not `$1`) in Cloudflare Redirect Rules to preserve path/query.
-
-**TLS & certs**
-- To confirm SAN coverage, use:
-openssl s_client -connect www.elevationary.com:443 -servername www.elevationary.com 2>/dev/null 
-| openssl x509 -noout -text | sed -n ‘/Subject:/p;/X509v3 Subject Alternative Name/,+1p’
-
-- “Proxied” vs “DNS only” determines whether Cloudflare’s cert applies. DNS-only hosts won’t be covered by CF TLS.
-
-**curl tips**
-- Use `-L` for canonical/redirect scenarios.
-- Avoid “double protocol” typos (`https://https://…`).
-- Quote URLs containing `?` to avoid shell globbing issues.
-
-**Robots parity**
-- Keep `robots` and `googlebot` meta tags aligned; constrain previews on indexable agent pages to avoid unwanted human snippets.
-
-**Search Console verification**
-- URL-prefix with HTML file is simple and robust for subdomains; re-verify after host/headers changes if needed.
-# Lessons Learned
-
 ## Quick hits
-
-- Cloudflare can serve **stale HTML** for a few minutes; after SEO/meta changes, purge **both** the page URL and any referenced assets, or bump the asset filename/version.
-- Keep the **agent subdomain unlinked** from the human site to avoid UX/audience bleed.
-- In **Cloudflare Redirect Rules**, use capture placeholders like **`${1}`** (not `$1`).
-- When testing redirects/canonicals, prefer `curl -sIL` and **quote URLs** that contain `?`.
-- Align **`robots`** and **`googlebot`** meta; on indexable agent pages use: `index,follow,noarchive,max-snippet:0,max-image-preview:none`.
-- Cloudflare TLS certs apply only to **Proxied** DNS records; **DNS only** hosts present the origin’s cert.
+- **Cloudflare cache**: Pages can serve stale HTML for a few minutes after meta/header edits. Purge **by URL** for the edited page and any referenced assets, or version the asset filename. Expect a brief edge lag.
+- **Keep agent human‑hidden**: Do **not** link the agent subdomain from the public site to avoid audience/UX bleed.
+- **Redirect rules placeholders**: In Cloudflare Redirect Rules, use **`${1}`** capture placeholders (not `$1`) when preserving path/query.
+- **Testing redirects/canonicals**: Prefer `curl -sIL` and **quote URLs with `?`** to avoid shell globbing in zsh.
+- **Robots parity**: Keep `<meta name="robots">` and `<meta name="googlebot">` consistent.
+  - **Product page**: `index,follow,noarchive,max-snippet:0,max-image-preview:none`
+  - **Catalog root**: `noindex,follow`
+- **TLS certificates**: Cloudflare’s cert applies **only** to **Proxied** DNS records; **DNS only** hosts present the origin’s cert.
+- **HSTS posture**: Start with **30 days**, **includeSubDomains = off**, **preload = off**. Expand only after confirming TLS across needed hostnames.
+- **Search Console**: Use URL‑prefix + **HTML file** verification for the agent subdomain; re‑verify after major hosting/header/domain changes.
 
 ## 2025-10-24 — From MiniMVP + cutovers
 
-**Cloudflare cache**
-- Pages may serve stale HTML after meta/header edits. Use **Purge by URL** for the edited page and affected assets, or version the assets. Expect a short edge lag.
+### Cloudflare cache behavior
+- HTML may remain stale briefly even after deployment. Use **Purge by URL** for the exact page and its assets, or bump asset versions.
 
-**Redirect rules syntax**
-- For zone-wide .ai → .com redirect, match on the host and preserve path/query with capture groups.
-- Capture groups use curly braces: **`${1}`, `${2}` …** not `$1`.
+### Redirect rules syntax
+- Zone‑wide `.ai → .com` redirect should match on host and **preserve path + query**.
+- Use capture groups with curly‑brace placeholders: **`${1}`, `${2}` …**, not `$1`.
 
-**TLS & certs**
-- “Proxied” vs. “DNS only” determines which TLS certificate is presented (Cloudflare vs. origin).
-- To view SANs quickly:
+### TLS & certificate checks
+- “**Proxied**” vs “**DNS only**” determines which certificate browsers see (Cloudflare vs origin).
+- To quickly confirm SAN coverage:
 
 ```bash
-# www cert SANs
+# www certificate SANs
 openssl s_client -connect www.elevationary.com:443 -servername www.elevationary.com 2>/dev/null | \
 openssl x509 -noout -text | sed -n '/Subject:/p;/X509v3 Subject Alternative Name/,+1p'
 
-# apex cert SANs (shows even though it 301s)
+# apex certificate SANs (visible even if it 301s)
 openssl s_client -connect elevationary.com:443 -servername elevationary.com 2>/dev/null | \
 openssl x509 -noout -text | sed -n '/Subject:/p;/X509v3 Subject Alternative Name/,+1p'
 ```
 
-**curl tips**
+### curl tips
 - Use `-L` to follow redirects and `-I` for headers.
-- Quote URLs with `?` to avoid shell globbing, e.g., `curl -I "https://example.com/abc?x=1*"`.
+- Always **quote** URLs that include `?` (e.g., `curl -I "https://example.com/abc?x=1"`).
 
-**Robots parity**
-- Keep `<meta name="robots">` and `<meta name="googlebot">` in sync.  
-  - Product page: `index,follow,noarchive,max-snippet:0,max-image-preview:none`  
-  - Catalog root: `noindex,follow`
+### Robots meta alignment
+- Keep `robots` and `googlebot` meta tags aligned per Quick hits above.
 
-**Search Console verification**
-- URL‑prefix + HTML file is robust for the agent subdomain; re‑verify after major hosting/header changes or domain moves.
+### Search Console verification
+- URL‑prefix + HTML file is simple and robust for subdomains; re‑verify after domain/hosting/header changes.
 
-**HSTS posture**
-- Start at **30 days**, **no includeSubDomains**, **no preload**. Raise scope only after confirming TLS across all needed hostnames.
-
+### HSTS baseline
+- Begin with 30‑day max‑age, **no** subdomains, **no** preload; only expand scope after confirming TLS readiness across hostnames.

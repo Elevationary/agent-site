@@ -27,6 +27,12 @@ _Last updated: 2025-10-27 (America/Phoenix)_
 - **Booking/Stripe**: centralize **price** and **booking** references in `offers.json` (ids/links).
 - **Policies**: publish Refund & Cancellation texts and link from booking page(s).
 - **Legal**: add ToS / Privacy links on the main site (if missing).
+- **Performance budget**: add Lighthouse check (target ≥95 on mobile & desktop) and capture results in `OPS-CHECKS.md`; fix regressions.
+- **Twitter meta**: once the @Elevationary handle exists, add `<meta name="twitter:site" content="@Elevationary">` and verify via Twitter card validator.
+- **`priceValidUntil` automation**: drive Product `priceValidUntil` from `/src/_data/offers.json` and set a quarterly review reminder.
+- **Redirect rule tests**: add curl tests for `.ai → www` 301 with path/query preservation to `OPS-CHECKS.md`.
+- **Stripe receipt template:** Add the booking fallback line to the product’s receipt settings. [owner][date]  ￼
+- **UTM tagging:** Apply the UTM pattern to the 60-min Pay Link; document for 15/30/90. [owner][date] 
 
 ## LATER (investment; scale)
 - **Newsletter product**: content pipeline, scheduling, and delivery (mail provider or custom).
@@ -34,4 +40,8 @@ _Last updated: 2025-10-27 (America/Phoenix)_
 - **DNSSEC**: enable per domain and publish DS at registrars; validate with DNSViz.
 - **HSTS hardening**: extend max-age; consider `includeSubDomains`; evaluate preload when ready.
 - **Enterprise**: SSO/SAML (if needed later), audit logging, access reviews, SOC2 readiness notes.
-
+- **Content Security Policy (CSP)**: start in Report-Only; tighten `default-src`, `script-src`, `img-src`, `connect-src`; then enforce.
+- **Accessibility**: WCAG 2.1 AA sweep (contrast, alt text, focus order, keyboard navigation).
+- **Internationalization (i18n)**: groundwork for language/currency readiness (lang attributes; currency/locale formatting).
+- **Automated DNS snapshots**: monthly export of both zones via Cloudflare API to `/docs/dns-snapshots/`.
+- **Link discovery (optional):** Consider a tiny “Agent catalog” link from the main site only if you want crawl discoverability; default is no link to keep it human-hidden. [owner][date] 

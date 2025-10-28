@@ -35,6 +35,14 @@ curl -sI "https://agent.elevationary.com/assets/elevationary-logo-512.png" \
 | grep -i cache-control
 # Expect (assets): Cache-Control: public, max-age=31536000, immutable
 
+## Quick HTTP checks (Booking & Payments)
+
+# Stripe Pay Link reachable (expect HTTP/2 200 or 303)
+curl -I "https://buy.stripe.com/3cI8wO9nzcVOffFf98eIw00" | head -1
+
+# Google Booking reachable (expect HTTP/2 200)
+curl -I "https://calendar.app.google/FLe6Q6WzHQkHRK7v7" | head -1
+
 ## Robots / Sitemap
 curl -sI "https://agent.elevationary.com/robots.txt"  | sed -n '1,5p'
 curl -sI "https://agent.elevationary.com/sitemap.xml" | sed -n '1,5p'
@@ -43,6 +51,16 @@ curl -sI "https://agent.elevationary.com/sitemap.xml" | sed -n '1,5p'
 ## Canonical & OG on product page
 curl -sL "https://agent.elevationary.com/consulting-60/" \
 | grep -i '<link rel="canonical"\|og:image'
+
+## Rich Results sanity (manual)
+
+- Confirm the product page has a correct canonical tag:
+  - `<link rel="canonical" href="https://agent.elevationary.com/consulting-60/">`
+- In the Product/Offer JSON-LD for `/consulting-60/`, verify before running validators:
+  - `offers.url` points to the Google Booking link (`https://calendar.app.google/FLe6Q6WzHQkHRK7v7`).
+  - `price` and `priceCurrency` are present and correct.
+  - `provider.@id` equals `https://www.elevationary.com/#organization`.
+- After confirming the above, run the Rich Results Test and Schema.org validator.
 
 ## Email auth (spot check)
 
