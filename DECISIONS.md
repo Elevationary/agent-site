@@ -17,7 +17,7 @@ Status: Accepted.
 
 # Decisions Log
 
-## 2025-10-24 — Harvest from MiniMVP outline
+## 2025-10-27 — Harvest from MiniMVP outline (two files)
 
 **Platform & Hosting**
 - Static site architecture with Eleventy (11ty) as the generator — **Accepted (implementation in progress)**
@@ -70,3 +70,20 @@ Status: Accepted (completed).
 Decision: Use Cloudflare Email Routing for @elevationary.ai forwarding to @elevationary.com; CF-managed DMARC aggregate.
 Why: Simplify forwarding; consistent SPF/DKIM/DMARC posture.
 Status: Accepted (completed).
+
+## 2025-10-27 — Commercial & Tracking Defaults
+
+**Product pricing (60‑minute consult)**
+- Set price to **$399.00 USD**; review quarterly and align Stripe Pay Link + Calendar price.
+
+**Receipts fallback**
+- Add this sentence to Stripe receipt email/template:  
+  “If you weren’t redirected to scheduling after payment, book here: https://calendar.app.google/FLe6Q6WzHQkHRK7v7”
+
+**UTM convention for Pay Links**
+- Append `?utm_source=site&utm_medium=consulting&utm_campaign=60min` to the 60‑minute Stripe Pay Link.  
+- Mirror the pattern for other durations (e.g., `...&utm_campaign=30min`, `...&utm_campaign=90min`) when added.
+
+**AEO/ACP mapping (confirmation)**
+- Keep policy: `offers.url` → Google Booking (human flow).  
+- Expose Stripe Pay Link for agents/ACP via JSON‑LD `additionalProperty.paymentLink`.

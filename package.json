@@ -1,0 +1,26 @@
+{
+  "name": "agent-site",
+  "version": "1.0.0",
+  "description": "_Last updated: 2025-10-27 (America/Phoenix)_",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "eleventy",
+    "dev": "eleventy --serve",
+    "start": "eleventy --serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Elevationary/agent-site.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Elevationary/agent-site/issues"
+  },
+  "homepage": "https://github.com/Elevationary/agent-site#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2"
+  }
+}
