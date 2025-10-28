@@ -1,18 +1,16 @@
 _Last updated: 2025-10-28 (America/Phoenix)_
 
 ---
-permalink: /sitemap.xml
+permalink: "/sitemap.xml"
 eleventyExcludeFromCollections: true
+layout: null
 ---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-{% for item in collections.all %}
-  {% set robots = item.data.robots or "" %}
-  {% if robots and "index" in robots %}
   <url>
-    <loc>{{ item.data.canonical or (site.url + item.url) }}</loc>
-    {% if item.data.lastmod %}<lastmod>{{ item.data.lastmod }}</lastmod>{% endif %}
+    <loc>{{ site.url }}/p/consulting-60/</loc>
+    {% if products and products.products and products.products[0].lastmod %}
+    <lastmod>{{ products.products[0].lastmod }}</lastmod>
+    {% endif %}
   </url>
-  {% endif %}
-{% endfor %}
 </urlset>
