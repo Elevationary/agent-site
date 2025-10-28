@@ -1,0 +1,23 @@
+_Last updated: 2025-10-28 (America/Phoenix)_
+
+---
+pagination:
+  data: products.products
+  size: 1
+  alias: product
+permalink: "/p/{{ product.slug }}/"
+layout: base.njk
+# surface to base.njk/head:
+title: "{{ product.title }}"
+canonical: "{{ site.url }}/{{ product.slug }}/"
+robots: "{% if product.indexable %}index,follow,noarchive,max-snippet:0,max-image-preview:none,max-video-preview:0{% else %}noindex,follow{% endif %}"
+googlebot: "{% if product.indexable %}index,follow,noarchive,max-snippet:0,max-image-preview:none,max-video-preview:0{% else %}noindex,follow{% endif %}"
+lastmod: "{{ product.lastmod | default('') }}"
+---
+<h1>{{ product.title }}</h1>
+
+<p>{{ product.description or "Prepaid AI strategy consultation via Google Meet." }}</p>
+
+<p><a href="{{ product.booking_url }}">Book now</a> &middot; <a href="{{ product.pay_url }}">Pay via Stripe</a></p>
+
+{% include "jsonld/product.njk" %}
