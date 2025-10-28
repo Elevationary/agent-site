@@ -1,19 +1,16 @@
 
 module.exports = function(eleventyConfig) {
-  eleventyConfig.addPassthroughCopy({"assets": "assets"});
+  // Static passthroughs to the build output root
+  eleventyConfig.addPassthroughCopy({ "assets": "assets" });
   eleventyConfig.addPassthroughCopy("robots.txt");
   eleventyConfig.addPassthroughCopy("sitemap.xml");
-  eleventyConfig.addPassthroughCopy("google*.html");
+  eleventyConfig.addPassthroughCopy("_headers");
+  eleventyConfig.addPassthroughCopy("404.html");
+  eleventyConfig.addPassthroughCopy("google*.html"); // verification file(s), glob OK
 
   return {
-    dir: {
-      input: "src",
-      includes: "_includes",
-      data: "_data",
-      output: "_site"
-    },
-    templateFormats: ["njk","html"],
+    dir: { input: "src", output: "_site", includes: "_includes", data: "_data" },
     htmlTemplateEngine: "njk",
-    markdownTemplateEngine: "njk"
+    templateFormats: ["html","njk","md"]
   };
 };
