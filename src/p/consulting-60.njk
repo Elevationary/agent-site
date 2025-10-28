@@ -1,0 +1,19 @@
+_Last updated: 2025-10-28 (America/Phoenix)_
+
+---
+layout: base.njk
+permalink: "/p/consulting-60/"
+title: "60-Minute AI Strategy Consultation"
+canonical: "{{ site.url }}/p/consulting-60/"
+robots: "index,follow,noarchive,max-snippet:0,max-image-preview:none,max-video-preview:0"
+googlebot: "index,follow,noarchive,max-snippet:0,max-image-preview:none,max-video-preview:0"
+lastmod: "{{ products.products[0].lastmod }}"
+---
+{% set product = products.products[0] %}
+<h1>{{ product.title }}</h1>
+
+<p>{{ product.description }}</p>
+
+<p><a href="{{ product.booking_url }}">Book now</a> · <a href="{{ product.pay_url }}">Pay via Stripe</a></p>
+
+{% include "jsonld/product.njk" %}
