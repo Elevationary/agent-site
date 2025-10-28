@@ -1,0 +1,8 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["src/_data/products.json"],
+      "url": "./.vscode/products.schema.json"
+    }
+  ]
+}
