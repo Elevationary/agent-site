@@ -1,17 +1,42 @@
-_Last updated: 2025-10-27 (America/Phoenix)_
+_Last updated: 2025-10-28 (America/Phoenix)_
 
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="robots" content="noindex,follow">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ title or "Eleventy Spike" }}</title>
+
+  <title>{{ title or site.name }}</title>
+  <meta name="description" content="{{ description or '' }}">
+
+  <link rel="canonical" href="{{ canonical or (site.url + page.url) }}">
+
+  <!-- Robots -->
+  <meta name="robots" content="{{ robots or 'noindex,follow' }}">
+  <meta name="googlebot" content="{{ googlebot or 'noindex,follow' }}">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ site.name }}">
+  <meta property="og:title" content="{{ title or site.name }}">
+  <meta property="og:description" content="{{ description or '' }}">
+  <meta property="og:url" content="{{ canonical or (site.url + page.url) }}">
+  <meta property="og:image" content="{{ og_image or (site.url + site.logo) }}">
+  <meta property="og:image:alt" content="{{ title or site.name }}">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ title or site.name }}">
+  <meta name="twitter:description" content="{{ description or '' }}">
+  <meta name="twitter:image" content="{{ og_image or (site.url + site.logo) }}">
+
+  <!-- Page-specific JSON-LD can be injected via head_jsonld -->
+  {{ head_jsonld | safe }}
+
+  <link rel="icon" href="/assets/elevationary-logo-512.png">
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body>
-  <main>
-    {{ content | safe }}
-  </main>
+  {{ content | safe }}
 </body>
 </html>

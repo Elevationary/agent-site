@@ -1,4 +1,7 @@
 {
-  "name": "Elevationary Agent Microsite",
-  "baseUrl": "https://agent.elevationary.com"
+  "name": "Elevationary Agents",
+  "url": "https://agent.elevationary.com",
+  "logo": "/assets/elevationary-logo-512.png",
+  "orgId": "https://agent.elevationary.com/#org",
+  "twitter": "@ElevationaryAI"
 }

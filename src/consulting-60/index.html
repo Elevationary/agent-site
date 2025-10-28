@@ -1,101 +1,45 @@
+_Last updated: 2025-10-28 (America/Phoenix)_
+
 ---
+layout: base.njk
 permalink: /consulting-60/index.html
----
-_Last updated: 2025-10-27 (America/Phoenix)_
-
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>60-Minute AI Strategy Consultation • Elevationary</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="/assets/styles.css">
-  <link rel="canonical" href="https://agent.elevationary.com/consulting-60/" />
-  <meta name="robots" content="index,follow,noarchive,max-snippet:0,max-image-preview:none,max-video-preview:0" />
-  <meta name="googlebot" content="index,follow,noarchive,max-snippet:0,max-image-preview:none,max-video-preview:0" />
-  <meta name="description" content="One-hour strategic consultation to align vision with execution, evaluate systems, and define a clear, actionable path forward." />
-
-  <!-- OpenGraph / Twitter -->
-  <meta property="og:type" content="product" />
-  <meta property="og:title" content="60-Minute AI Strategy Consultation" />
-  <meta property="og:description" content="One-hour strategic consultation to align vision with execution, evaluate systems, and define a clear, actionable path forward." />
-  <meta property="og:url" content="https://agent.elevationary.com/consulting-60/" />
-  <meta property="og:image" content="https://agent.elevationary.com/assets/og-consulting-60.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="60-Minute AI Strategy Consultation"/>
-  <meta name="twitter:description" content="Prepaid AI strategy consultation via Google Meet."/>
-  <meta name="twitter:image" content="https://agent.elevationary.com/assets/og-consulting-60.png"/>
-
-  <!-- Organization JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Organization",
-    "@id":"https://www.elevationary.com/#organization",
-    "name":"Elevationary, Inc.",
-    "url":"https://www.elevationary.com/",
-    "logo":"https://agent.elevationary.com/assets/elevationary-logo-512.png",
-    "sameAs":[
-      "https://www.linkedin.com/company/elevationary",
-      "https://elevationary.ai"
-    ]
-  }
-  </script>
-
-  <!-- Product + Offer JSON-LD (Bookings collects payment; Stripe link exposed for agents) -->
-  <script type="application/ld+json">
-  {
+title: 60-Minute AI Strategy Consultation
+description: Prepaid AI strategy consultation via Google Meet.
+canonical: https://agent.elevationary.com/consulting-60/
+robots: "index,follow,noarchive,max-snippet:0,max-image-preview:none,max-video-preview:0"
+googlebot: "index,follow,noarchive,max-snippet:0,max-image-preview:none,max-video-preview:0"
+og_image: https://agent.elevationary.com/assets/og-consulting-60.png
+head_jsonld: |
+  <script type="application/ld+json">{
     "@context":"https://schema.org",
     "@type":"Product",
     "@id":"https://agent.elevationary.com/consulting-60/#product",
     "name":"60-Minute AI Strategy Consultation",
-    "description":"One-hour strategic consultation to align vision with execution, evaluate existing systems, and define a clear, actionable path forward.",
-    "brand": { "@type":"Brand", "name":"Elevationary" },
-    "image": [
-      "https://agent.elevationary.com/assets/og-consulting-60.png",
-      "https://agent.elevationary.com/assets/elevationary-logo-512.png"
-    ],
-    "offers": {
+    "description":"Prepaid AI strategy consultation via Google Meet.",
+    "image":["https://agent.elevationary.com/assets/og-consulting-60.png"],
+    "brand":{"@type":"Organization","@id":"https://agent.elevationary.com/#org","name":"Elevationary"},
+    "url":"https://agent.elevationary.com/consulting-60/",
+    "offers":{
       "@type":"Offer",
+      "price":"399.00",
       "priceCurrency":"USD",
-      "price":"395.00",
-      "url":"https://calendar.app.google/FLe6Q6WzHQkHRK7v7",
       "availability":"https://schema.org/InStock",
-      "priceValidUntil":"2026-12-31",
+      "url":"https://buy.stripe.com/3cI8wO9nzcVOffFf98eIw00",
+      "priceValidUntil":"2030-12-31",
+      "seller":{"@type":"Organization","@id":"https://agent.elevationary.com/#org","name":"Elevationary"},
       "hasMerchantReturnPolicy":{
         "@type":"MerchantReturnPolicy",
-        "applicableCountry":"US",
-        "returnPolicyCategory":"https://schema.org/MerchantReturnNotPermitted"
-      },
-      "seller":{"@id":"https://www.elevationary.com/#organization"}
+        "returnPolicyCategory":"https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays":1
+      }
     },
-    "additionalProperty":[
-      {"@type":"PropertyValue","name":"duration","value":"PT60M"},
-      {"@type":"PropertyValue","name":"paymentLink","value":"https://buy.stripe.com/3cI8wO9nzcVOffFf98eIw00"},
-      {"@type":"PropertyValue","name":"humanConsultingPage","value":"https://www.elevationary.com/bookings/60-minute-ai-strategy-consultation"}
-    ]
-  }
-  </script>
-
-  <style>
-    :root { --brand:#418BCB; }
-    body { font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; margin:2rem; color:#111; }
-    .buttons a {
-      display:inline-block; padding:.65rem 1rem; border:1px solid var(--brand);
-      border-radius:10px; text-decoration:none; margin-right:.5rem; color:var(--brand);
-    }
-    .buttons a:hover { background:var(--brand); color:white; }
-    .muted { color:#6b7280; font-size:.95rem; }
-  </style>
-</head>
-<body>
+    "isRelatedTo":{"@type":"Service","name":"Google Meet consultation","url":"https://calendar.app.google/FLe6Q6WzHQkHRK7v7"},
+    "shippingDetails":{"@type":"OfferShippingDetails","shippingRate":{"@type":"MonetaryAmount","value":"0","currency":"USD"}}
+  }</script>
+---
   <h1>60-Minute AI Strategy Consultation</h1>
   <p class="muted">This page is optimized for automated agents. Humans: book and pay securely via Google Calendar.</p>
   <div class="buttons">
     <a href="https://calendar.app.google/FLe6Q6WzHQkHRK7v7">Book via Google Calendar</a>
     <a href="https://www.elevationary.com/bookings/60-minute-ai-strategy-consultation">More details</a>
   </div>
-</body>
-</html>
