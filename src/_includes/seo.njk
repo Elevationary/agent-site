@@ -1,4 +1,4 @@
-{# src/_includes/seo.njk — minimal, deterministic, no product.* deps #}
+{# src/_includes/seo.njk — minimal + deterministic #}
 {% set _title = title or (page.fileSlug | replace('-', ' ') | title) %}
 {% if description %}<meta name="description" content="{{ description }}">{% endif %}
 
@@ -7,7 +7,6 @@
 {% if robots %}<meta name="robots" content="{{ robots }}">{% endif %}
 {% if googlebot %}<meta name="googlebot" content="{{ googlebot }}">{% endif %}
 
-{# Open Graph fallbacks #}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{{ _title }}">
 <meta property="og:title" content="{{ _title }}">
