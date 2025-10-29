@@ -22,3 +22,5 @@
 # Serve sitemap as XML
 /sitemap*
   Content-Type: application/xml; charset=utf-8
+/consulting-60/*
+  Content-Type: text/html; charset=utf-8
