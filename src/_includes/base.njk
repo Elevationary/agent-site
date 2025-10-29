@@ -1,4 +1,4 @@
-_Last updated: 2025-10-28 (America/Phoenix)_
+_Last updated: 2025-10-29 (America/Phoenix)_
 
 <!doctype html>
 <html lang="en">
@@ -8,12 +8,6 @@ _Last updated: 2025-10-28 (America/Phoenix)_
 
   <title>{{ title or site.name }}</title>
   <meta name="description" content="{{ description or '' }}">
-
-  <link rel="canonical" href="{{ canonical or (site.url + page.url) }}">
-
-  <!-- Robots -->
-  <meta name="robots" content="{{ robots or 'noindex,follow' }}">
-  <meta name="googlebot" content="{{ googlebot or 'noindex,follow' }}">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
@@ -32,6 +26,9 @@ _Last updated: 2025-10-28 (America/Phoenix)_
 
   <!-- Page-specific JSON-LD can be injected via head_jsonld -->
   {{ head_jsonld | safe }}
+
+  <!-- Ensure the SEO include is in the layout -->
+  {% include 'seo.njk' %}
 
   <link rel="icon" href="/assets/elevationary-logo-512.png">
   <link rel="stylesheet" href="/assets/styles.css">
