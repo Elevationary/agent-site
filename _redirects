@@ -1,0 +1,3 @@
+/consulting-60            /p/consulting-60/           301
+/consulting-60/           /p/consulting-60/           301
+/consulting-60/*          /p/consulting-60/:splat     301
