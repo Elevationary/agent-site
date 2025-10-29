@@ -1,4 +1,18 @@
+{# src/_includes/seo.njk — minimal, deterministic, no product.* deps #}
+{% set _title = title or (page.fileSlug | replace('-', ' ') | title) %}
+{% if description %}<meta name="description" content="{{ description }}">{% endif %}
 
-<link rel="canonical" href="{{ canonical | default(site.url + page.url) }}">
-<meta name="robots" content="{{ robots | default('index,follow') }}">
-<meta name="googlebot" content="{{ googlebot | default('index,follow') }}">
+<link rel="canonical" href="{{ canonical | default(page.url | url) }}">
+
+{% if robots %}<meta name="robots" content="{{ robots }}">{% endif %}
+{% if googlebot %}<meta name="googlebot" content="{{ googlebot }}">{% endif %}
+
+{# Open Graph fallbacks #}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ _title }}">
+<meta property="og:title" content="{{ _title }}">
+{% if description %}<meta property="og:description" content="{{ description }}">{% endif %}
+<meta property="og:url" content="{{ canonical | default(page.url | url) }}">
+{% set _og = og_image or '/assets/og-consulting-60.png' %}
+<meta property="og:image" content="{{ _og | url }}">
+<meta property="og:image:alt" content="{{ _title }}">
