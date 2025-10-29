@@ -1,6 +1,7 @@
 
 # Elevationary – Ops & Infra README
 
+_Last updated: 2025-10-27 (America/Phoenix)_
 
 This repo hosts the **agent micro-site** for AEO/ACP under `https://agent.elevationary.com`. The public website lives on **Google Sites** at `https://www.elevationary.com`.
 

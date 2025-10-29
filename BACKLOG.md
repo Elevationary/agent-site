@@ -6,7 +6,6 @@
 
 # Backlog (Now / Next / Later)
 
-_Last updated: 2025-10-27 (America/Phoenix)_
 
 ## NOW (low effort, scales)
 - **Eleventy scaffold**: `/src` + `.eleventy.cjs`; single source of truth (`/src/_data/offers.json`) to drive pages, JSON-LD, sitemap, buttons.
