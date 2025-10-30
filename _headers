@@ -1,26 +1,2 @@
-/ *
-  X-Frame-Options: DENY
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
-  Cache-Control: public, max-age=300, s-maxage=600
-
-/*.html
-  Cache-Control: public, max-age=600
-
-/assets/*
-  Cache-Control: public, max-age=31536000, immutable
-
-# Keep catalog (root) out of search
-/
-  X-Robots-Tag: noindex, nofollow
-
-# Allow indexing of the 60-min page
-/consulting-60/*
-  X-Robots-Tag: index, follow
-
-# Serve sitemap as XML
-/sitemap*
-  Content-Type: application/xml; charset=utf-8
-/consulting-60/*
-  Content-Type: text/html; charset=utf-8
+/sitemap.xml
+  Cache-Control: public, max-age=300, must-revalidate
