@@ -1,20 +1,36 @@
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "@id": "https://agent.elevationary.com/consulting-60/#product",
-  "name": "60-Minute AI Strategy Consultation",
-  "description": "Prepaid AI strategy consultation via Google Meet.",
-  "image": ["https://agent.elevationary.com/assets/og-consulting-60.png"],
-  "brand": {"@type": "Organization", "name": "Elevationary"},
-  "url": "https://agent.elevationary.com/consulting-60/",
-  "offers": {
-    "@type": "Offer",
-    "price": "395.00",
-    "priceCurrency": "USD",
-    "availability": "https://schema.org/InStock",
-    "url": "https://buy.stripe.com/3cI8wO9nzcVOffFf98eIw00",
-    "seller": {"@type": "Organization", "name": "Elevationary"}
-  }
-}
-</script>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{ title or site.name }}</title>
+  <meta name="description" content="{{ description or '' }}">
+
+  {# Minimal, product-agnostic OG/Twitter. Canonical/robots handled by seo.njk #}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ site.name or (title or '') }}">
+  <meta property="og:title" content="{{ title or site.name }}">
+  {% if description %}<meta property="og:description" content="{{ description }}">{% endif %}
+  <meta property="og:url" content="{{ canonical or (page.url | url) }}">
+  <meta property="og:image" content="{{ (og_image or '/assets/og-consulting-60.png') | url }}">
+  <meta property="og:image:alt" content="{{ title or site.name }}">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ title or site.name }}">
+  {% if description %}<meta name="twitter:description" content="{{ description }}">{% endif %}
+  <meta name="twitter:image" content="{{ (og_image or '/assets/og-consulting-60.png') | url }}">
+
+  {# Page-specific JSON-LD injected here #}
+  {{ head_jsonld | safe }}
+
+  {# Standard SEO tags (canonical, robots, googlebot) #}
+  {% include 'seo.njk' %}
+
+  <link rel="icon" href="/assets/elevationary-logo-512.png">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  {{ content | safe }}
+</body>
+</html>
