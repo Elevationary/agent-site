@@ -5,10 +5,18 @@ layout: null
 ---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {% set lastmod = '' %}
+  {% for p in collections.all %}
+    {% if p.url == '/consulting-60/' %}
+      {% if p.data.lastmod %}
+        {% set lastmod = p.data.lastmod %}
+      {% else %}
+        {% set lastmod = p.date | date('yyyy-MM-dd') %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
   <url>
     <loc>{{ site.url }}/consulting-60/</loc>
-    {% if products and products.products and products.products[0].lastmod %}
-    <lastmod>{{ products.products[0].lastmod }}</lastmod>
-    {% endif %}
+    {% if lastmod %}<lastmod>{{ lastmod }}</lastmod>{% endif %}
   </url>
 </urlset>
