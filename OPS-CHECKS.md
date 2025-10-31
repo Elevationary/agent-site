@@ -1,4 +1,3 @@
-
 # Ops Checks (quick copy/paste)
 
 ## DNS & Proxies
@@ -28,7 +27,7 @@ openssl s_client -connect elevationary.com:443 -servername elevationary.com 2>/d
 ## Headers & Caching (HTML + assets)
 curl -sI "https://agent.elevationary.com/consulting-60/" \
 | grep -i 'content-type\|cache-control\|strict-transport-security\|x-content-type-options\|permissions-policy\|referrer-policy'
-# Expect (HTML): text/html; charset=utf-8 • Cache-Control: public, max-age=600
+# Expect (HTML): text/html; charset=utf-8 • Cache-Control: public, max-age=0, must-revalidate
 
 curl -sI "https://agent.elevationary.com/assets/elevationary-logo-512.png" \
 | grep -i cache-control
@@ -45,20 +44,34 @@ curl -I "https://calendar.app.google/FLe6Q6WzHQkHRK7v7" | head -1
 ## Robots / Sitemap
 curl -sI "https://agent.elevationary.com/robots.txt"  | sed -n '1,5p'
 curl -sI "https://agent.elevationary.com/sitemap.xml" | sed -n '1,5p'
-# Expect: robots.txt served • sitemap.xml contains only the indexable product URL(s).
+# Content check (expect only /consulting-60/ with ISO <lastmod>)
+curl -sL "https://agent.elevationary.com/sitemap.xml" | sed -n '1,40p'
+# Expect: <loc>https://agent.elevationary.com/consulting-60/</loc> and a recent <lastmod>.
+
+## No staging (/p) remnants
+
+# /consulting-60/index.html should resolve to /consulting-60/ (not /p/*)
+curl -i "https://agent.elevationary.com/consulting-60/index.html" | sed -n '1,12p'
+# Expect: 200 OK or 308 → /consulting-60/ (no /p/ in Location)
+
+# /p/consulting-60/ should not exist
+curl -I "https://agent.elevationary.com/p/consulting-60/" | head -1
+# Expect: HTTP/2 404
 
 ## Canonical & OG on product page
 curl -sL "https://agent.elevationary.com/consulting-60/" \
-| grep -i '<link rel="canonical"\|og:image'
+| tr '\n' ' ' \
+| grep -oiE '<link[^>]+rel=.canonical[^>]*>|<meta[^>]+name=.(description|robots|googlebot).[^>]*>|<meta[^>]+property=.og:image[^>]*>' \
+|| echo "(head tags not found)"
 
 ## Rich Results sanity (manual)
 
 - Confirm the product page has a correct canonical tag:
   - `<link rel="canonical" href="https://agent.elevationary.com/consulting-60/">`
 - In the Product/Offer JSON-LD for `/consulting-60/`, verify before running validators:
-  - `offers.url` points to the Google Booking link (`https://calendar.app.google/FLe6Q6WzHQkHRK7v7`).
-  - `price` and `priceCurrency` are present and correct.
-  - `provider.@id` equals `https://www.elevationary.com/#organization`.
+  - `name`, `description`, and `image` point to the correct values (image → `https://agent.elevationary.com/assets/og-consulting-60.png`).
+  - `offers.price` = `395.00` and `offers.priceCurrency` = `USD`.
+  - `offers.url` points to the Stripe Pay Link `https://buy.stripe.com/3cI8wO9nzcVOffFf98eIw00`.
 - After confirming the above, run the Rich Results Test and Schema.org validator.
 
 ## Email auth (spot check)
@@ -97,7 +110,7 @@ curl -I "https://blog.elevationary.ai/test" | sed -n '1p;/^location:/Ip'
 ```bash
 curl -sI https://agent.elevationary.com/consulting-60/ \
 | grep -i 'strict-transport-security\|cache-control\|content-type'
-# Expect HSTS on, HTML cache ~600s, and text/html; charset=utf-8
+# Expect HSTS on, HTML cache 0s (must-revalidate), and text/html; charset=utf-8
 
 curl -sI https://agent.elevationary.com/assets/elevationary-logo-512.png \
 | grep -i 'cache-control'
@@ -108,7 +121,7 @@ curl -sI https://agent.elevationary.com/assets/elevationary-logo-512.png \
 ```bash
 curl -sL https://agent.elevationary.com/consulting-60/ \
 | grep -i '<script type="application/ld+json"' -n
-# Expect ≥1 match (Organization + Product/Offer)
+# Expect ≥1 match (Product/Offer present)
 ```
 
 ### Certificate SANs (spot-check)
