@@ -6,6 +6,159 @@ This repo hosts the **agent micro-site** for AEO/ACP under `https://agent.elevat
 
 ---
 
+## Runbook (v0.1)
+
+### 1) Quick Start
+```bash
+# install (Node 18+ recommended)
+npm install
+
+# build static site to ./_site
+npm run build
+
+# optional: local dev server
+npx @11ty/eleventy --serve
+```
+
+- **Eleventy:** v3.1.x  
+- **Build output:** `_site/`  
+- **Hosting:** Cloudflare Pages `agent-site2` → custom domain `agent.elevationary.com`
+
+---
+
+### 2) Repo Layout (canonical)
+```
+assets/                      # static assets (passthrough)
+_headers                    # CF Pages headers (passthrough)
+robots.txt                  # passthrough
+sitemap.xml                 # legacy file; output is built from src/sitemap.njk
+src/
+  _includes/
+    base.njk               # base layout (no JSON-LD here)
+    seo.njk                # injects canonical/robots/googlebot/canonical
+  consulting-60.md         # product page (front matter + markdown)
+  index.html               # catalog home (noindex)
+  sitemap.njk              # sitemap generator
+.eleventy.js                # passthrough + dir config
+```
+> **Important:** No `_redirects` file is used for `/consulting-60/`. The retired `/p/*` staging path is removed.
+
+---
+
+### 3) Front Matter Contract (page-level SEO)
+Pages supply SEO via front matter. **Do not inject JSON-LD from `base.njk`.**
+
+```yaml
+---
+layout: base.njk
+permalink: /<slug>/index.html
+title: "<Page Title>"
+description: "<Short description>"
+canonical: "https://agent.elevationary.com/<slug>/"
+robots: "index,follow,noarchive,max-snippet:0,max-image-preview:none,max-video-preview:0"
+googlebot: "index,follow,noarchive,max-snippet:0,max-image-preview:none,max-video-preview:0"
+og_image: "https://agent.elevationary.com/assets/og-<slug>.png"
+lastmod: "YYYY-MM-DD"
+head_jsonld: |
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": "https://agent.elevationary.com/<slug>/#product",
+    "name": "<Name>",
+    "description": "<Short description>",
+    "image": ["https://agent.elevationary.com/assets/og-<slug>.png"],
+    "brand": {"@type": "Organization", "name": "Elevationary"},
+    "url": "https://agent.elevationary.com/<slug>/",
+    "offers": {
+      "@type": "Offer",
+      "price": "395.00",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": "https://buy.stripe.com/...",
+      "seller": {"@type": "Organization", "name": "Elevationary"}
+    }
+  }
+  </script>
+---
+```
+
+---
+
+### 4) Sanity Checks (copy/paste)
+**Headers (content-type / cache)**
+```bash
+curl -sI https://agent.elevationary.com/consulting-60/ | grep -i 'content-type\|cache-control'
+```
+
+**Asset cache policy**
+```bash
+curl -sI https://agent.elevationary.com/assets/og-consulting-60.png | grep -i cache-control
+```
+
+**Canonical / robots / googlebot / OG present**
+```bash
+curl -sL https://agent.elevationary.com/consulting-60/ \
+| tr '\n' ' ' \
+| grep -oiE '<link[^>]+rel=.canonical[^>]*>|<meta[^>]+name=.(description|robots|googlebot).[^>]*>|<meta[^>]+property=.og:image[^>]*>' \
+|| echo "(head tags not found)"
+```
+
+**Sitemap contents + cache header**
+```bash
+curl -sL https://agent.elevationary.com/sitemap.xml | sed -n '1,40p'
+curl -sI  https://agent.elevationary.com/sitemap.xml | grep -i cache-control
+```
+
+---
+
+### 5) Deployment Notes (Cloudflare Pages)
+- Project: `agent-site2`  
+- Build command: `npm run build`  
+- Output directory: `_site`
+- After a push to `main`, CF Pages deploys automatically to a preview URL and Production.
+- **Cache purge:** Site → Configure caching → Custom Purge → URL.
+
+**Robots policy**
+- `/` is intentionally `noindex,follow`.
+- Product pages (e.g., `/consulting-60/`) are `index,follow`.
+
+**Cache policy**
+- HTML: `public, max-age=0, must-revalidate` (active iteration).
+- `/assets/*`: `public, max-age=31536000, immutable`.
+- `/sitemap.xml`: `public, max-age=300, must-revalidate`.
+
+---
+
+### 6) Known Gotchas / Lessons
+- Duplicate `permalink` values cause Eleventy build failures—ensure uniqueness.
+- JSON-LD must be page-level. Do **not** put JSON-LD in `base.njk`.
+- Retired `/p/*`. Ensure no `_redirects` rules or templates reference `/p/`.
+- Do not commit `_site/`.
+
+---
+
+### 7) Adding a New Product (manual, current flow)
+Copy `src/consulting-60.md` and update front matter + JSON-LD:
+```bash
+# example: 90-minute consult
+cp src/consulting-60.md src/consulting-90.md
+# edit: slug in permalink/canonical, title/description, lastmod, head_jsonld payload
+```
+Then build and verify:
+```bash
+npm run build
+# run sanity checks in section 4
+```
+
+---
+
+### 8) Google Search Console (GSC)
+- Property: URL-prefix `https://agent.elevationary.com/`
+- Inspect canonical: `https://agent.elevationary.com/consulting-60/`
+- Sitemap: `https://agent.elevationary.com/sitemap.xml`
+ 
+
 ## 1) Environment Inventory
 
 **Workstation**
