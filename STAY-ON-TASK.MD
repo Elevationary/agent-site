@@ -142,4 +142,14 @@ Action: Updated `BACKLOG.md` with concrete tickets for 15/30/90, products data (
 Local Verify: Commit recorded on `main` as `57c00f2`; diff shows ~95 insertions. File renders locally and does not affect build output.
 Prod Verify: N/A (documentation-only change).
 Result: ✅ Task 5 complete — backlog updated and pushed.
-Next: Task 6 — Create `src/_data/products.json` skeleton. Awaiting file access grant per protocol.
+Next: Task 6 — Create `src/_data/products.json` skeleton. Awaiting file access grant per protocol. 
+### Protocol Patch — Append-Only Edits to STAY-ON-TASK
+- **Rule 9 (added):** When updating `STAY-ON-TASK.MD`, you will be **appending** to the file, **never overwriting**. Use `>>` redirection only. Do not replace or truncate existing content.
+
+### Log — Task 6 (Products Data Skeleton)
+[Time 🕒] 2025-10-30 18:55 MST
+Action: Reviewed `src/_data/products.json` for required fields (`slug`, `title`, `description`, `image`, `price`, `currency`, `stripeUrl`, `indexable`, `lastmod`). **No modifications are required.**
+Local Verify: File exists and schema matches the spec; contents are valid JSON.
+Prod Verify: N/A (data-only; no live output yet).
+Result: ✅ Task 6 complete — **No modifications are required.**
+Next: Task 7 — Create `src/product-page.njk` (generator template with per-item front matter and canonical/robots/OG/JSON‑LD). Awaiting file access to create this new file.
