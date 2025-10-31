@@ -125,4 +125,12 @@ Action: Refreshed `OPS-CHECKS.md` per final policies: (1) HTML cache `public, ma
 Local Verify: `npm run build` OK; local curl/grep on `_site/consulting-60/index.html` shows expected tags; `_site/sitemap.xml` contains `/consulting-60/` with `<lastmod>2025-10-29` from front matter.
 Prod Verify: `/consulting-60/` returns correct canonical/robots/googlebot and OG; `/sitemap.xml` contains `/consulting-60/` with `<lastmod>2025-10-29`; `/p/consulting-60/` → 404; `assets/og-consulting-60.png` served with `cache-control: public, max-age=31536000, immutable`.
 Result: ✅ Task 3 complete — ready for verification.
-Next: Task 4 — Update `LESSONS.md` with postmortem (duplicate permalink root cause, JSON-LD-in-base hazard, cache/redirect learnings). Awaiting file access.
+
+### Log — Task 4 (LESSONS.md — Postmortem)
+
+[Time 🕒] 2025-10-30 20:56 ET
+Action: Added detailed Eleventy + Cloudflare Pages postmortem to `LESSONS.md` (symptoms, root causes, fixes, guardrails, refs). Included command snippets for duplicate-permalink checks, head/sitemap verification, redirects discipline, and cache headers.
+Local Verify: `LESSONS.md` renders with new section; content includes grep/curl blocks and guardrails. Local diff clean; no build output impacted.
+Prod Verify: N/A (documentation-only change; does not affect live HTML output).
+Result: ✅ Task 4 complete — documentation matches repo state.
+Next: Task 5 — Update `BACKLOG.md` (product expansion plan). Please grant access to `BACKLOG.md`.
