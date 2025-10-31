@@ -44,3 +44,98 @@
 - **Internationalization (i18n)**: groundwork for language/currency readiness (lang attributes; currency/locale formatting).
 - **Automated DNS snapshots**: monthly export of both zones via Cloudflare API to `/docs/dns-snapshots/`.
 - **Link discovery (optional):** Consider a tiny “Agent catalog” link from the main site only if you want crawl discoverability; default is no link to keep it human-hidden. [owner][date] 
+
+# Backlog — Agent-Site (v2025-10-30)
+
+## Open Decisions (track separately from sprint tasks)
+- Newsletter platform choice (ConvertKit/Substack/beehiiv vs. homegrown) — Phase 2.
+- Contractor pool model & SLAs — Phase 3.
+- DNSSEC enablement (staged) — Revisit after 1 week of stability.
+
+---
+
+## NOW (next 24–48h) — Concrete tickets for production pages
+
+### A. Single source of truth for offers
+- [ ] **Create** `/src/_data/offers.json` with this minimal schema (one array of offers):
+  ```json
+  [
+    {
+      "key": "consulting60",
+      "slug": "consulting-60",
+      "title": "60-Minute AI Strategy Consultation",
+      "description": "Prepaid AI strategy consultation via Google Meet.",
+      "price": "395.00",
+      "currency": "USD",
+      "image": "/assets/og-consulting-60.png",
+      "booking_url": "https://calendar.app.google/FLe6Q6WzHQkHRK7v7",
+      "pay_url": "https://buy.stripe.com/3cI8wO9nzcVOffFf98eIw00",
+      "indexable": true,
+      "show_in_sitemap": true,
+      "lastmod": "2025-10-29"
+    }
+  ]
+  ```
+- [ ] **Policy**: prices/URLs/images/lastmod must be edited only here; pages derive from data.
+
+### B. Product pages (15 / 30 / 90) using the 60-min as the canonical pattern
+- [ ] **Add** `src/consulting-15.md`, `src/consulting-30.md`, `src/consulting-90.md` — each with:
+  - `layout: base.njk`
+  - `permalink: /<slug>/index.html`
+  - `eleventyComputed` pulling `title`, `description`, `og_image`, `robots`, `googlebot`, `canonical`, and `head_jsonld` **from** `offers.json` (match by `slug`).
+  - Body: H1 title + two-paragraph description + booking + Stripe links.
+- [ ] **Acceptance**: 
+  - `curl -sL https://agent.elevationary.com/<slug>/ | tr '\n' ' ' | grep -oiE '<link[^>]+rel=.canonical[^>]*>|<meta[^>]+name=.(description|robots|googlebot).[^>]*>|<meta[^>]+property=.og:image[^>]*>'` shows correct tags.
+  - JSON-LD validates in Google Rich Results for all 4 pages (15/30/60/90).
+
+### C. Sitemap sourced from offers.json only
+- [ ] **Update** `src/sitemap.njk` to iterate over `collections.all` **or** directly over `offers` data and include **only** items with `indexable && show_in_sitemap`.
+- [ ] `<lastmod>`: prefer `offer.lastmod`; fallback to `page.date` when present.
+- [ ] **Acceptance**:
+  - `curl -sL https://agent.elevationary.com/sitemap.xml` contains only the 15/30/60/90 URLs with correct `<lastmod>`.
+
+### D. Redirects & staging remnants
+- [ ] **Ensure** no `_redirects` entries that map `/consulting-*/` → `/p/...` exist (file should be **absent**).
+- [ ] **Acceptance**: `curl -i https://<preview>.agent-site2.pages.dev/consulting-60/index.html | sed -n '1,12p'` returns `200` or `308 → /consulting-60/` **not** `/p/…`; `curl -i https://agent.elevationary.com/p/consulting-60/` returns `404`.
+
+### E. Headers & caching policy (no regressions)
+- [ ] **HTML**: `Cache-Control: public, max-age=0, must-revalidate`.
+- [ ] **Assets**: `Cache-Control: public, max-age=31536000, immutable` for `/assets/*`.
+- [ ] **Acceptance**:
+  - `curl -sI https://agent.elevationary.com/consulting-60/ | grep -i 'content-type\|cache-control'`
+  - `curl -sI https://agent.elevationary.com/assets/og-consulting-60.png | grep -i cache-control`
+
+### F. PR workflow toggle (lightweight)
+- [ ] **Add** a note in `README.md` on how to toggle PR-only mode (branch protections & tiny checks) when ready.
+- [ ] **Optional**: add a simple CI lint step (HTML/JSON-LD) for PRs; keep direct pushes allowed for now.
+
+---
+
+## NEXT (1–3 days)
+- [ ] **Policies**: Publish Refund & Cancellation text and link from all consulting pages.
+- [ ] **Cloudflare Web Analytics**: add to base layout; confirm no cookies.
+- [ ] **Performance budget**: Lighthouse ≥95 on mobile/desktop; capture scores in `OPS-CHECKS.md`.
+- [ ] **Monitoring**: simple synthetic checks for `/` and `/consulting-*/` with Slack/email alerts.
+- [ ] **UTM tagging**: document UTM pattern for Pay Links; apply to 15/30/90; capture in `README.md`.
+- [ ] **Stripe receipt**: add booking fallback line in Stripe receipt template; note owner/date.
+- [ ] **`priceValidUntil` automation**: quarterly review date tracked in repo and surfaced in JSON-LD.
+
+---
+
+## LATER (investment; scale)
+- [ ] **Newsletter product**: content pipeline & delivery.
+- [ ] **Serverless glue**: CF Workers for webhooks (Stripe/Calendar), CRM/contact handoff.
+- [ ] **DNSSEC**: enable per domain; publish DS; validate with DNSViz.
+- [ ] **HSTS hardening**: extend `max-age`; consider `includeSubDomains`; evaluate preload.
+- [ ] **CSP**: start Report-Only; then enforce with tight `default-src`, `script-src`, `img-src`, `connect-src`.
+- [ ] **Accessibility**: WCAG 2.1 AA sweep (contrast/alt/focus/keyboard nav).
+- [ ] **Internationalization**: groundwork for language/currency readiness.
+- [ ] **Automated DNS snapshots**: monthly CF API export to `/docs/dns-snapshots/`.
+- [ ] **Link discovery (optional)**: consider small “Agent catalog” link from main site if crawl discoverability desired; otherwise leave hidden.
+
+---
+
+## Cross-references
+- Keep `OPS-CHECKS.md` aligned with the acceptance commands above.
+- See `DECISIONS.md` for canonical/robots policy and sitemap `lastmod` strategy.
+- See `README.md` Runbook for Eleventy/CF Pages deploy and cache sanity checks.
