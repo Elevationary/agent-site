@@ -134,3 +134,12 @@ Local Verify: `LESSONS.md` renders with new section; content includes grep/curl 
 Prod Verify: N/A (documentation-only change; does not affect live HTML output).
 Result: ✅ Task 4 complete — documentation matches repo state.
 Next: Task 5 — Update `BACKLOG.md` (product expansion plan). Please grant access to `BACKLOG.md`.
+
+### Log — Task 5 (BACKLOG.md — Product Expansion Plan)
+
+[Time 🕒] 2025-10-30 22:05 ET (19:05 MST)
+Action: Updated `BACKLOG.md` with concrete tickets for 15/30/90, products data (`offers.json`/`products.json`), sitemap iteration, redirects cleanup (remove `/p` remnants), PR toggle, smoke script, GSC submission, and guardrails.
+Local Verify: Commit recorded on `main` as `57c00f2`; diff shows ~95 insertions. File renders locally and does not affect build output.
+Prod Verify: N/A (documentation-only change).
+Result: ✅ Task 5 complete — backlog updated and pushed.
+Next: Task 6 — Create `src/_data/products.json` skeleton. Awaiting file access grant per protocol.
