@@ -27,6 +27,10 @@ Acce# Backlog / Open Decisions
 ## Future Consideration
 - DNSSEC enablement (staged) — Revisit after 1 month of stability
 - Newsletter platform evaluation (ConvertKit/Substack/beehiiv) - if MailChimp doesn't meet needs
+- **Google Sites SEO Optimization**: Research and document best practices for maximizing SEO within Google Sites' limitations
+  - Test and document which meta tags are actually used by search engines
+  - Explore if there are any official Google-recommended patterns for structured data
+  - Document any workarounds for common SEO needs
 
 # Backlog (Now / Next / Later)
 

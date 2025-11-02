@@ -18,8 +18,9 @@ BASE_URL="http://localhost:8080"  # Update this if your local dev server runs on
 PAGES=(
   "/"
   "/consulting-60/"
-  "/consulting-30/"
-  "/consulting-90/"
+  # "/consulting-15/"  # Uncomment when ready
+  # "/consulting-30/"  # Uncomment when ready
+  # "/consulting-90/"  # Uncomment when ready
 )
 
 # Check if local server is running
@@ -107,15 +108,24 @@ check_url() {
       echo -e "${YELLOW}⚠️  Missing Open Graph $tag${NC}"
     else
       value=$(echo "$content" | grep -o "property=\"$tag\" content=\"[^\"]*" | cut -d'"' -f4)
-      echo -e "${GREEN}✓ $tag: ${value:0:60}${value:60:+...}${NC}"
+      # Truncate long values and add ellipsis if needed
+      if [ ${#value} -gt 60 ]; then
+        echo -e "${GREEN}✓ $tag: ${value:0:60}...${NC}"
+      else
+        echo -e "${GREEN}✓ $tag: $value${NC}"
+      fi
     fi
   done
   
-  # Check JSON-LD
-  if ! echo "$content" | grep -q '<script type="application/ld+json"'; then
-    echo -e "${YELLOW}⚠️  No JSON-LD structured data found${NC}"
+  # Check JSON-LD (skip for homepage as it's on Google Sites)
+  if [ "$url" != "/" ]; then
+    if ! echo "$content" | grep -q '<script type="application/ld+json"'; then
+      echo -e "${YELLOW}⚠️  No JSON-LD structured data found${NC}"
+    else
+      echo -e "${GREEN}✓ JSON-LD structured data found${NC}"
+    fi
   else
-    echo -e "${GREEN}✓ JSON-LD structured data found${NC}"
+    echo -e "${BLUE}ℹ️  JSON-LD check skipped for homepage (hosted on Google Sites)${NC}"
   fi
   
   echo -e "${GREEN}✅ Basic SEO checks passed for $url${NC}"
