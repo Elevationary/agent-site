@@ -1,0 +1,81 @@
+# SEO Contract & Front Matter Standards
+
+This document outlines the required front matter keys and SEO standards for all pages in the Elevationary Agent microsite.
+
+## Required Front Matter
+
+### Core Metadata
+```yaml
+---
+# Required for all pages
+title: "Page Title | Elevationary"  # Max 60 chars
+description: "Concise description for search results (150-160 chars)"
+permalink: "/path/to/page/"  # Must be absolute path with leading/trailing slashes
+---
+```
+
+### SEO-Specific
+```yaml
+# Recommended for better control
+canonical: "https://agent.elevationary.com/full/url/"  # Only set if different from permalink
+robots: "index, follow"  # Override default indexing behavior if needed
+og_image: "/path/to/og-image.jpg"  # 1200x630px, JPG/PNG, <1MB
+```
+
+### Content Pages
+```yaml
+---
+layout: "page.njk"  # Or appropriate layout
+# ... core metadata ...
+lastmod: 2025-11-02  # Last modified date (YYYY-MM-DD)
+head_jsonld: |
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Page Title",
+      "description": "Page description",
+      "url": "https://agent.elevationary.com/full/url/"
+    }
+  </script>
+---
+```
+
+## File Naming Conventions
+- Use kebab-case for all filenames (e.g., `my-article.md`)
+- Match the filename to the URL slug when possible
+- Use descriptive, keyword-rich names
+
+## Image Standards
+- **Format**: WebP (preferred) or JPG for photos, SVG for icons/logos
+- **Dimensions**: 
+  - Open Graph: 1200×630px
+  - Hero images: 1920×1080px
+  - Thumbnails: 400×300px
+- **Naming**: `descriptive-name-keywords.jpg` (lowercase, hyphens)
+- **Alt Text**: Required for all images, max 125 chars
+
+## URL Structure
+- Use lowercase with hyphens
+- Keep URLs short but descriptive
+- Avoid dates in URLs unless time-sensitive content
+- Use canonical tags for duplicate content
+
+## Validation
+Run the smoke test before pushing changes:
+```bash
+./scripts/check-seo.sh
+```
+
+## Monitoring
+- Google Search Console
+- Google Analytics 4
+- Regular sitemap validation
+- Broken link checks
+
+## Change Control
+Any changes to this contract require:
+1. Update this document
+2. Update related templates
+3. Test affected pages
+4. Update sitemap if URL structure changes

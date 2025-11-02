@@ -1,9 +1,25 @@
 # robots.txt for https://agent.elevationary.com/
+# Last updated: 2025-11-02
 
+# Default policy: allow all
 User-agent: *
 Allow: /
+
+# Sitemap location (must be absolute URL)
 Sitemap: https://agent.elevationary.com/sitemap.xml
-# (Optional) keep non-public workspaces out of indexes if you ever add them
+
+# Disallow non-public areas
 Disallow: /drafts/
 Disallow: /private/
 Disallow: /staging/
+Disallow: /admin/
+Disallow: /api/
+
+# Crawl-delay: 10  # Uncomment if needed to reduce server load
+
+# Additional directives for specific bots
+User-agent: GPTBot
+Disallow: /
+
+# Note: This file is version controlled. Changes should be tested locally
+# before deployment. See docs/SEO-CONTRACT.md for more information.

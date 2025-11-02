@@ -1,12 +1,304 @@
 
-# Elevationary – Ops & Infra README
+# Elevationary – Agent Microsite README
 
+This repo hosts the **agent micro-site** for AEO (Agent Experience Optimization) and ACP (Agentic Commerce Protocol) under `https://agent.elevationary.com`. The public website lives on **Google Sites** at `https://www.elevationary.com`.
 
-This repo hosts the **agent micro-site** for AEO/ACP under `https://agent.elevationary.com`. The public website lives on **Google Sites** at `https://www.elevationary.com`.
+## Project Goals
+
+### Primary Objectives
+- Provide booking capabilities for AI strategy consultations (15/30/60/90 minute sessions)
+- Offer subscription-based 3-2-1 format newsletters with AI applications
+- Serve as a lead generation platform for consulting engagements
+- Implement Agentic Commerce Protocol (ACP) for AI-native commerce
+- Automate content generation and delivery pipeline
+
+### Key Performance Indicators (KPIs)
+- **Booking completion rate** vs abandonment rate
+- **Subscription completion rate** vs abandonment rate
+- Conversion of bookings to consulting projects
+- Conversion of newsletter subscribers to bookings/projects
+- **ACP Engagement**: AI agent interactions and conversions
+- **Content Performance**: Open rates, click-through rates, and engagement metrics
+
+## Agentic Commerce Protocol (ACP)
+
+### Overview
+ACP enables AI-native commerce experiences by allowing AI agents to discover, evaluate, and transact on behalf of users. This microsite implements ACP to:
+- Make services discoverable by AI agents
+- Provide structured data for AI understanding
+- Enable seamless booking and subscription flows
+
+### Implementation
+- Schema.org markup for services and offers
+- Structured data for AI agent comprehension
+- API endpoints for agent interactions
+- Secure authentication for agent-initiated actions
+
+## 3-2-1 Newsletter Format
+
+### Structure
+Each newsletter follows this proven format for maximum engagement and value:
+
+#### 3 Practical Stories
+- Real-world examples of AI applications in the newsletter's focus area
+- Presented in a table format with concise summaries
+- Demonstrates practical implementation and success stories
+- Builds credibility by showing real results
+
+#### 2 Actionable Insights
+- Practical, immediately applicable strategies
+- Specific, step-by-step guidance
+- Focused on delivering quick wins
+- Often includes templates or frameworks
+
+#### 1 Big Question
+- Thought-provoking prompt for reflection
+- Connects to broader industry trends
+- Encourages reader engagement
+- Sparks conversation and deeper thinking
+
+### Example Structure
+```
+ELEVATIONARY AI: [EDITION NAME]
+
+3 PRACTICAL STORIES
+[Case Study 1] - Brief description and key takeaway
+[Case Study 2] - Brief description and key takeaway
+[Case Study 3] - Brief description and key takeaway
+
+2 ACTIONABLE INSIGHTS
+1. [Specific Tip] - Brief explanation and implementation steps
+2. [Framework/Strategy] - Clear, actionable guidance
+
+1 BIG QUESTION
+[Provocative question that ties back to the theme]
+```
+
+### Content Generation Process
+1. **AI Research & Curation**
+   - Automated gathering of AI trends and case studies
+   - Source validation and fact-checking
+   - Industry-specific relevance assessment
+
+2. **Content Development**
+   - AI-assisted drafting of 3-2-1 components
+   - Creation of visual elements (tables, charts)
+   - Development of supporting resources
+
+3. **Expert Review**
+   - Subject matter expert validation
+   - Tone and style refinement
+   - Fact verification and source attribution
+
+4. **Approval Workflow**
+   - Editorial review for clarity and impact
+   - Compliance and brand alignment check
+   - Final approval before scheduling
+
+5. **Publishing & Distribution**
+   - Automated scheduling through MailChimp
+   - Multi-platform optimization (email, web, social)
+   - Performance tracking and analytics
+
+### Implementation Guidelines
+- Maintain consistent formatting across all editions
+- Include clear calls-to-action
+- Optimize for both quick scanning and deep reading
+- Ensure mobile responsiveness
+- Track engagement metrics for continuous improvement
+
+### Newsletter Topics
+1. AI in Business Strategy
+2. Machine Learning Innovations
+3. AI Ethics and Governance
+4. Automation and Productivity
+5. AI in Marketing
+6. Data Science Trends
+7. AI in Healthcare
+8. Natural Language Processing
+9. Computer Vision Applications
+10. AI in Finance
+11. Robotics and AI
+12. Future of Work with AI
 
 ---
 
 ## Runbook (v0.1)
+
+## Technical Stack
+
+- **Static Site Generator**: Eleventy (11ty) v3.1.x
+- **Hosting**: Cloudflare Pages
+- **DNS/SSL**: Cloudflare (Full/Strict SSL, HSTS enabled)
+- **Analytics**: 
+  - Cloudflare Web Analytics (cookie-less)
+  - Google Analytics
+- **Email Platform**: MailChimp
+- **Search**: Google Search Console
+- **Schema**: Sitemaps.org, schema.org
+- **Booking & Payments**: Google Calendar + Stripe integration
+
+## Current Status (2025-11-01)
+
+### Infrastructure
+- Basic infrastructure in place
+- Initial product page for 60-min consultation live
+- 15/30/90 minute variants in development
+- Newsletter system architecture defined
+- CRM integration in progress
+
+### Recent Updates
+- Consolidated newsletter documentation
+- Implemented structured content guidelines
+- Set up conversion tracking framework
+- Created implementation roadmap in BACKLOG.md
+
+## Newsletters
+
+### Documentation Structure
+- `NEWSLETTERS.md`: Comprehensive guide to newsletter standards, formats, and processes
+- `BACKLOG.md`: Implementation tasks and technical details
+- `Agent Newsletter creation Prompt.MD`: AI prompt templates for content generation
+- `The 18 Newsletter topics.md`: Complete list of newsletter topics and themes
+
+### 3-2-1 Newsletter Format
+Each newsletter follows a structured 3-2-1 format designed to deliver maximum value efficiently:
+
+#### 3 Practical Stories
+- Real-world examples of AI application
+- Concise case studies with actionable insights
+- Focus on measurable outcomes
+- Source attribution and key takeaways
+
+#### 2 Actionable Insights
+- Practical frameworks and strategies
+- Ready-to-implement tips
+- Department-specific guidance
+- Step-by-step instructions
+
+#### 1 Big Question
+- Thought-provoking prompt
+- Encourages engagement and reflection
+- Ties back to broader business impact
+- Includes call-to-action for response
+
+### Newsletter Series
+
+#### 🧡 Nonprofit Series (9 Newsletters)
+Focused on mission-driven organizations, covering:
+1. **Marketing & Outreach**
+   - AI-powered donor segmentation
+   - Automated engagement workflows
+   - Impact storytelling at scale
+
+2. **Fundraising Campaigns**
+   - Predictive donor modeling
+   - AI-optimized campaign timing
+   - Personalized ask strategies
+
+3. **Donor Stewardship**
+   - Automated thank-you sequences
+   - Donor journey mapping
+   - Impact reporting automation
+
+4. **Volunteer Engagement**
+   - Skills matching algorithms
+   - Automated scheduling
+   - Impact tracking
+
+5. **Program Delivery**
+   - Service optimization
+   - Resource allocation
+   - Outcome measurement
+
+6. **Advocacy & Awareness**
+   - Message testing
+   - Audience targeting
+   - Campaign optimization
+
+7. **Grant Prospecting & Reporting**
+   - Grant matching
+   - Proposal generation
+   - Impact reporting
+
+8. **Impact Measurement**
+   - Data collection automation
+   - Outcome visualization
+   - ROI analysis
+
+9. **Organizational Readiness**
+   - AI maturity assessment
+   - Change management
+   - Capacity building
+
+#### 🏢 Corporate Series (9 Newsletters)
+Designed for business growth and efficiency:
+1. **Marketing & Demand Generation**
+   - Predictive lead scoring
+   - Content personalization
+   - Campaign optimization
+
+2. **Sales & Revenue Operations**
+   - Deal scoring
+   - Pipeline forecasting
+   - Churn prediction
+
+3. **Customer Success**
+   - Health scoring
+   - Proactive support
+   - Expansion opportunities
+
+4. **Workforce & Partner Enablement**
+   - Training automation
+   - Knowledge management
+   - Performance analytics
+
+5. **Product & Service Delivery**
+   - Quality assurance
+   - Process optimization
+   - Continuous improvement
+
+6. **Brand Influence & Thought Leadership**
+   - Content strategy
+   - Audience engagement
+   - Sentiment analysis
+
+7. **Strategic Partnerships**
+   - Partner matching
+   - Co-marketing optimization
+   - Joint solution development
+
+8. **Business Intelligence & Performance**
+   - Predictive analytics
+   - KPI forecasting
+   - Anomaly detection
+
+9. **Digital Transformation**
+   - Roadmap planning
+   - Change management
+   - ROI measurement
+
+### Implementation Status
+- **Current Phase**: Initial rollout
+- **Next Milestone**: Complete CRM integration
+- **Key Metrics**:
+  - Subscription rate (Target: >25% of visitors)
+  - Open rate (Target: >35%)
+  - Click-through rate (Target: >5%)
+  - Conversion to paid (Target: >3% of subscribers)
+
+### Related Documentation
+- [Newsletter Creation Process](NEWSLETTERS.md)
+- [Implementation Backlog](BACKLOG.md)
+- [AI Content Generation](Agent%20Newsletter%20creation%20Prompt.MD)
+- [Newsletter Topics](The%2018%20Newsletter%20topics.md)
+
+### Content Management
+- Centralized content database
+- Version control for all assets
+- Performance analytics dashboard
+- Automated scheduling and publishing
+- Content generation pipeline in development
 
 ### 1) Quick Start
 ```bash

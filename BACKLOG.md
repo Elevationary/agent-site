@@ -1,20 +1,114 @@
-# Backlog / Open Decisions
+Acce# Backlog / Open Decisions
 
-- Newsletter platform choice (ConvertKit/Substack/beehiiv vs. homegrown) — Phase 2.
-- Contractor pool model & SLAs — Phase 3.
-- DNSSEC enablement (staged) — Revisit after 1 week of stability.
+## High Priority
+- [ ] Implement 15/30/90 minute consultation variants
+- [ ] Set up MailChimp integration for 3-2-1 newsletter
+- [ ] Develop automated content generation pipeline for newsletters
+- [ ] Implement conversion tracking for bookings and subscriptions
+- [ ] Create subscriber-only content pages
+- [ ] Set up ACP (Agentic Commerce Protocol) endpoints
+
+## Medium Priority
+- [ ] Set up cross-browser and AI browser testing
+- [ ] Implement automated testing strategy
+- [ ] Implement privacy/cookie consent mechanism
+  - [ ] Basic cookie banner with opt-out (MVP)
+  - [ ] Full GDPR/CCPA compliance solution (Future)
+- [ ] CRM Implementation
+  - [ ] **Starter Phase (0-2,000 contacts)**
+    - [ ] Mailchimp + Stripe integration
+    - [ ] Basic contact management
+    - [ ] Email marketing setup
+  - [ ] **Growth Phase (2,000+ contacts)**
+    - [ ] Evaluate HubSpot Free/Starter
+    - [ ] Advanced pipeline tracking
+    - [ ] Tool integration assessment
+
+## Future Consideration
+- DNSSEC enablement (staged) — Revisit after 1 month of stability
+- Newsletter platform evaluation (ConvertKit/Substack/beehiiv) - if MailChimp doesn't meet needs
 
 # Backlog (Now / Next / Later)
 
 
-## NOW (low effort, scales)
-- **Eleventy scaffold**: `/src` + `.eleventy.cjs`; single source of truth (`/src/_data/offers.json`) to drive pages, JSON-LD, sitemap, buttons.
-- **Templates**: `consulting-60.njk` → parametrized for 15/30/90 variants; shared partials for head/meta/JSON-LD.
-- **Sitemap generation** (11ty) from `offers.json`; include only indexable URLs.
-- **Robots/meta consistency** helpers (11ty shortcodes) for `robots` + `googlebot`.
-- **Cloudflare Web Analytics** on agent site (no cookies).
-- **OPS docs**: keep `OPS-CHECKS.md` aligned with new endpoints, add Eleventy build check.
-- **Tagging**: release tags `vYYYY.MM.DD`; short CHANGELOG entry per tag.
+## NOW (Next 1-2 Weeks)
+- **Newsletter Implementation**
+  - [ ] **Subscription System**
+    - [ ] Implement subscription form with validation
+    - [ ] Set up double opt-in process
+    - [ ] Create welcome email series
+    - [ ] Build preference center
+    - [ ] Test mobile responsiveness
+  
+  - [ ] **Content Generation**
+    - [ ] Set up AI content generation pipeline
+    - [ ] Implement fact-checking workflow
+    - [ ] Create content review process
+    - [ ] Set up version control for content
+    - [ ] Implement A/B testing framework
+
+  - [ ] **Analytics & Tracking**
+    - [ ] Configure Google Analytics 4 events
+    - [ ] Set up conversion tracking
+    - [ ] Implement UTM parameter strategy
+    - [ ] Create dashboard for key metrics
+
+- **Consultation Pages**
+  - [ ] Implement 15/30/90 minute variants using the 60-min template
+  - [ ] Update `offers.json` with all consultation options
+  - [ ] Test booking flow for all time slots
+
+- **3-2-1 Newsletter Implementation**
+  - [ ] Create newsletter template structure
+    - [ ] Develop HTML/CSS template for email
+    - [ ] Design mobile-responsive layout
+    - [ ] Create template variants for different editions
+  - [ ] Implement subscription management
+    - [ ] Build double opt-in flow
+    - [ ] Create preference center for subscribers
+    - [ ] Set up subscription confirmation emails
+  - [ ] MailChimp integration
+    - [ ] Configure audience segments
+    - [ ] Set up automation workflows
+    - [ ] Implement tracking and analytics
+  - [ ] Content creation workflow
+    - [ ] Develop style guide for 3-2-1 format
+    - [ ] Create content templates for each section
+    - [ ] Set up editorial calendar
+
+- **AI Content Pipeline**
+  - [ ] Research & Curation System
+    - [ ] Set up AI-powered content discovery
+    - [ ] Implement source validation process
+    - [ ] Create database for storing case studies
+  - [ ] Content Generation
+    - [ ] Develop templates for 3-2-1 components
+    - [ ] Create AI prompts for each section
+    - [ ] Implement fact-checking workflow
+  - [ ] Review & Approval
+    - [ ] Set up multi-stage review process
+    - [ ] Create feedback collection system
+    - [ ] Implement version control for content
+  - [ ] Publishing System
+    - [ ] Set up automated scheduling
+    - [ ] Create multi-channel distribution
+    - [ ] Implement A/B testing framework
+
+- **Newsletter Foundation**
+  - [ ] Set up MailChimp API integration
+  - [ ] Create subscription form component
+  - [ ] Design email templates for 3-2-1 format
+  - [ ] Implement double opt-in process
+
+- **Analytics & Tracking**
+  - [ ] Set up Google Analytics 4 with custom events
+  - [ ] Track booking/signup funnels
+  - [ ] Monitor page load performance (target: <2s)
+
+- **Testing**
+  - [ ] Cross-browser testing matrix
+  - [ ] AI browser compatibility (Comet, etc.)
+  - [ ] Automated smoke tests for critical paths
 
 - **Dup pages**: 15/30/90 consults using the shared template; verify JSON-LD & sitemap per page.
 - **Reviews & ratings schema (optional)**: Decide policy (real reviews only; no fakes). If/when available, add `aggregateRating` and `review` JSON-LD to product pages; wire Eleventy to pull counts/averages from a single source (e.g., `/src/_data/reviews.json`). Include moderation/consent notes.
@@ -33,17 +127,89 @@
 - **Stripe receipt template:** Add the booking fallback line to the product’s receipt settings. [owner][date]  ￼
 - **UTM tagging:** Apply the UTM pattern to the 60-min Pay Link; document for 15/30/90. [owner][date] 
 
-## LATER (investment; scale)
-- **Newsletter product**: content pipeline, scheduling, and delivery (mail provider or custom).
-- **Serverless glue**: Cloudflare Workers for webhooks (Stripe/Calendar), CRM/contact handoff.
-- **DNSSEC**: enable per domain and publish DS at registrars; validate with DNSViz.
-- **HSTS hardening**: extend max-age; consider `includeSubDomains`; evaluate preload when ready.
-- **Enterprise**: SSO/SAML (if needed later), audit logging, access reviews, SOC2 readiness notes.
-- **Content Security Policy (CSP)**: start in Report-Only; tighten `default-src`, `script-src`, `img-src`, `connect-src`; then enforce.
-- **Accessibility**: WCAG 2.1 AA sweep (contrast, alt text, focus order, keyboard navigation).
-- **Internationalization (i18n)**: groundwork for language/currency readiness (lang attributes; currency/locale formatting).
-- **Automated DNS snapshots**: monthly export of both zones via Cloudflare API to `/docs/dns-snapshots/`.
-- **Link discovery (optional):** Consider a tiny “Agent catalog” link from the main site only if you want crawl discoverability; default is no link to keep it human-hidden. [owner][date] 
+## NEXT (1-3 Months)
+- **Advanced Newsletter Features**
+  - [ ] **CRM Integration**
+    - [ ] Set up Mailchimp audience segments
+    - [ ] Configure Stripe payment integration
+    - [ ] Implement automated workflows
+    - [ ] Set up tagging system
+    - [ ] Test email deliverability
+  
+  - [ ] **Subscriber-Only Portal**
+    - [ ] Design authentication system
+    - [ ] Implement content protection
+    - [ ] Create user dashboard
+    - [ ] Set up access control
+    - [ ] Test download functionality
+
+  - [ ] **Advanced Analytics**
+    - [ ] Implement custom event tracking
+    - [ ] Set up conversion funnels
+    - [ ] Create retention reports
+    - [ ] Monitor engagement metrics
+    - [ ] Set up alerts for anomalies
+
+- **Subscriber-Only Content"
+  - [ ] Member Portal
+    - [ ] Design protected content area
+    - [ ] Implement authentication system
+    - [ ] Create user profiles and preferences
+  - [ ] Content Strategy
+    - [ ] Develop content upgrade framework
+    - [ ] Create exclusive resources
+    - [ ] Set up content drip system
+  - [ ] Engagement Tracking
+    - [ ] Implement analytics for content consumption
+    - [ ] Set up engagement scoring
+    - [ ] Create re-engagement workflows
+
+- **Advanced ACP Features**
+  - [ ] Implement AI agent authentication
+  - [ ] Create API endpoints for agent interactions
+  - [ ] Set up monitoring for ACP traffic
+  - [ ] Optimize structured data for AI comprehension
+
+- **Performance Optimization**
+  - [ ] Implement A/B testing for newsletter formats
+  - [ ] Optimize content delivery for global audience
+  - [ ] Set up advanced analytics and reporting
+
+- **CRM Integration**
+  - [ ] Evaluate if Stripe + MailChimp is sufficient
+  - [ ] If needed, implement lightweight CRM (e.g., HubSpot)
+  - [ ] Set up lead scoring and nurturing workflows
+
+- **Performance & Security**
+  - [ ] Implement Content Security Policy (CSP)
+  - [ ] Conduct WCAG 2.1 AA accessibility audit
+  - [ ] Set up automated performance monitoring
+
+## FUTURE (3-6+ Months)
+- **Newsletter Expansion**
+  - [ ] Add specialized newsletter editions
+  - [ ] Implement user preference center
+  - [ ] Develop content recommendation engine
+
+- **AI Agent Ecosystem**
+  - [ ] Create developer portal for ACP
+  - [ ] Implement webhook system for real-time updates
+  - [ ] Develop agent performance analytics
+
+- **Internationalization**
+  - [ ] Multi-language support
+  - [ ] Localized pricing and scheduling
+  - [ ] Region-specific content adaptation
+
+- **Advanced Features**
+  - [ ] Self-service booking portal
+  - [ ] Client dashboard for subscription management
+  - [ ] Integration with additional payment providers
+
+- **Scaling**
+  - [ ] Evaluate need for CDN optimization
+  - [ ] Implement advanced caching strategies
+  - [ ] Set up automated scaling for traffic spikes
 
 # Backlog — Agent-Site (v2025-10-30)
 
@@ -135,7 +301,49 @@
 
 ---
 
+## AI Content Generation System
+
+### Current Implementation
+- **Newsletter Creation Prompt**: Comprehensive prompt for generating 18 unique newsletters (9 non-profit, 9 corporate)
+- **3-2-1 Format**: Each newsletter follows the 3-2-1 structure:
+  - 3 Practical Stories
+  - 2 Actionable Insights
+  - 1 Big Question/Call-to-Action
+- **Branding**: Uses specific color palette and design guidelines
+
+### Current Challenges
+- Manual modifications required for each newsletter
+- No tracking of previously published content
+- Potential for topic/example duplication
+- No built-in workflow management
+- No automated source validation
+
+### Proposed Enhancements
+1. **Content Database**
+   - Track published newsletters
+   - Record used sources and examples
+   - Store performance metrics
+   - Maintain version history
+
+2. **Automated Workflow**
+   - Implement workflow management system
+   - Create pipeline for content generation
+   - Add approval and review steps
+   - Schedule and track publishing
+
+3. **AI Agent Improvements**
+   - Add memory to track used content
+   - Implement topic clustering
+   - Create source validation system
+   - Add feedback loop for quality improvement
+
+4. **Integration Layer**
+   - Connect to MailChimp API
+   - Set up webhook notifications
+   - Implement analytics tracking
+
 ## Cross-references
 - Keep `OPS-CHECKS.md` aligned with the acceptance commands above.
 - See `DECISIONS.md` for canonical/robots policy and sitemap `lastmod` strategy.
+- See `NewsletterDescription.md` for detailed prompt and format specifications.
 - See `README.md` Runbook for Eleventy/CF Pages deploy and cache sanity checks.
