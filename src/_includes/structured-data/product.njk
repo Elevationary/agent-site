@@ -1,0 +1,30 @@
+{% if product %}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "{{ product.title }}",
+    "description": "{{ product.description | escape }}",
+    "brand": {
+      "@type": "Brand",
+      "name": "Elevationary"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://agent.elevationary.com/{{ product.slug }}/",
+      "priceCurrency": "{{ product.currency }}",
+      "price": "{{ product.price }}",
+      "priceValidUntil": "2025-12-31",
+      "availability": "https://schema.org/InStock",
+      "seller": {
+        "@type": "Organization",
+        "name": "Elevationary",
+        "url": "https://elevationary.com"
+      }
+    }{% if product.og_image %},
+    "image": [
+      "https://agent.elevationary.com{{ product.og_image }}"
+    ]{% endif %}
+  }
+</script>
+{% endif %}

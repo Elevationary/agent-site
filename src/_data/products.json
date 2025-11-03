@@ -1,16 +1,50 @@
-{
-  "products": [
-    {
-      "slug": "consulting-60",
-      "title": "60-Minute AI Strategy Consultation",
-      "description": "Prepaid AI strategy consultation via Google Meet.",
-      "price": "395.00",
-      "currency": "USD",
-      "image": "https://agent.elevationary.com/assets/og-consulting-60.png",
-      "booking_url": "https://calendar.app.google/FLe6Q6WzHQkHRK7v7",
-      "pay_url": "https://buy.stripe.com/3cI8wO9nzcVOffFf98eIw00",
-      "indexable": true,
-      "lastmod": "2025-10-28"
-    }
-  ]
-}
+[
+  {
+    "key": "consulting15",
+    "slug": "consulting-15",
+    "title": "15-Minute AI Quick Consult",
+    "description": "A quick 15-minute session to discuss your immediate AI questions or get guidance on specific AI challenges.",
+    "price": 99.00,
+    "currency": "USD",
+    "og_image": "/assets/og-consulting-15.png",
+    "indexable": true,
+    "booking_url": "https://calendar.app.google/quick-15min-consult",
+    "lastmod": "2025-11-03"
+  },
+  {
+    "key": "consulting30",
+    "slug": "consulting-30",
+    "title": "30-Minute AI Strategy Session",
+    "description": "Focused 30-minute consultation to explore AI opportunities and initial strategy for your business needs.",
+    "price": 199.00,
+    "currency": "USD",
+    "og_image": "/assets/og-consulting-30.png",
+    "indexable": true,
+    "booking_url": "https://calendar.app.google/30min-consult",
+    "lastmod": "2025-11-03"
+  },
+  {
+    "key": "consulting60",
+    "slug": "consulting-60",
+    "title": "60-Minute AI Strategy Consultation",
+    "description": "Comprehensive 60-minute consultation to develop a detailed AI implementation strategy for your business.",
+    "price": 399.00,
+    "currency": "USD",
+    "og_image": "/assets/og-consulting-60.png",
+    "indexable": true,
+    "booking_url": "https://calendar.app.google/FLe6Q6WzHQkHRK7v7",
+    "lastmod": "2025-11-03"
+  },
+  {
+    "key": "consulting90",
+    "slug": "consulting-90",
+    "title": "90-Minute AI Deep Dive",
+    "description": "Comprehensive 90-minute session for in-depth AI strategy development and implementation planning.",
+    "price": 598.00,
+    "currency": "USD",
+    "og_image": "/assets/og-consulting-90.png",
+    "indexable": true,
+    "booking_url": "https://calendar.app.google/90min-consult",
+    "lastmod": "2025-11-03"
+  }
+]

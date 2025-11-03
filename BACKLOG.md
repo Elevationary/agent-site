@@ -32,6 +32,18 @@ Acce# Backlog / Open Decisions
   - Explore if there are any official Google-recommended patterns for structured data
   - Document any workarounds for common SEO needs
 
+## Future Enhancements (When Scaling)
+- **Advanced Newsletter Features**
+  - A/B testing for subject lines and content
+  - Segmentation and personalization
+  - Automated email sequences
+  - Integration with CRM system
+- **Additional Consultation Pages**
+  - 15-Minute Consultation Page
+  - 30-Minute Consultation Page
+  - 90-Minute Consultation Page
+  - Custom package builder
+
 # Backlog (Now / Next / Later)
 
 
@@ -43,6 +55,18 @@ Acce# Backlog / Open Decisions
     - [ ] Create welcome email series
     - [ ] Build preference center
     - [ ] Test mobile responsiveness
+  - [ ] **Content Management**
+    - [ ] Set up content approval workflow
+    - [ ] Create newsletter templates
+    - [ ] Implement content scheduling
+  - [ ] **Analytics & Tracking**
+    - [ ] Set up open/click tracking
+    - [ ] Implement UTM parameters
+    - [ ] Create basic dashboard for key metrics
+  - [ ] **Compliance**
+    - [ ] Ensure GDPR/CCPA compliance
+    - [ ] Set up unsubscribe management
+    - [ ] Document data retention policies
   
   - [ ] **Content Generation**
     - [ ] Set up AI content generation pipeline
