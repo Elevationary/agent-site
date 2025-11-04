@@ -83,6 +83,26 @@ curl -sI https://agent.elevationary.com/assets/og-consulting-60.png | grep -i ca
 curl -sI https://agent.elevationary.com/consulting-60/ | grep -i cache-control
 ```
 
+## 2025-11-04 — 404 & Redirects Sanity
+
+**404 Page Optimization**
+- **Enhanced user experience**: Updated 404.html to display all 4 consultation options instead of single link
+- **Consistent branding**: All consultation titles match products.json for brand consistency
+- **Complete navigation**: Users see full service menu when hitting missing pages
+- **Titles**: 15-Minute AI Strategy Introductory Consultation, 30-Minute AI Readiness Consultation, 60-Minute AI Strategy Consultation, 90-Minute AI Strategy In-depth Consultation
+
+**Redirects Policy**
+- **Legacy cleanup**: Removed all `/p/` redirect references from previous staging setup
+- **Clean URLs**: Current `/consulting-*/` structure works perfectly without additional redirects
+- **Decision**: Skipped optional `_redirects` file for `/slug/index.html` → `/slug/` (no benefit added)
+- **Rationale**: Cloudflare Pages handles clean URLs natively; additional complexity unnecessary
+
+**Implementation Details**
+- 404.html now provides comprehensive consultation menu
+- Product titles centralized in products.json and reflected across site
+- No stale redirect rules remaining from previous staging paths
+- Clean URL structure maintained without additional redirect files
+
 ## 2025-10-27 — Harvest from MiniMVP outline (two files)
 
 **Platform & Hosting**

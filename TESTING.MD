@@ -31,6 +31,27 @@
 - **Error Suppression**: Clean output without debug noise
 - **Exit Codes**: 0 for success, 1 for failure
 
+## 404 & Redirects Testing
+
+### 404 Page Validation
+- **Content**: Verify all 4 consultation options are displayed with correct titles
+- **Links**: Test all consultation links resolve to correct pages
+- **Branding**: Ensure titles match products.json for consistency
+
+### Redirects Sanity
+- **Legacy cleanup**: Confirm no `/p/` redirect rules exist
+- **Clean URLs**: Verify `/consulting-*/` structure works without additional redirects
+- **Decision**: Skipped optional `_redirects` file (unnecessary complexity)
+
+### Verification Commands
+```bash
+# Test 404 page content
+curl -sL https://agent.elevationary.com/nonexistent-page | grep -E 'consulting-15|consulting-30|consulting-60|consulting-90'
+
+# Verify clean URLs work
+curl -I https://agent.elevationary.com/consulting-60/ | head -1
+```
+
 ## 1. Cross-Browser Testing
 
 ### Supported Browsers

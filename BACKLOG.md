@@ -278,6 +278,13 @@ Acce# Backlog / Open Decisions
 - [x] **Tests**: 12 total tests (JSON-LD, product data, URLs)
 - [x] **Acceptance**: All tests passing with clean output
 
+### G. ✅ 404 & redirects sanity
+- [x] **Updated** 404.html to show all 4 consultation options (15/30/60/90)
+- [x] **Fixed** product titles for consistency across site and 404 page
+- [x] **Removed** legacy `/p/` redirect references
+- [x] **Decision**: Skipped optional `_redirects` file (clean URLs work perfectly)
+- [x] **Acceptance**: 404 page provides complete consultation menu with correct titles
+
 ---
 
 ## NEXT (1–3 days)
