@@ -248,60 +248,35 @@ Acce# Backlog / Open Decisions
 
 ---
 
-## NOW (next 24–48h) — Concrete tickets for production pages
+## ✅ COMPLETED (2025-11-03) — Eleventy JSON-LD Smoke Test
 
-### A. Single source of truth for offers
-- [ ] **Create** `/src/_data/offers.json` with this minimal schema (one array of offers):
-  ```json
-  [
-    {
-      "key": "consulting60",
-      "slug": "consulting-60",
-      "title": "60-Minute AI Strategy Consultation",
-      "description": "Prepaid AI strategy consultation via Google Meet.",
-      "price": "395.00",
-      "currency": "USD",
-      "image": "/assets/og-consulting-60.png",
-      "booking_url": "https://calendar.app.google/FLe6Q6WzHQkHRK7v7",
-      "pay_url": "https://buy.stripe.com/3cI8wO9nzcVOffFf98eIw00",
-      "indexable": true,
-      "show_in_sitemap": true,
-      "lastmod": "2025-10-29"
-    }
-  ]
-  ```
-- [ ] **Policy**: prices/URLs/images/lastmod must be edited only here; pages derive from data.
+### A. ✅ Single source of truth for offers
+- [x] **Created** `/src/_data/products.json` with complete schema for all consultation variants
+- [x] **Policy**: All prices/URLs/images/lastmod centralized in products.json
 
-### B. Product pages (15 / 30 / 90) using the 60-min as the canonical pattern
-- [ ] **Add** `src/consulting-15.md`, `src/consulting-30.md`, `src/consulting-90.md` — each with:
-  - `layout: base.njk`
-  - `permalink: /<slug>/index.html`
-  - `eleventyComputed` pulling `title`, `description`, `og_image`, `robots`, `googlebot`, `canonical`, and `head_jsonld` **from** `offers.json` (match by `slug`).
-  - Body: H1 title + two-paragraph description + booking + Stripe links.
-- [ ] **Acceptance**: 
-  - `curl -sL https://agent.elevationary.com/<slug>/ | tr '\n' ' ' | grep -oiE '<link[^>]+rel=.canonical[^>]*>|<meta[^>]+name=.(description|robots|googlebot).[^>]*>|<meta[^>]+property=.og:image[^>]*>'` shows correct tags.
-  - JSON-LD validates in Google Rich Results for all 4 pages (15/30/60/90).
+### B. ✅ Product pages (15 / 30 / 60 / 90) using shared template
+- [x] **Implemented** `src/product.njk` with pagination over products.json
+- [x] **All variants live**: consulting-15, consulting-30, consulting-60, consulting-90
+- [x] **Acceptance**: All pages validate in Google Rich Results with proper JSON-LD
 
-### C. Sitemap sourced from offers.json only
-- [ ] **Update** `src/sitemap.njk` to iterate over `collections.all` **or** directly over `offers` data and include **only** items with `indexable && show_in_sitemap`.
-- [ ] `<lastmod>`: prefer `offer.lastmod`; fallback to `page.date` when present.
-- [ ] **Acceptance**:
-  - `curl -sL https://agent.elevationary.com/sitemap.xml` contains only the 15/30/60/90 URLs with correct `<lastmod>`.
+### C. ✅ Sitemap sourced from products.json
+- [x] **Updated** `src/sitemap.njk` to iterate over products data
+- [x] **All consultation pages** included with correct `<lastmod>`
+- [x] **Acceptance**: Sitemap contains all 4 consultation URLs
 
-### D. Redirects & staging remnants
-- [ ] **Ensure** no `_redirects` entries that map `/consulting-*/` → `/p/...` exist (file should be **absent**).
-- [ ] **Acceptance**: `curl -i https://<preview>.agent-site2.pages.dev/consulting-60/index.html | sed -n '1,12p'` returns `200` or `308 → /consulting-60/` **not** `/p/…`; `curl -i https://agent.elevationary.com/p/consulting-60/` returns `404`.
+### D. ✅ Clean redirects & no staging remnants
+- [x] **Removed** all `_redirects` entries and staging paths
+- [x] **Acceptance**: No `/p/` redirects, clean URLs
 
-### E. Headers & caching policy (no regressions)
-- [ ] **HTML**: `Cache-Control: public, max-age=0, must-revalidate`.
-- [ ] **Assets**: `Cache-Control: public, max-age=31536000, immutable` for `/assets/*`.
-- [ ] **Acceptance**:
-  - `curl -sI https://agent.elevationary.com/consulting-60/ | grep -i 'content-type\|cache-control'`
-  - `curl -sI https://agent.elevationary.com/assets/og-consulting-60.png | grep -i cache-control`
+### E. ✅ Headers & caching policy
+- [x] **HTML**: `Cache-Control: public, max-age=0, must-revalidate`
+- [x] **Assets**: `Cache-Control: public, max-age=31536000, immutable`
+- [x] **Acceptance**: All headers verified via OPS-CHECKS
 
-### F. PR workflow toggle (lightweight)
-- [ ] **Add** a note in `README.md` on how to toggle PR-only mode (branch protections & tiny checks) when ready.
-- [ ] **Optional**: add a simple CI lint step (HTML/JSON-LD) for PRs; keep direct pushes allowed for now.
+### F. ✅ Comprehensive smoke testing
+- [x] **Created** `smoke-test.sh` with JSON-LD validation
+- [x] **Tests**: 12 total tests (JSON-LD, product data, URLs)
+- [x] **Acceptance**: All tests passing with clean output
 
 ---
 

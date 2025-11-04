@@ -3,12 +3,13 @@
     "key": "consulting15",
     "slug": "consulting-15",
     "title": "15-Minute AI Quick Consult",
-    "description": "A quick 15-minute session to discuss your immediate AI questions or get guidance on specific AI challenges.",
+    "description": "A quick 15-minute session to introduce AI strategy and discuss your immediate AI questions.",
     "price": 99.00,
     "currency": "USD",
     "og_image": "/assets/og-consulting-15.png",
     "indexable": true,
-    "booking_url": "https://calendar.app.google/quick-15min-consult",
+    "booking_url": "https://calendar.app.google/NTD1KQzzVh33YQEj6",
+    "pay_url": "https://calendar.app.google/NTD1KQzzVh33YQEj6",
     "lastmod": "2025-11-03"
   },
   {
@@ -20,7 +21,8 @@
     "currency": "USD",
     "og_image": "/assets/og-consulting-30.png",
     "indexable": true,
-    "booking_url": "https://calendar.app.google/30min-consult",
+    "booking_url": "https://calendar.app.google/kQe1Mnyn6s7E6GuGA",
+    "pay_url": "https://calendar.app.google/kQe1Mnyn6s7E6GuGA",
     "lastmod": "2025-11-03"
   },
   {
@@ -32,7 +34,8 @@
     "currency": "USD",
     "og_image": "/assets/og-consulting-60.png",
     "indexable": true,
-    "booking_url": "https://calendar.app.google/FLe6Q6WzHQkHRK7v7",
+    "booking_url": "https://calendar.app.google/DSMDWLSaXbXGpwAo9",
+    "pay_url": "https://calendar.app.google/DSMDWLSaXbXGpwAo9",
     "lastmod": "2025-11-03"
   },
   {
@@ -44,7 +47,8 @@
     "currency": "USD",
     "og_image": "/assets/og-consulting-90.png",
     "indexable": true,
-    "booking_url": "https://calendar.app.google/90min-consult",
+    "booking_url": "https://calendar.app.google/3GzaShZ7TPgzHden8",
+    "pay_url": "https://calendar.app.google/3GzaShZ7TPgzHden8",
     "lastmod": "2025-11-03"
   }
 ]

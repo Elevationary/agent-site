@@ -3,14 +3,19 @@
   {
     "@context": "https://schema.org",
     "@type": "Product",
+    "@id": "https://agent.elevationary.com/{{ product.slug }}/#product",
     "name": "{{ product.title }}",
     "description": "{{ product.description | escape }}",
     "brand": {
       "@type": "Brand",
       "name": "Elevationary"
     },
+    "image": [
+      "https://agent.elevationary.com{{ product.og_image }}"
+    ],
     "offers": {
       "@type": "Offer",
+      "@id": "https://agent.elevationary.com/{{ product.slug }}/#offer",
       "url": "https://agent.elevationary.com/{{ product.slug }}/",
       "priceCurrency": "{{ product.currency }}",
       "price": "{{ product.price }}",
@@ -21,10 +26,7 @@
         "name": "Elevationary",
         "url": "https://elevationary.com"
       }
-    }{% if product.og_image %},
-    "image": [
-      "https://agent.elevationary.com{{ product.og_image }}"
-    ]{% endif %}
+    }
   }
 </script>
 {% endif %}

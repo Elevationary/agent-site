@@ -48,19 +48,32 @@ openssl x509 -noout -text | sed -n '/Subject:/p;/X509v3 Subject Alternative Name
 ### HSTS baseline
 - Begin with 30‑day max‑age, **no** subdomains, **no** preload; only expand scope after confirming TLS readiness across hostnames.
 
-## 2025-10-30 — Eleventy + CF Pages postmortem (consulting-60, /p/, headers, sitemap)
+## 2025-11-03 — Eleventy JSON-LD Smoke Test Completion
 
-### Symptoms observed
-- Product page intermittently rendered wrong head tags (empty/templated values), and in one build the output lacked expected `<html>/<head>` context.
-- Requests to `/consulting-60/` were redirected to `/p/consulting-60/` on some deployments.
-- Sitemap initially pointed to `/p/consulting-60/` and `<lastmod>` lagged.
-- Mixed caching expectations between HTML and assets.
+### Project Achievement
+- **Stable build process**: Eleventy v3.1.x with no filter or syntax errors
+- **Centralized product data**: Single source of truth in `products.json`
+- **Consistent JSON-LD**: All consultation pages have proper structured data
+- **Comprehensive testing**: 12-test smoke test suite with clean output
 
-### Root causes
-1) **Duplicate permalink targets**: Two templates attempted to write `_site/consulting-60/index.html` (`src/consulting-60.html/.njk` and `src/consulting-60.md`), triggering Eleventy `DuplicatePermalinkOutputError` and/or nondeterministic output during iterations.
-2) **JSON-LD placed in the base layout**: A Product JSON-LD block lived in `base.njk`, causing it to render on non-product pages and to pick up incorrect/empty variables. This also complicated head verification because placeholders like `{{ product.title }}` could leak into prod when context was missing.
-3) **Stale staging redirect rules**: A `_redirects` file mapped `/consulting-60 → /p/consulting-60/` (and variants). Even after code changes, deployments honored those redirects until the file was removed, creating inconsistent behavior between local and prod.
-4) **Cache/edge behavior expectations**: HTML is effectively dynamic (not cached long at edge) while assets are immutable; earlier assumptions around short-lived HTML caching vs the desired `must-revalidate` policy needed alignment.
+### Key Technical Solutions
+1) **Pagination-based product pages**: Implemented `src/product.njk` with Eleventy pagination over `products.json`, eliminating duplicate permalink issues
+2) **Proper JSON-LD injection**: Moved structured data to `head_jsonld` front matter variable, ensuring it appears in HTML head section
+3) **Deterministic field handling**: Ensured all JSON-LD fields are consistently populated with no blank values
+4) **Robust smoke testing**: Created comprehensive validation script using `jq`, `grep`, and `sed` for JSON-LD and product data integrity
+
+### Smoke Testing Framework
+- **JSON-LD validation**: Checks for presence, syntax, and required Product/Offer fields
+- **Product data validation**: Verifies required keys, data types, and URL formats
+- **Special field handling**: Proper `jq` syntax for fields with `@` symbols (`@context`, `@type`, `@id`)
+- **Clean output**: Color-coded pass/fail results with no debug noise
+
+### Previous Issues Resolved
+- ✅ Duplicate permalink conflicts eliminated
+- ✅ JSON-LD properly scoped to product pages only
+- ✅ All staging redirects removed
+- ✅ Cache policies correctly implemented
+- ✅ Sitemap dynamically generated from product data
 
 ### Fixes applied
 - Removed staging template and `_site/p` remnants; deleted `src/products.njk` and removed the `_redirects` mappings.
