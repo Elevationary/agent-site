@@ -9,6 +9,30 @@ All consultation pages (15/30/60/90) are live with:
 - Centralized product data management
 - Enhanced 404 page with all consultation options
 - Clean URL structure with no legacy redirects
+- Optimized homepage for SEO/crawler purpose with minimal UI
+- Enhanced consultation page content with standardized structure and inclusive language
+
+## GSC/Analytics Housekeeping
+
+### Google Search Console Inspection URLs
+- **15-Minute Consultation**: https://search.google.com/search-console/inspect?url=https://agent.elevationary.com/consulting-15/
+- **30-Minute Consultation**: https://search.google.com/search-console/inspect?url=https://agent.elevationary.com/consulting-30/
+- **60-Minute Consultation**: https://search.google.com/search-console/inspect?url=https://agent.elevationary.com/consulting-60/
+- **90-Minute Consultation**: https://search.google.com/search-console/inspect?url=https://agent.elevationary.com/consulting-90/
+
+### Request Indexing Cadence
+- **Initial submission**: Request indexing for all 4 product pages immediately after deployment
+- **Weekly check**: Inspect each page weekly for coverage and indexing status
+- **Monthly refresh**: Request indexing for any pages showing "Not in coverage" or "Duplicate without user-selected canonical"
+- **Content updates**: Request indexing immediately after any content changes to product pages
+- **Seasonal adjustment**: Increase frequency during business planning seasons (Q1, Q4)
+
+### Analytics Implementation Plan
+- **Lightweight pageview events**: Implement Google Analytics 4 pageview tracking
+- **Event tracking**: Track consultation page views and outbound clicks to booking URLs
+- **No heavy tracking**: Avoid complex funnels or user behavior tracking for this micro-site
+- **Privacy-focused**: Minimal data collection, no personal identifiers
+- **Implementation timing**: Once content set is finalized and stable
 
 ## DNS & Proxies
 dig +short elevationary.com

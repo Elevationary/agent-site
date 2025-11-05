@@ -52,6 +52,55 @@ curl -sL https://agent.elevationary.com/nonexistent-page | grep -E 'consulting-1
 curl -I https://agent.elevationary.com/consulting-60/ | head -1
 ```
 
+## Homepage Optimization
+
+### SEO/Crawler Validation
+- **Purpose**: Homepage serves search engines and automated agents, not human users
+- **Content**: Minimal UI with JSON-LD structured data for SEO, AEO, and ACP
+- **Navigation**: 404 page handles user navigation, homepage handles crawlers
+
+### Technical Architecture
+- **Static homepage**: `/index.html` serves production traffic (simple, reliable)
+- **Dynamic templates**: `/src/index.html` → `_site/index.html` for build process
+- **Clean separation**: Static root files + dynamic `_site/` directory
+
+### Verification Commands
+```bash
+# Test homepage has minimal UI
+curl -sL https://agent.elevationary.com/ | grep -c "<div class=\"card\">"
+# Should return 0 (no product cards)
+
+# Verify JSON-LD structured data present
+curl -sL https://agent.elevationary.com/ | grep -c "application/ld+json"
+# Should return 2 (Organization + ItemList)
+
+# Test explanatory text present
+curl -sL https://agent.elevationary.com/ | grep "Machine-readable listing"
+# Should return the explanatory text for accidental visitors
+```
+
+### Content Polish Verification
+```bash
+# Test consultation pages have above-the-fold summaries
+curl -sL https://www.elevationary.com/consulting/15-minute-ai-strategy-introductory-consultation | grep -c "Who It's For"
+# Should return 2 (above-fold + full description)
+
+# Verify standardized structure across all consultations
+for page in 15-minute-ai-strategy-introductory-consultation 30-minute-ai-readiness-consultation 60-minute-ai-strategy-consultation 90-minute-ai-strategy-in-depth-consultation; do
+  echo "Checking $page..."
+  curl -sL "https://www.elevationary.com/consulting/$page" | grep -E "(Who It's For|Key Benefits|What You Get|Session Expectations)" | wc -l
+  # Should return 8 for each page (4 sections × 2 placements)
+done
+
+# Test inclusive language usage
+curl -sL https://www.elevationary.com/consulting/15-minute-ai-strategy-introductory-consultation | grep -c "organization"
+# Should return > 0 (inclusive language present)
+
+# Verify dual CTA placement
+curl -sL https://www.elevationary.com/consulting/60-minute-ai-strategy-consultation | grep -c "Schedule Your Consultation"
+# Should return 2 (top + bottom CTA)
+```
+
 ## 1. Cross-Browser Testing
 
 ### Supported Browsers

@@ -103,6 +103,46 @@ curl -sI https://agent.elevationary.com/consulting-60/ | grep -i cache-control
 - No stale redirect rules remaining from previous staging paths
 - Clean URL structure maintained without additional redirect files
 
+## 2025-11-04 — Homepage Optimization
+
+**Homepage Purpose Clarification**
+- **SEO/Crawler focus**: Homepage serves search engines and automated agents, not human users
+- **Google Sites workaround**: Built to overcome Google Sites limitations for structured data
+- **Minimal UI**: Removed product listing cards to avoid confusing accidental visitors
+- **Structured data preserved**: JSON-LD for Organization and ItemList maintained for SEO
+
+**Technical Architecture**
+- **Static homepage**: `/index.html` serves production traffic (simple, reliable)
+- **Dynamic templates**: `/src/index.html` → `_site/index.html` for build process
+- **Clean separation**: Static root files + dynamic `_site/` directory
+- **No complexity**: Avoided redirect loops or build output reconfiguration
+
+**Key Insights**
+- **Root cause identified**: Static file was overriding dynamic template
+- **Simplicity wins**: Static homepage is more reliable for SEO/crawler use case
+- **User experience**: 404 page handles user navigation, homepage handles crawlers
+- **Future-proof**: Easy to modify without breaking build process
+
+## 2025-11-04 — Content Polish for Consultation Pages
+
+**Content Strategy Enhancement**
+- **Differentiated messaging**: Each consultation level now has unique value propositions
+- **Inclusive language**: "Organization" terminology suitable for both non-profits and corporations
+- **Scaled promises**: Realistic deliverables based on actual time constraints
+- **User experience optimization**: Above-the-fold summaries with detailed descriptions below
+
+**Structural Standardization**
+- **Consistent sections**: Who It's For, Key Benefits, What You Get, Session Expectations
+- **Dual CTA placement**: Booking buttons at top and bottom for better mobile/tablet access
+- **Progressive complexity**: Clear value increase from 15-minute to 90-minute consultations
+- **Professional tone**: Action-oriented language focused on business outcomes
+
+**Technical Implementation**
+- **Google Sites optimization**: Content structured for Google Sites limitations
+- **Mobile-first design**: Reduced scrolling with strategic CTA placement
+- **Booking link updates**: All consultation pages use current, functional calendar links
+- **Standardized labeling**: Consistent "Schedule Your Consultation" CTA text across all products
+
 ## 2025-10-27 — Harvest from MiniMVP outline (two files)
 
 **Platform & Hosting**

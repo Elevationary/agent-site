@@ -81,6 +81,19 @@ openssl x509 -noout -text | sed -n '/Subject:/p;/X509v3 Subject Alternative Name
 - **Clean URL philosophy**: Avoid unnecessary redirect files when native structure works
 - **Legacy cleanup**: Remove old staging paths to prevent user confusion
 
+### Homepage Architecture
+- **Purpose-driven design**: Homepage for crawlers vs. 404 page for users
+- **Static vs. dynamic**: Know when to use static files vs. templates
+- **Build output clarity**: Understand `_site/` vs. root directory roles
+- **Simplicity principle**: Avoid over-engineering SEO-focused pages
+
+### Content Strategy & UX
+- **Audience awareness**: Tailor language for both non-profits and corporations
+- **Mobile-first content**: Structure for above-the-fold scanning with details below
+- **Progressive complexity**: Scale value propositions appropriately by service level
+- **Dual CTA strategy**: Place conversion points at both top and bottom of content
+- **Realistic promises**: Under-promise and over-deliver based on time constraints
+
 ### Fixes applied
 - Removed staging template and `_site/p` remnants; deleted `src/products.njk` and removed the `_redirects` mappings.
 - Moved Product JSON-LD out of `base.njk`; page-level JSON-LD is now supplied via `head_jsonld` (front matter) in `src/consulting-60.md`.

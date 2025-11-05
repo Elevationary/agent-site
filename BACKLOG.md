@@ -285,6 +285,42 @@ Acce# Backlog / Open Decisions
 - [x] **Decision**: Skipped optional `_redirects` file (clean URLs work perfectly)
 - [x] **Acceptance**: 404 page provides complete consultation menu with correct titles
 
+### H. ✅ Homepage optimization
+- [x] **Identified** root cause: static `/index.html` overriding dynamic template
+- [x] **Restored** homepage to original SEO/crawler purpose (not user-facing)
+- [x] **Removed** unnecessary product listing cards for cleaner crawler experience
+- [x] **Preserved** JSON-LD structured data for SEO, AEO, and ACP
+- [x] **Maintained** helpful explanatory text for accidental visitors
+- [x] **Decision**: Keep static homepage for simplicity and reliability
+
+### I. ✅ Content polish for consultation pages
+- [x] **Enhanced** all 4 consultation pages with differentiated content
+- [x] **Standardized** structure: Who It's For, Key Benefits, What You Get, Session Expectations
+- [x] **Applied** inclusive language for non-profits and corporations
+- [x] **Implemented** above-the-fold summaries with full descriptions below
+- [x] **Added** dual CTA placement for better mobile/tablet experience
+- [x] **Scaled** promises realistically based on consultation duration
+- [x] **Updated** booking links and standardized CTA labels across all products
+
+---
+
+## FUTURE ENHANCEMENTS (Deferred)
+
+### CSS Component System
+- [ ] **Minimal CSS component tokens** for product cards
+- [ ] **Design system consistency** across consultation pages
+- [ ] **Maintainable styling** approach for future updates
+
+### Developer Experience
+- [ ] **CLI npm run smoke alias** for shorter smoke test command
+- [ ] **Enhanced smoke test output** with better error reporting
+- [ ] **Local development tooling** improvements
+
+### CI/CD Automation
+- [ ] **GitHub Action to fail PRs** when smoke checks fail
+- [ ] **Automated deployment verification** in CI pipeline
+- [ ] **Quality gates** for PR-only rule enforcement
+
 ---
 
 ## NEXT (1–3 days)
