@@ -1,0 +1,28 @@
+---
+permalink: /ucp.json
+eleventyExcludeFromCollections: true
+---
+{
+  "spec_version": "0.1.0",
+  "provider": {
+    "name": "{{ site.name }}",
+    "url": "{{ site.url }}",
+    "logo": "{{ site.url }}{{ site.logo }}"
+  },
+  "products": [
+    {%- for product in products %}
+    {
+      "id": "{{ product.slug }}",
+      "name": "{{ product.title }}",
+      "description": "{{ product.description }}",
+      "price": {
+        "amount": {{ product.price }},
+        "currency": "{{ product.currency }}"
+      },
+      "url": "{{ site.url }}/{{ product.slug }}/",
+      "purchase_url": "{{ product.pay_url }}",
+      "image": "{{ site.url }}{{ product.og_image }}"
+    }{% if not loop.last %},{% endif %}
+    {%- endfor %}
+  ]
+}

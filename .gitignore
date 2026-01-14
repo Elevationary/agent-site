@@ -2,3 +2,7 @@
 _site
 node_modules/
 .githooks/ # prevent re-adding
+.env
+venv/
+tmp/
+legacy_archive/

@@ -153,3 +153,4 @@ Local Verify: File exists and schema matches the spec; contents are valid JSON.
 Prod Verify: N/A (data-only; no live output yet).
 Result: ✅ Task 6 complete — **No modifications are required.**
 Next: Task 7 — Create `src/product-page.njk` (generator template with per-item front matter and canonical/robots/OG/JSON‑LD). Awaiting file access to create this new file.
+

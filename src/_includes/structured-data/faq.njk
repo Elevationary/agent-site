@@ -1,0 +1,20 @@
+{% if faq %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% for qa in faq %}
+    {
+      "@type": "Question",
+      "name": "{{ qa.question }}",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{ qa.answer }}"
+      }
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endif %}

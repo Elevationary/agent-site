@@ -8,7 +8,7 @@
     "build": "eleventy",
     "dev": "eleventy --serve",
     "start": "eleventy --serve",
-    "smoke-test": "./smoke-test.sh"
+    "smoke-test": "./scripts/smoke-test.sh"
   },
   "repository": {
     "type": "git",

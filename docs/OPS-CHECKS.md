@@ -2,6 +2,12 @@
 
 ## ✅ PROJECT STATUS: COMPLETE (2025-11-03)
 
+## 0. Environment Verification (The Engine)
+*   [ ] **Virtual Env**: Is `venv/` present and active? (`source venv/bin/activate`)
+*   [ ] **Dependencies**: Does `requirements.txt` exist? Are they installed? (`pip freeze`)
+*   [ ] **Secrets**: Is `.env` present? (Ensure no placeholders in production).
+*   [ ] **Gitignore**: Does it exclude `venv/` and `.env`?
+
 All consultation pages (15/30/60/90) are live with:
 - Stable Eleventy build process
 - Consistent JSON-LD structured data
@@ -33,6 +39,38 @@ All consultation pages (15/30/60/90) are live with:
 - **No heavy tracking**: Avoid complex funnels or user behavior tracking for this micro-site
 - **Privacy-focused**: Minimal data collection, no personal identifiers
 - **Implementation timing**: Once content set is finalized and stable
+
+## Booking URL Monitoring
+
+### URL Validation Commands
+```bash
+# Check current booking URLs in products.json
+cat src/_data/products.json | jq -r '.[].booking_url'
+# Expected: 4 valid Google Calendar booking URLs
+
+# Verify URLs are accessible (return 200)
+for url in $(cat src/_data/products.json | jq -r '.[].booking_url'); do
+  echo "Checking $url..."
+  curl -sI "$url" | head -1
+  # Expected: HTTP/2 200 for all URLs
+done
+
+# Compare with live consultation pages
+curl -sL https://www.elevationary.com/consulting/60-minute-ai-strategy-consultation | grep -o 'https://calendar\.google\.com[^" ]*'
+# Should match products.json booking URLs
+```
+
+### Monitoring Cadence
+- **Weekly check**: Verify all booking URLs return 200 status
+- **Monthly audit**: Compare products.json URLs with live consultation pages
+- **Event-driven**: Check URLs immediately after any Google Calendar settings changes
+- **Pre-deployment**: Validate URLs before any site updates
+
+### Alerting & Remediation
+- **URL change detection**: Any 404/redirect triggers immediate alert
+- **Update workflow**: Modify products.json → rebuild site → deploy update
+- **Stakeholder notification**: Email affected customers with updated booking links
+- **Documentation**: Record URL changes with date and reason
 
 ## DNS & Proxies
 dig +short elevationary.com

@@ -96,7 +96,7 @@ ELEVATIONARY AI: [EDITION NAME]
    - Final approval before scheduling
 
 5. **Publishing & Distribution**
-   - Automated scheduling through MailChimp
+   - Automated scheduling through HubSpot
    - Multi-platform optimization (email, web, social)
    - Performance tracking and analytics
 
@@ -133,7 +133,7 @@ ELEVATIONARY AI: [EDITION NAME]
 - **Analytics**: 
   - Cloudflare Web Analytics (cookie-less)
   - Google Analytics
-- **Email Platform**: MailChimp
+- **Email Platform**: HubSpot (Subscription & CRM)
 - **Search**: Google Search Console
 - **Schema**: Sitemaps.org, schema.org
 - **Booking & Payments**: Google Calendar + Stripe integration

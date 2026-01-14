@@ -18,8 +18,9 @@ Disallow: /api/
 # Crawl-delay: 10  # Uncomment if needed to reduce server load
 
 # Additional directives for specific bots
+# Additional directives for specific bots
 User-agent: GPTBot
-Disallow: /
+Allow: /
 
 # Note: This file is version controlled. Changes should be tested locally
 # before deployment. See docs/SEO-CONTRACT.md for more information.
