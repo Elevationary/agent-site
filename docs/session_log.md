@@ -30,3 +30,16 @@ User requested implementation of "Phase 4" features: GEO Identity (AI Visibility
 *   Deploy changes to production.
 *   Verify live endpoints (`/ucp.json`, `/.well-known/ai-plugin.json`).
 *   Execute backlog items (Legal/About pages).
+
+## 2026-01-14 - Deployment & New Pages
+
+### Actions
+1.  **Deployment**: Pushed Phase 4 changes to production.
+2.  **Verification**: Verified live endpoints. HTML Schema present. New pages returning 200. JSON artifacts pending propagation.
+3.  **Backlog Execution**: Created and deployed `src/about.njk` and `src/legal.njk`.
+4.  **Cleanup**: Updated `BACKLOG.md` to reflect completed Phase 4 items.
+
+### Wins
+*   Site is fully deployed with AI protocols and required pages.
+*   Verified `Organization` schema on homepage.
+*   Verified `/about/` and `/legal/` routes.

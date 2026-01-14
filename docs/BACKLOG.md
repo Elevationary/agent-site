@@ -13,7 +13,9 @@
 - [ ] **Create About Page**: Launch `about` page on `elevationary.com` and `elevationary.ai` (URLs in `site.json`).
 - [ ] **Social Media**: Create Twitter account for `@ElevationaryAI` (URL in `site.json`).
 - [ ] **Legal Page**: Create `legal` page on `elevationary.com` (referenced in `ai-plugin.json`).
-
+- [ ] **James to Update FAQ content**: Refine the initial FAQ questions in `index.njk`.
+- [ ] **James to create about and legal pages on google sites**: Create corresponding pages on `elevationary.com` (main site).
+- [ ] **Gemini to monitor google and openai for updated details on UCP and ACP implementations**: Periodically check for spec updates from major AI providers.
 ## 📌 Phase 1: The "Gatekeeper" Implementation (Current Focus)
 
 ### Block 1: Foundation & Data Design
