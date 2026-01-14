@@ -48,3 +48,16 @@ User requested implementation of "Phase 4" features: GEO Identity (AI Visibility
 1.  **AEO Content**: Populated `index.njk` with FAQ data. Verified correct `FAQPage` schema generation.
 2.  **Backlog**: Added assigned tasks for James (FAQ refinement, Google Sites pages) and Gemini (Protocol Monitoring).
 3.  **Deployment**: Pushed final polish to production.
+
+### Update - Phase 1: The Gatekeeper
+1.  **Gating Infrastructure**: Created `functions/_middleware.js` to protect `/premium/` routes.
+2.  **Commerce Components**:
+    - Updated `products.json` with "Agent Insider Subscription".
+    - Created `unlock.njk` with Stripe Checkout implementation.
+    - Created `premium/index.njk` as the "Vault".
+3.  **Deployment**: Pushed Changes.
+4.  **Verification**: Verified `/unlock/` exists. Verified `/premium/` redirects (pending propagation).
+
+### Update - Strategy Adjustment
+*   **Archival Strategy**: Decided to use Cloudflare R2 for long-term storage (post-Year 1) to mitigate the 20k file limit. Added to Backlog.
+*   **Next Session Goal**: Activate the Gatekeeper (Stripe Keys + Middleware) before starting Content Phase.

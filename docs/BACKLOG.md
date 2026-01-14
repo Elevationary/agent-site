@@ -59,3 +59,4 @@
 - **Community Chat**: WhatsApp/Discord integration for subscribers.
 - **Podcast Feed**: Auto-generated audio versions of the newsletters.
 - **Legacy Migration**: Anything remaining from old Google Sites.
+- **Architect Archival Strategy (R2)**: Implement "Current Year" vs "Archive" split to manage 20k file limit.
