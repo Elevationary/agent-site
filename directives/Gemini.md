@@ -87,7 +87,7 @@ To ensure long-term memory across sessions, you must actively manage the "State 
 - Read the last entry of `docs/session_log.md` to see where we left off.
 
 **2. On Wrap-up (Context Saving):**
-- **Trigger:** When completing a significant milestone or when the user indicates the session is ending.
+- **Trigger:** When completing a significant milestone or when the user indicates the session is ending (referred to as "Wrap-up", not "Shutdown").
 - **Action:**
     - Update `docs/project_state.md`: Reflect the *new* current reality.
     - Append to `docs/session_log.md`: Summarize what was accomplished, decisions made, and next steps.
