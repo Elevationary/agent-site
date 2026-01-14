@@ -43,3 +43,8 @@ User requested implementation of "Phase 4" features: GEO Identity (AI Visibility
 *   Site is fully deployed with AI protocols and required pages.
 *   Verified `Organization` schema on homepage.
 *   Verified `/about/` and `/legal/` routes.
+
+### Update - Final Polish (AEO & Backlog)
+1.  **AEO Content**: Populated `index.njk` with FAQ data. Verified correct `FAQPage` schema generation.
+2.  **Backlog**: Added assigned tasks for James (FAQ refinement, Google Sites pages) and Gemini (Protocol Monitoring).
+3.  **Deployment**: Pushed final polish to production.

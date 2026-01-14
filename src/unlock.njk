@@ -1,0 +1,55 @@
+---
+layout: base.njk
+permalink: /unlock/index.html
+title: Unlock Full Access
+description: Subscribe to Elevationary Agents for premium AI intelligence.
+canonical: https://agent.elevationary.com/unlock/
+og_image: https://agent.elevationary.com/assets/og-consulting-60.png
+---
+
+<div class="unlock-container">
+  <h1>Unlock the Revenue Engine</h1>
+  <p class="lead">You have reached a restricted area. To access our premium agent protocols, deep-dive strategies, and the full "3-2-1" intelligence briefing, you must be an active subscriber.</p>
+  
+  <div class="pricing-card">
+    <h2>Agent Insider</h2>
+    <p class="price">$19/mo</p>
+    <ul>
+      <li>✅ Full Access to /premium/ signals</li>
+      <li>✅ Weekly "3-2-1" Deep Dive</li>
+      <li>✅ Agentic Commerce Protocols</li>
+    </ul>
+    
+    <!-- Stripe Checkout -->
+    <button id="checkout-button" class="button primary">Subscribe via Stripe</button>
+    <p class="small">Already a member? <a href="#">Log in</a></p>
+  </div>
+
+  <hr />
+
+  <h3>Free Updates</h3>
+  <p>Not ready to commit? Get the public summary.</p>
+  {% include "hubspot-form.njk" %}
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  const stripe = Stripe('pk_test_HOLDER'); // Replace with env var in build
+  const checkoutButton = document.getElementById('checkout-button');
+
+  checkoutButton.addEventListener('click', async () => {
+    // In a real app, this would call a backend function to create the session.
+    // For MVP client-side demo:
+    const { error } = await stripe.redirectToCheckout({
+      lineItems: [{ price: 'price_HOLDER', quantity: 1 }],
+      mode: 'subscription',
+      successUrl: window.location.origin + '/premium/',
+      cancelUrl: window.location.origin + '/unlock/',
+    });
+
+    if (error) {
+      console.error('Stripe Error:', error);
+      alert('Error redirecting to checkout: ' + error.message);
+    }
+  });
+</script>

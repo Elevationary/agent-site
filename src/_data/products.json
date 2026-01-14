@@ -1,5 +1,20 @@
 [
   {
+    "key": "subscription_monthly",
+    "slug": "agent-insider",
+    "title": "Agent Insider Subscription",
+    "description": "Monthly access to premium AI signals, deep-dive newsletters, and agent protocols.",
+    "price": 19.00,
+    "currency": "USD",
+    "type": "subscription",
+    "stripe_price_id": "price_HOLDER",
+    "og_image": "/assets/og-consulting-60.png",
+    "indexable": true,
+    "booking_url": "/unlock/",
+    "pay_url": "#",
+    "lastmod": "2026-01-14"
+  },
+  {
     "key": "consulting15",
     "slug": "consulting-15",
     "title": "15-Minute AI Strategy Introductory Consultation",

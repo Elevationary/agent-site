@@ -12,6 +12,7 @@
 - **Recent Wins:**
     - **Robots:** Unblocked `GPTBot` (Visibility 100%).
     - **Intelligence:** Hydrated standard Directives (`Gemini.md`).
+    - **AEO:** `FAQPage` schema populated and validated.
     - **Environment:** Functional Python `venv` with `pypdf`.
     - **GEO Identity:** `Organization` and `FAQPage` schema injected. `index.html` visible.
     - **Protocols:** ACP (`ai-plugin.json`) and UCP (`ucp.json`) live.
