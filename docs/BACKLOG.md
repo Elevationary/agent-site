@@ -1,11 +1,11 @@
 # Product Backlog
 
 ## High Priority (AI Visibility & Commerce)
-- [ ] **Fix Robots.txt:** Remove `Disallow: /` for `GPTBot` to enable AI indexing.
-- [ ] **Implement GEO Identity:** Inject `Organization` schema into `base.njk` (Logo, Founder, Socials).
-- [ ] **Implement ACP:** Create `public/.well-known/ai-plugin.json` for Agentic Commerce.
-- [ ] **Implement UCP:** Define UCP manifests for product catalog.
-- [ ] **Implement AEO:** Add `FAQPage` schema to landing pages to capture Featured Snippets.
+- [x] **Fix Robots.txt:** Remove `Disallow: /` for `GPTBot` to enable AI indexing.
+- [x] **Implement GEO Identity:** Inject `Organization` schema into `base.njk` (Logo, Founder, Socials).
+- [x] **Implement ACP:** Create `public/.well-known/ai-plugin.json` for Agentic Commerce.
+- [x] **Implement UCP:** Define UCP manifests for product catalog.
+- [x] **Implement AEO:** Add `FAQPage` schema to landing pages to capture Featured Snippets.
 
 ## General Backlog
 **Focus**: Freemium Newsletter Platform (HubSpot + Stripe + Cloudflare)
