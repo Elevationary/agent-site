@@ -61,3 +61,4 @@ User requested implementation of "Phase 4" features: GEO Identity (AI Visibility
 ### Update - Strategy Adjustment
 *   **Archival Strategy**: Decided to use Cloudflare R2 for long-term storage (post-Year 1) to mitigate the 20k file limit. Added to Backlog.
 *   **Next Session Goal**: Activate the Gatekeeper (Stripe Keys + Middleware) before starting Content Phase.
+*   **Handoff**: Copied `docs/STORAGE_STRATEGY.md` to `Archetype - Content/docs/`.
