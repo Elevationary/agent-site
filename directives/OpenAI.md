@@ -38,6 +38,9 @@ Before writing a script, check `execution/` per your directive. Only create new 
     - **Docs:** `.../doc_read.py <ID>` | `.../doc_create.py "Title" "Content"` | `.../doc_replace.py <ID> "Old" "New"`
     - **Sheets:** `.../sheet_read.py <ID> [Range]` | `.../sheet_append.py <ID> "CSV"` | `.../sheet_update.py <ID> <Range> "CSV"`
     - **Slides:** `.../slide_read.py <ID>` | `.../slide_create.py "Title"`
+- **RTM Agent:** `~/.gemini/antigravity/skills/rtm_agent/scripts/`
+    - **Add Task:** `python3 .../rtm_add.py "Task Name" [List]`
+    - **List Tasks:** `python3 .../rtm_list.py [Query]`
 
 **2. Self-anneal when things break**
 - Read error message and stack trace
@@ -92,14 +95,12 @@ Errors are learning opportunities. When something breaks:
 
 To ensure long-term memory and reliability, you must actively manage the "State Files" in `docs/`.
 
-> **CRITICAL:** Do NOT create `docs/task.md`. Use `docs/BACKLOG.md` for project scope and your internal memory (`task_boundary`) for session tactics.
-
 **1. On Startup (The Morning Muster):**
 - **Protocol:** Run `python3 startup.py` immediately.
 - **Results:** This will display your Directives status, the MOTD, and automatically START the timekeeper.
 - **Context:** Then read `docs/project_state.md` and `docs/BACKLOG.md`.
 
-**2. On Wrap-up (The Handover):**
+**2. On Wrap-up (The Wrap-Up Protocol):**
 - **Knowledge:** "Did I learn something new?" -> Update the relevant `directives/` file.
 - **Hygiene:** Delete/Archive files in `.tmp/`.
 - **Clock:** Execute `python3 ~/.gemini/antigravity/skills/time_keeper/scripts/time_keeper.py STOP` and report the Stats ("Session Duration", "Daily Total").

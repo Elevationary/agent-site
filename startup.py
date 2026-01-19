@@ -12,7 +12,8 @@ def check_directives():
     """Checks the status of critical directives."""
     directives = [
         "directives/Gemini.md",
-        "docs/project_state.md"
+        "docs/project_state.md", 
+        "docs/task.md"
     ]
     print("\n📜 DIRECTIVES STATUS:")
     

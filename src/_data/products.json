@@ -7,7 +7,7 @@
     "price": 19.00,
     "currency": "USD",
     "type": "subscription",
-    "stripe_price_id": "price_HOLDER",
+    "stripe_price_id": "price_1SrSA2C3YEf5bh1ijPQYV1ys",
     "og_image": "/assets/og-consulting-60.png",
     "indexable": true,
     "booking_url": "/unlock/",
