@@ -62,3 +62,25 @@ User requested implementation of "Phase 4" features: GEO Identity (AI Visibility
 *   **Archival Strategy**: Decided to use Cloudflare R2 for long-term storage (post-Year 1) to mitigate the 20k file limit. Added to Backlog.
 *   **Next Session Goal**: Activate the Gatekeeper (Stripe Keys + Middleware) before starting Content Phase.
 *   **Handoff**: Copied `docs/STORAGE_STRATEGY.md` to `Archetype - Content/docs/`.
+
+## 2026-01-19 - Startup Protocol Refinement
+
+### Actions
+1.  **Workflow**: Removed  and updated  to stop checking for it.
+2.  **Clarification**: Established  as the sole persistent source of truth for tasks.
+3.  **Directives**: Updated  (and synced) to explicitly forbid creation of .
+
+### Next Steps
+*   **Stripe Keys**: Obtain and configure keys (Blocked on User).
+*   **Middleware**: Debug Cloudflare execution.
+
+## 2026-01-19 - Startup Protocol Refinement
+
+### Actions
+1.  **Workflow**: Removed `docs/task.md` and updated `startup.py` to stop checking for it.
+2.  **Clarification**: Established `docs/BACKLOG.md` as the sole persistent source of truth for tasks.
+3.  **Directives**: Updated `Gemini.md` (and synced) to explicitly forbid creation of `docs/task.md`.
+
+### Next Steps
+*   **Stripe Keys**: Obtain and configure keys (Blocked on User).
+*   **Middleware**: Debug Cloudflare execution.

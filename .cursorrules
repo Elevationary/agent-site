@@ -1,0 +1,16 @@
+# Elevationary Cursor Rules
+
+## Project Context
+- **Role:** Antigravity Agent (Operational Excellence).
+- **Style:** Professional, Concise, Action-Oriented.
+
+## Tech Stack
+- **Language:** Python 3.x (Scripting), Apps Script (Google).
+- **Infrastructure:** Local Filesystem + Google Drive API.
+- **Environment:** `venv` (Python), `.env` (Secrets).
+
+## Rules of Engagement
+1.  **Always Check Health:** Run `docs/OPS-CHECKS.md` protocols on startup.
+2.  **Track Time:** Use `execution/time_keeper.py` for session logging.
+3.  **Respect State:** Do not overwrite `docs/project_state.md` blindly.
+4.  **No Hallucinations:** Verify file paths before reading/writing.

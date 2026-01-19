@@ -1,6 +1,7 @@
 # Agent Instructions
 
 > This file is mirrored across CLAUDE.md, AGENTS.md, OPENAI.md, and GEMINI.md so the same instructions load in any AI environment.
+> **CRITICAL:** If you edit `Gemini.md`, you MUST immediately execute `cp Gemini.md Agents.md; cp Gemini.md Claude.md; cp Gemini.md OpenAI.md` to keep the brains synchronized.
 
 You operate within a 3-layer architecture that separates concerns to maximize reliability. LLMs are probabilistic, whereas most business logic is deterministic and requires consistency. This system fixes that mismatch.
 
@@ -28,6 +29,15 @@ You operate within a 3-layer architecture that separates concerns to maximize re
 
 **1. Check for tools first**
 Before writing a script, check `execution/` per your directive. Only create new scripts if none exist.
+
+**Global Toolkit:**
+- **Timekeeper:** `python3 ~/.gemini/antigravity/skills/time_keeper/scripts/time_keeper.py [START|STOP]`
+- **PDF Reader:** `python3 ~/.gemini/antigravity/skills/pdf_reader/scripts/read_pdf.py <path_to_pdf>`
+- **Google Workspace:** `~/.gemini/antigravity/skills/google_workspace/scripts/`
+    - **Drive:** `.../drive_list.py [query]` | `.../drive_delete.py <ID>`
+    - **Docs:** `.../doc_read.py <ID>` | `.../doc_create.py "Title" "Content"` | `.../doc_replace.py <ID> "Old" "New"`
+    - **Sheets:** `.../sheet_read.py <ID> [Range]` | `.../sheet_append.py <ID> "CSV"` | `.../sheet_update.py <ID> <Range> "CSV"`
+    - **Slides:** `.../slide_read.py <ID>` | `.../slide_create.py "Title"`
 
 **2. Self-anneal when things break**
 - Read error message and stack trace
@@ -73,7 +83,29 @@ Errors are learning opportunities. When something breaks:
 
 **Temp file management:** Use your judgment on when to create and clean up `.tmp/` files. Generally, clean up when a task is complete. You may organize by directive (e.g., `.tmp/scrape_website/`) if it helps maintain clarity.
 
-**Missing credentials:** If a directive requires Google OAuth credentials (`credentials.json`, `token.json`) and they don't exist, halt and ask the user to provide them before proceeding.
+**Missing credentials:** 
+1. **Check Environment First:** Look for `GOOGLE_CLIENT_SECRETS_JSON` or `GOOGLE_TOKEN_JSON` in `.env`. If present, parse them using `json.loads()`.
+2. **Check Files Second:** If not in `.env`, look for `credentials.json` or `token.json` (gitignored).
+3. **If Missing:** Halt and ask the user to provide them.
+
+## Context Persistence & Session Management
+
+To ensure long-term memory and reliability, you must actively manage the "State Files" in `docs/`.
+
+> **CRITICAL:** Do NOT create `docs/task.md`. Use `docs/BACKLOG.md` for project scope and your internal memory (`task_boundary`) for session tactics.
+
+**1. On Startup (The Morning Muster):**
+- **Protocol:** Run `python3 startup.py` immediately.
+- **Results:** This will display your Directives status, the MOTD, and automatically START the timekeeper.
+- **Context:** Then read `docs/project_state.md` and `docs/BACKLOG.md`.
+
+**2. On Wrap-up (The Handover):**
+- **Knowledge:** "Did I learn something new?" -> Update the relevant `directives/` file.
+- **Hygiene:** Delete/Archive files in `.tmp/`.
+- **Clock:** Execute `python3 ~/.gemini/antigravity/skills/time_keeper/scripts/time_keeper.py STOP` and report the Stats ("Session Duration", "Daily Total").
+- **State:** Update `docs/project_state.md` (Current Status) and append to `docs/session_log.md` (Session Summary).
+- **The Law of Logs:** You are one of many. Your memory implies the next agent's success. **Be Disciplined.** Detailed logs allow us to switch contexts between 8+ workspaces without losing flow.
+- **Do not ask for permission** to update these logs; treat them as your own internal memory.
 
 ## Summary
 

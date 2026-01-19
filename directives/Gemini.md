@@ -1,6 +1,7 @@
 # Agent Instructions
 
 > This file is mirrored across CLAUDE.md, AGENTS.md, OPENAI.md, and GEMINI.md so the same instructions load in any AI environment.
+> **CRITICAL:** If you edit `Gemini.md`, you MUST immediately execute `cp Gemini.md Agents.md; cp Gemini.md Claude.md; cp Gemini.md OpenAI.md` to keep the brains synchronized.
 
 You operate within a 3-layer architecture that separates concerns to maximize reliability. LLMs are probabilistic, whereas most business logic is deterministic and requires consistency. This system fixes that mismatch.
 
@@ -28,6 +29,15 @@ You operate within a 3-layer architecture that separates concerns to maximize re
 
 **1. Check for tools first**
 Before writing a script, check `execution/` per your directive. Only create new scripts if none exist.
+
+**Global Toolkit:**
+- **Timekeeper:** `python3 ~/.gemini/antigravity/skills/time_keeper/scripts/time_keeper.py [START|STOP]`
+- **PDF Reader:** `python3 ~/.gemini/antigravity/skills/pdf_reader/scripts/read_pdf.py <path_to_pdf>`
+- **Google Workspace:** `~/.gemini/antigravity/skills/google_workspace/scripts/`
+    - **Drive:** `.../drive_list.py [query]` | `.../drive_delete.py <ID>`
+    - **Docs:** `.../doc_read.py <ID>` | `.../doc_create.py "Title" "Content"` | `.../doc_replace.py <ID> "Old" "New"`
+    - **Sheets:** `.../sheet_read.py <ID> [Range]` | `.../sheet_append.py <ID> "CSV"` | `.../sheet_update.py <ID> <Range> "CSV"`
+    - **Slides:** `.../slide_read.py <ID>` | `.../slide_create.py "Title"`
 
 **2. Self-anneal when things break**
 - Read error message and stack trace
@@ -80,18 +90,22 @@ Errors are learning opportunities. When something breaks:
 
 ## Context Persistence & Session Management
 
-To ensure long-term memory across sessions, you must actively manage the "State Files" in `docs/`:
+To ensure long-term memory and reliability, you must actively manage the "State Files" in `docs/`.
 
-**1. On Startup (Context Loading):**
-- Read `docs/project_state.md` to ground yourself in the current reality (what's running, what's broken).
-- Read the last entry of `docs/session_log.md` to see where we left off.
+> **CRITICAL:** Do NOT create `docs/task.md`. Use `docs/BACKLOG.md` for project scope and your internal memory (`task_boundary`) for session tactics.
 
-**2. On Wrap-up (Context Saving):**
-- **Trigger:** When completing a significant milestone or when the user indicates the session is ending (referred to as "Wrap-up", not "Shutdown").
-- **Action:**
-    - Update `docs/project_state.md`: Reflect the *new* current reality.
-    - Append to `docs/session_log.md`: Summarize what was accomplished, decisions made, and next steps.
-    - **Do not ask for permission** to update these logs; treat them as your own internal memory that you maintain autonomously.
+**1. On Startup (The Morning Muster):**
+- **Protocol:** Run `python3 startup.py` immediately.
+- **Results:** This will display your Directives status, the MOTD, and automatically START the timekeeper.
+- **Context:** Then read `docs/project_state.md` and `docs/BACKLOG.md`.
+
+**2. On Wrap-up (The Handover):**
+- **Knowledge:** "Did I learn something new?" -> Update the relevant `directives/` file.
+- **Hygiene:** Delete/Archive files in `.tmp/`.
+- **Clock:** Execute `python3 ~/.gemini/antigravity/skills/time_keeper/scripts/time_keeper.py STOP` and report the Stats ("Session Duration", "Daily Total").
+- **State:** Update `docs/project_state.md` (Current Status) and append to `docs/session_log.md` (Session Summary).
+- **The Law of Logs:** You are one of many. Your memory implies the next agent's success. **Be Disciplined.** Detailed logs allow us to switch contexts between 8+ workspaces without losing flow.
+- **Do not ask for permission** to update these logs; treat them as your own internal memory.
 
 ## Summary
 
