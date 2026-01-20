@@ -34,22 +34,28 @@ og_image: https://agent.elevationary.com/assets/og-consulting-60.png
 
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-  const stripe = Stripe('pk_test_51S9DuBC3YEf5bh1ikeGv0PT34xoCuveN1ovT4D98qxmGO6pMyJmLVfy29fqKEtwE4PFWaQ775m5DWvoQcK8GUIcL00enZJg9oM'); 
   const checkoutButton = document.getElementById('checkout-button');
 
   checkoutButton.addEventListener('click', async () => {
-    // In a real app, this would call a backend function to create the session.
-    // For MVP client-side demo:
-    const { error } = await stripe.redirectToCheckout({
-      lineItems: [{ price: 'price_1SrSA2C3YEf5bh1ijPQYV1ys', quantity: 1 }],
-      mode: 'subscription',
-      successUrl: window.location.origin + '/premium/',
-      cancelUrl: window.location.origin + '/unlock/',
-    });
+    checkoutButton.disabled = true;
+    checkoutButton.innerText = "Redirecting...";
 
-    if (error) {
-      console.error('Stripe Error:', error);
-      alert('Error redirecting to checkout: ' + error.message);
+    try {
+      const response = await fetch('/api/checkout', { method: 'POST' });
+      const data = await response.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert('Payment setup failed: ' + (data.error || 'Unknown error'));
+        checkoutButton.disabled = false;
+        checkoutButton.innerText = "Subscribe via Stripe";
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Network error. Please try again.');
+        checkoutButton.disabled = false;
+        checkoutButton.innerText = "Subscribe via Stripe";
     }
   });
 </script>
