@@ -1,6 +1,11 @@
 
+import Stripe from 'stripe';
+
 export const onRequestPost = async (context) => {
-    const stripe = require('stripe')(context.env.STRIPE_SECRET_KEY);
+    const stripe = new Stripe(context.env.STRIPE_SECRET_KEY, {
+        apiVersion: '2023-10-16', // Pinning version for stability
+        httpClient: Stripe.createFetchHttpClient(), // Ensure native fetch is used
+    });
 
     try {
         // secure: strictly defined price to avoid client-side manipulation
