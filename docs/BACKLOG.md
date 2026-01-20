@@ -16,24 +16,20 @@
 - [ ] **James to Update FAQ content**: Refine the initial FAQ questions in `index.njk`.
 - [ ] **James to create about and legal pages on google sites**: Create corresponding pages on `elevationary.com` (main site).
 - [ ] **Gemini to monitor google and openai for updated details on UCP and ACP implementations**: Periodically check for spec updates from major AI providers.
-## 📌 Phase 1: The "Gatekeeper" Implementation (Current Focus)
+### Phase 1: The Gatekeeper (Revenue Engine)
+- [x] **Commerce Infrastructure**
+    - [x] Set up Stripe Product (Recurring Subscription)
+    - [x] Implement Stripe Checkout (Server-Side)
+    - [x] Configure Environment Variables (Cloudflare)
+- [x] **Access Control**
+    - [x] Create Cloudflare Middleware (`_middleware.js`)
+    - [x] Build Unauthorized Redirect Page (`/unlock/`)
+    - [x] Verify End-to-End Flow (`/premium/` -> `/unlock/` -> Stripe)
 
-### Block 1: Foundation & Data Design
-- [x] **Project Re-planning**: Update Backlog & Decisions to reflect new strategy.
-- [x] **HubSpot Configuration**: Basic Portal/Form ID setup.
-- [x] **Env Update**: Upgrade to Node.js v24 (LTS).
-- [ ] **HubSpot Schema Definition**: Define the 20 Custom Properties/Lists for subscription groups. (DEFERRED pending discussion)
-
-### Block 2: The "Gatekeeper" Prototype
-- [ ] **Create "Locked" Page**: A test page on the microsite that *should* be protected.
-- [ ] **Cloudflare Worker Setup**: Initialize a Worker to intercept requests to `/premium/*`.
-- [ ] **Auth Logic**: Implement basic check (Cookie -> Allow/Deny).
-- [ ] **Redirect Flow**: Users denied access should land on a generic "Subscribe" page.
-
-### Block 3: Stripe <-> HubSpot Wiring
-- [ ] **Stripe Product Setup**: Create "Test Product" (Monthly Subscription).
-- [ ] **HubSpot Integration**: Configure HubSpot-Stripe app.
-- [ ] **Workflow Automation**: Verify that "Stripe Payment" event adds contact to "Active Subscriber" list in HubSpot.
+### Phase 2 Preview: Content & Production Pipeline
+- [ ] **Ingestion Pipeline**: Scripts to fetch content.
+- [ ] **Draft Generation**: LLM prompt chain.
+- [ ] **HubSpot Integration**: CRM and Email wiring.
 
 ### Block 4: Content Templates
 - [ ] **"3-2-1" Template (Free)**: Layout for the public summary version.
