@@ -1,5 +1,10 @@
+- [ ] **P0: [Protocol] Enforce State Sync.** `task.md` is for session RAM only. You MUST update `project_state.md` and `BACKLOG.md` before standing down. Use `visualize_org_progress.py` logic as the Source of Truth.
 # Product Backlog
 
+
+## Current Sprint
+- [ ] **P0: [Protocol] Review Global Skill Directive.** Read `directives/global_skill_documentation.md` (in Administrator). Ensure any Global Skills you have published are fully documented with a `SKILL.md` manifest.
+- [ ] **P0: [Protocol] Enforce State Sync.** `task.md` is for session RAM only. You MUST update `project_state.md` and `BACKLOG.md` before standing down. Use `visualize_org_progress.py` logic as the Source of Truth.
 ## High Priority (AI Visibility & Commerce)
 - [x] **Fix Robots.txt:** Remove `Disallow: /` for `GPTBot` to enable AI indexing.
 - [x] **Implement GEO Identity:** Inject `Organization` schema into `base.njk` (Logo, Founder, Socials).

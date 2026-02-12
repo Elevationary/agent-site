@@ -34,12 +34,13 @@ A closed-loop system for acquiring and managing subscribers.
     *   **Stripe:** Collects info & payment (Source of Rev Truth).
     *   **Cloudflare:** Gates access to content based on Sub status.
 4.  **Fulfillment:**
-    *   Stripe notifies **HubSpot** (Source of Subscriber Truth).
-    *   HubSpot takes over daily newsletter delivery.
-    *   Instantly.ai is notified to **STOP** marketing (Move from Prospect to Customer).
+    *   Stripe Webhook fires "Payment Success".
+    *   **Registry Update:** Updates D1/KV (subscriber active).
+    *   **Instantly Update:** Removes user from Cold Campaign (Stop Marketing).
+    *   **Delivery:** (TBD) Transactional email system takes over.
 
 ### C. Feedback Loops
-*   **Opt-Outs:** If User unsubscribes in Instantly -> Push to HubSpot "Do Not Contact" list (Compliance).
+*   **Opt-Outs:** Managed within Instantly (Cold) or the TBD Delivery System (Subscribers).
 
 ## 4. Enterprise Architecture
 *   **The Billboard:** **Google Sites** (Main Brand). Simple, static information.

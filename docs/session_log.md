@@ -98,3 +98,38 @@ User requested implementation of "Phase 4" features: GEO Identity (AI Visibility
 -   **Documentation:** Updated `walkthrough.md` with verification steps.
 
 **Next Session Focus:** Phase 2 (Content Generation).
+
+## [2026-01-22 14:19] Session Wrap-up
+- **Milestone:** Lean Stack Deployment & Verification
+- **Actions:**
+    - Refactored `subscribe.js` and `webhook_stripe.js` for Cloudflare Pages (named exports).
+    - Deployed to Production: `https://agent-site-dqv.pages.dev`
+    - Injected Secrets: `STRIPE_SECRET_KEY`, `INSTANTLY_API_KEY`, `POSTMARK_SERVER_TOKEN`.
+    - Verified `POST /api/subscribe` (302 Success).
+- **Next Steps:**
+    1. **User Action:** Configure Stripe Webhook Endpoint.
+    2. **Frontend:** Update UI to use new API.
+    3. **Intelligence:** Activate reporting scripts.
+
+## [2026-01-28 14:49] Session Wrap-up
+- **Milestone:** Startup & Shutdown (Brief Check-in)
+- **Status:** Unchanged.
+- **Context:** User initiated startup but paused immediately.
+- **Next Steps:**
+    1. **User Action:** Configure Stripe Webhook Endpoint.
+    2. **Frontend:** Update UI to use new API.
+    3. **Intelligence:** Activate reporting scripts.
+
+## [2026-01-28 22:13] Session Wrap-up
+- **Milestone:** Startup & Shutdown (Brief Check-in)
+- **Status:** Unchanged.
+- **Context:** User initiated startup but paused immediately.
+- **Next Steps:**
+    1. **User Action:** Configure Stripe Webhook Endpoint (P0).
+    2. **Frontend:** Update UI to use new API.
+    3. **Intelligence:** Activate reporting scripts.
+
+## 2026-02-12 11:17
+- **PROTOCOL ZERO:** Read directives/Gemini.md immediately. <!-- original_id: p0 -->
+- **P0: [Protocol] Review Global Skill Directive.** Read `directives/global_skill_documentation.md` (in Administrator). Ensure any Global Skills you have published are fully documented with a `SKILL.md` manifest. <!-- imported -->
+- **Create About Page**: Launch `about` page on `elevationary.com` and `elevationary.ai` (URLs in `site.json`). <!-- imported -->

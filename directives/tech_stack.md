@@ -8,10 +8,15 @@
 - **Frontend:** HTML5, Nunjucks (.njk), Vanilla CSS.
 
 ## The Ecosystem
-### 1. Customer Relationship (CRM)
-- **HubSpot:** The Source of Truth for *People*.
-    - Manages: Subscribers, Opt-outs, Newsletter Delivery.
-    - Integration: Receives data from Stripe and Instantly.
+### 1. Identity & Registry (The Truth)
+- **Stripe:** The Master Source of Truth for *Identity* & *Revenue*.
+    - Manages: Customers, Subscriptions, Payments, Entitlements (Metadata).
+- **Subscriber Registry (TBD):** Lightweight database (Cloudflare D1 or KV).
+    - Purpose: Caches subscription status for instant Gating checks at the Edge.
+    - Sync: Webhook updates from Stripe.
+- **Instantly.ai:** The Source of Truth for *Prospects*.
+    - Manages: Cold Leads, Outreach Campaigns.
+    - Sync: Receiving "Stop Marketing" signal from Stripe (via Webhook).
 
 ### 2. Commerce & Gating
 - **Stripe:** The Source of Truth for *Revenue*.
@@ -22,7 +27,6 @@
 - **Instantly.ai:** Cold Email Infrastructure.
     - Assets: 25+ Warmed Domains.
     - Scale: 20k emails/month.
-    - Logic: Stops sending upon HubSpot "Subscribed" signal.
 - **Data Source:** Apollo.io + Agentic Enrichment.
 
 ### 4. Brand Presence
