@@ -77,3 +77,5 @@ Every Order must be verified upon receipt.
 1.  **Receive:** Agent reads `BACKLOG.md` or Directive.
 2.  **Reflect:** Agent summarizes understand in `session_log.md`.
 3.  **Execute:** Agent updates PD3 State.
+
+> **Last Modified:** 2026-02-26

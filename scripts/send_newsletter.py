@@ -3,7 +3,11 @@ import sqlite3
 import requests
 import json
 import subprocess
+import sys
 from dotenv import load_dotenv
+
+sys.path.append(os.path.expanduser("~/.gemini/antigravity/runtime"))
+from global_paths import resolve_path
 
 # Load .env
 load_dotenv()

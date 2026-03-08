@@ -47,3 +47,5 @@ When creating a Global Skill in `~/.gemini/antigravity/skills/`:
 1.  Ensure `SKILL.md` exists with frontmatter (`name`, `description`).
 2.  Ensure all scripts in `scripts/` have docstrings (as per Rule #1).
 3.  The "Global Capabilities" report parses these docstrings automatically. **If you don't write it, no one knows your tool exists.**
+
+> **Last Modified:** 2026-02-26

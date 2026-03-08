@@ -1,8 +1,10 @@
-.DS_Store
-_site
-node_modules/
-.githooks/ # prevent re-adding
-.env
 venv/
-tmp/
-legacy_archive/
+.env
+__pycache__/
+*.pyc
+.DS_Store
+
+# Security Patch
+client_secrets.json
+.env
+*.gsheet

@@ -3,9 +3,12 @@ import sys
 import subprocess
 import datetime
 
+sys.path.append(os.path.expanduser("~/.gemini/antigravity/runtime"))
+from global_paths import resolve_path
+
 # CONFIGURATION
 TIME_KEEPER_PATH = os.path.expanduser("~/.gemini/antigravity/skills/time_keeper/scripts/time_keeper.py")
-SESSION_LOG_PATH = "docs/session_log.md"
+SESSION_LOG_PATH = resolve_path("{ANTIGRAVITY_DATA_DIR}/micro-site/agent-site/docs/SESSION_LOG.md")
 
 def stop_clock():
     """Stops the global timekeeper and captures the output."""

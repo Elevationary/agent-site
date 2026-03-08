@@ -1,0 +1,18 @@
+{
+    "schema_version": "v1",
+    "name_for_model": "Elevationary Agents",
+    "name_for_human": "Elevationary Agents",
+    "description_for_model": "Catalog of AI implementation services and agent configurations/manifests offered by Elevationary.",
+    "description_for_human": "Browse and book AI strategy consultations and agent implementation services.",
+    "auth": {
+        "type": "none"
+    },
+    "api": {
+        "type": "openapi",
+        "url": "https://agent.elevationary.com/openapi.yaml",
+        "is_user_authenticated": false
+    },
+    "logo_url": "https://agent.elevationary.com/assets/elevationary-logo-512.png",
+    "contact_email": "hello@elevationary.com",
+    "legal_info_url": "https://www.elevationary.com/legal"
+}

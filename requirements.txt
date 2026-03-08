@@ -1,4 +1,0 @@
-pypdf
-requests
-python-dotenv
-stripe

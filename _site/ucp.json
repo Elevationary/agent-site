@@ -1,0 +1,70 @@
+{
+  "spec_version": "0.1.0",
+  "provider": {
+    "name": "Elevationary Agents",
+    "url": "https://agent.elevationary.com",
+    "logo": "https://agent.elevationary.com/assets/elevationary-logo-512.png"
+  },
+  "products": [
+    {
+      "id": "agent-insider",
+      "name": "Agent Insider Subscription",
+      "description": "Monthly access to premium AI signals, deep-dive newsletters, and agent protocols.",
+      "price": {
+        "amount": 19,
+        "currency": "USD"
+      },
+      "url": "https://agent.elevationary.com/agent-insider/",
+      "purchase_url": "#",
+      "image": "https://agent.elevationary.com/assets/og-consulting-60.png"
+    },
+    {
+      "id": "consulting-15",
+      "name": "15-Minute AI Strategy Introductory Consultation",
+      "description": "A quick 15-minute session to introduce AI strategy and discuss your immediate AI questions.",
+      "price": {
+        "amount": 99,
+        "currency": "USD"
+      },
+      "url": "https://agent.elevationary.com/consulting-15/",
+      "purchase_url": "https://calendar.app.google/NTD1KQzzVh33YQEj6",
+      "image": "https://agent.elevationary.com/assets/og-consulting-15.png"
+    },
+    {
+      "id": "consulting-30",
+      "name": "30-Minute AI Readiness Consultation",
+      "description": "A focused 30-minute consultation to explore AI opportunities and initial strategy for your business.",
+      "price": {
+        "amount": 199,
+        "currency": "USD"
+      },
+      "url": "https://agent.elevationary.com/consulting-30/",
+      "purchase_url": "https://calendar.app.google/kQe1Mnyn6s7E6GuGA",
+      "image": "https://agent.elevationary.com/assets/og-consulting-30.png"
+    },
+    {
+      "id": "consulting-60",
+      "name": "60-Minute AI Strategy Consultation",
+      "description": "A detailed 60-minute consultation to develop an AI implementation strategy for your business.",
+      "price": {
+        "amount": 399,
+        "currency": "USD"
+      },
+      "url": "https://agent.elevationary.com/consulting-60/",
+      "purchase_url": "https://calendar.app.google/DSMDWLSaXbXGpwAo9",
+      "image": "https://agent.elevationary.com/assets/og-consulting-60.png"
+    },
+    {
+      "id": "consulting-90",
+      "name": "90-Minute AI Strategy In-depth Consultation",
+      "description": "An in-depth 90-minute session for AI strategy development and implementation planning.",
+      "price": {
+        "amount": 598,
+        "currency": "USD"
+      },
+      "url": "https://agent.elevationary.com/consulting-90/",
+      "purchase_url": "https://calendar.app.google/3GzaShZ7TPgzHden8",
+      "image": "https://agent.elevationary.com/assets/og-consulting-90.png"
+    }
+  ]
+}

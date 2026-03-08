@@ -68,3 +68,5 @@ Use this standard across all repositories.
 1. **Search Scope:** When you ask "fix the build script", I look only in `/scripts`.
 2. **Context Loading:** When I need business logic, I read `/docs`. I don't waste tokens reading your minified JS.
 3. **Safety:** I know that editing `/docs` is safe, but editing `/src` requires testing.
+
+> **Last Modified:** 2026-02-26

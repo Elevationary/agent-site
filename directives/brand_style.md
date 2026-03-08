@@ -26,3 +26,5 @@ Use the **Brand Manager** skill to find files:
 
 Find exact paths using:
 `python3 ~/.gemini/antigravity/skills/brand_manager/scripts/brand_get_asset.py "filename"`
+
+> **Last Modified:** 2026-02-26

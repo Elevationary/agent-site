@@ -3,7 +3,11 @@ import requests
 import stripe
 import json
 import datetime
+import sys
 from dotenv import load_dotenv
+
+sys.path.append(os.path.expanduser("~/.gemini/antigravity/runtime"))
+from global_paths import resolve_path
 
 # Load credentials
 load_dotenv()
@@ -135,7 +139,7 @@ def generate_report():
     
     # Also save to file
     today_str = datetime.date.today().strftime("%Y-%m-%d")
-    filename = f"docs/reports/{today_str}_brief.md"
+    filename = resolve_path(f"{{ANTIGRAVITY_DATA_DIR}}/micro-site/agent-site/docs/reports/{today_str}_brief.md")
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     with open(filename, "w") as f:
         f.write(report)

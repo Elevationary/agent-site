@@ -47,3 +47,5 @@ We separate **WHAT** we work on (Archetypes/Folders) from **HOW** we view it (Pr
 2.  Name it **"Antigravity Manager"**.
 3.  Open **Command Palette** (`Cmd+Shift+P`) > `Preferences: Open Settings (JSON)`.
 4.  Paste the "Mission Control" block above.
+
+> **Last Modified:** 2026-02-26
