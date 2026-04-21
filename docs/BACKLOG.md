@@ -1,55 +1,60 @@
-# 🛑 STOP: READ IMMEDIATELY 🛑
-
-> **Protocol Zero:** Before starting any work, you MUST read `directives/Gemini.md`.
-
 # Backlog
 
-## Current Sprint
+## Blocked on James
+These items cannot be automated. Waiting on manual action.
 
-- [ ] **P0: [Protocol] Review Global Skill Directive.** Read `directives/global_skill_documentation.md` (in Administrator). Ensure any Global Skills you have published are fully documented with a `SKILL.md` manifest.
-- [ ] **P0: [Protocol] Enforce State Sync.** `task.md` is for session RAM only. You MUST update `project_state.md` and `BACKLOG.md` before standing down. Use `visualize_org_progress.py` logic as the Source of Truth.
+- [ ] **Social Media:** Create Twitter account for `@ElevationaryAI`
+- [ ] **FAQ Content:** Review and update FAQ questions in `src/index.njk`
+- [ ] **Google Sites Pages:** Create matching About and Legal pages on `elevationary.com` main site
+- [ ] **Stripe Webhook Secret:** Configure `STRIPE_WEBHOOK_SECRET` in Cloudflare dashboard to enforce webhook signature verification
 
 ## Future Iterations
 
-### **Focus**: Strengthen website content
+### Phase 2: Content Pipeline
+_Architecture: Cloudflare D1 (subscribers) + Postmark (delivery) + Instantly (outreach). HubSpot removed per ADR-008._
 
-- [ ] **Create About Page**: Launch `about` page on `elevationary.com` and `elevationary.ai` (URLs in `site.json`).
-- [ ] **Social Media**: Create Twitter account for `@ElevationaryAI` (URL in `site.json`).
-- [ ] **Legal Page**: Create `legal` page on `elevationary.com` (referenced in `ai-plugin.json`).
-- [ ] **James to Update FAQ content**: Refine the initial FAQ questions in `index.njk`.
-- [ ] **James to create about and legal pages on google sites**: Create corresponding pages on `elevationary.com` (main site).
-- [ ] **Gemini to monitor google and openai for updated details on UCP and ACP implementations**: Periodically check for spec updates from major AI providers.
+- [ ] **Ingestion Pipeline:** Scripts to fetch and stage newsletter content
+- [ ] **Draft Generation:** LLM prompt chain for "3-2-1" and "Full Story" formats
+- [ ] **Subscriber Sync:** Cloudflare D1 → Postmark audience sync for broadcast delivery
 
-### Phase 2 Preview: Content & Production Pipeline
+### ACP/UCP Monitoring
+- [ ] Periodically check OpenAI plugin spec and Google agent protocol for updates; document changes in session log
 
-- [ ] **Ingestion Pipeline**: Scripts to fetch content.
-- [ ] **Draft Generation**: LLM prompt chain.
-- [ ] **HubSpot Integration**: CRM and Email wiring.
-
-## 🔮 Icebox
-
-- **Community Chat**: WhatsApp/Discord integration for subscribers.
-- **Podcast Feed**: Auto-generated audio versions of the newsletters.
-- **Legacy Migration**: Anything remaining from old Google Sites.
-- **Architect Archival Strategy (R2)**: Implement "Current Year" vs "Archive" split to manage 20k file limit.
+## Icebox
+- Community Chat: WhatsApp/Discord integration for subscribers
+- Podcast Feed: Auto-generated audio versions of newsletters
+- Legacy Migration: Anything remaining from old Google Sites
+- Architect Archival Strategy (R2): Implement "Current Year" vs "Archive" split to manage 20k file limit
 
 ## Completed
 
-### Phase 1: The Gatekeeper (Revenue Engine)
+### Phase 9: Clear Backlog / Solid Foundation (2026-04-20)
+- [X] Git hygiene: committed legacy directive removal + session infrastructure
+- [X] `project_state.md` restored and updated to current state
+- [X] `legal.njk` enriched with full ToS, Privacy Policy, AI disclaimer
+- [X] `about.njk` updated with "What We Do" 3-pillar section
+- [X] BACKLOG.md cleaned up — stale refs removed, blocked items separated
+- [X] P0: Global Skill Directive — no skills published, nothing to document
+- [X] P0: State Sync enforced — `project_state.md` active
 
-- [X] **Commerce Infrastructure**
-  - [X] Set up Stripe Product (Recurring Subscription)
-  - [X] Implement Stripe Checkout (Server-Side)
-  - [X] Configure Environment Variables (Cloudflare)
-- [X] **Access Control**
-  - [X] Create Cloudflare Middleware (`_middleware.js`)
-  - [X] Build Unauthorized Redirect Page (`/unlock/`)
-  - [X] Verify End-to-End Flow (`/premium/` -> `/unlock/` -> Stripe)
+### Phase 1: Revenue Engine Foundation
+- [X] Stripe subscription product and checkout (server-side)
+- [X] Cloudflare D1 `subscribers` table deployed
+- [X] `subscribe` and `webhook_stripe` Workers deployed and verified
+- [X] Freemium gating: `/premium/` → `/unlock/` → Stripe (end-to-end verified)
+- [X] Cloudflare environment secrets injected (Stripe, Instantly, Postmark)
 
-## High Priority (AI Visibility & Commerce)
+### AI Visibility Layer
+- [X] Fix `robots.txt` — allow GPTBot for AI indexing
+- [X] GEO Identity: `Organization` schema in `base.njk`
+- [X] ACP: `public/.well-known/ai-plugin.json`
+- [X] UCP: product catalog manifests
+- [X] AEO: `FAQPage` schema on landing pages
 
-- [X] **Fix Robots.txt:** Remove `Disallow: /` for `GPTBot` to enable AI indexing.
-- [X] **Implement GEO Identity:** Inject `Organization` schema into `base.njk` (Logo, Founder, Socials).
-- [X] **Implement ACP:** Create `public/.well-known/ai-plugin.json` for Agentic Commerce.
-- [X] **Implement UCP:** Define UCP manifests for product catalog.
-- [X] **Implement AEO:** Add `FAQPage` schema to landing pages to capture Featured Snippets.
+### Infrastructure
+- [X] DNS consolidated to Cloudflare (elevationary.com + elevationary.ai) — ADR-004
+- [X] Email routing for `@elevationary.ai` → `@elevationary.com` — ADR-005
+- [X] HSTS configured
+- [X] Consulting product pages: /consulting-15/, /consulting-30/, /consulting-60/, /consulting-90/
+- [X] About page (`/about/`)
+- [X] Legal page (`/legal/`)
