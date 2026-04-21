@@ -9,7 +9,7 @@
 - All committed: `631de08` — clean build (18 files, 0 errors)
 
 **Next Step:**
-1. **James: B1** — Cloudflare dashboard → Security → Bots → disable AI scraper blocking (ClaudeBot, GPTBot, Google-Extended blocked by Cloudflare)
+1. **James: B1** — Cloudflare dashboard → **Protect & Connect → Application security** → look for Bots or Bot Management section → disable AI scraper blocking for ClaudeBot, GPTBot, Google-Extended. If not visible there, also check Delivery & performance.
 2. After B1 confirmed: **B2** — Verify robots.txt shows AI bots allowed
 3. **Execute Phase 2 GEO tasks** (after B1):
    - Add `Service` schema to all consulting product pages (task_e5f6a0b1)
@@ -22,6 +22,7 @@
 - Do NOT use `wrangler secret put` without confirming the secret value first
 - The Cloudflare bot blocking is injected by Cloudflare, NOT in our robots.txt source — fixing requires Cloudflare dashboard
 - HubSpot block in `site.json` is still needed — hubspot-form.njk uses it; do not remove
+- **Cloudflare AI bot architecture:** "Block AI bots" master switch overrides ALL per-bot AI Crawl Control settings. "Block on all pages" = everything blocked. "Do not block" = everything allowed. Per-bot controls only work after master is set to "Do not block." Current state: master = Do not block, all AI bots allowed. To block only training scrapers (CCBot), use per-bot AI Crawl Control individually.
 
 **Open Questions:**
 - Should elevationary.com migrate from Google Sites to Cloudflare Pages? (C3 — strategic decision for James)

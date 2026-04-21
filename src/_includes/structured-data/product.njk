@@ -3,13 +3,18 @@
   {
     "@context": "https://schema.org",
     "@type": "Service",
-    "@id": "https://agent.elevationary.com/{{ product.slug }}/#product",
+    "@id": "https://agent.elevationary.com/{{ product.slug }}/#service",
     "name": "{{ product.title }}",
     "description": "{{ product.description | escape }}",
-    "brand": {
-      "@type": "Brand",
-      "name": "Elevationary"
+    "serviceType": "{% if product.type == 'subscription' %}AI Intelligence Subscription{% else %}AI Strategy Consulting{% endif %}",
+    "provider": {
+      "@type": "Organization",
+      "@id": "{{ site.orgId }}",
+      "name": "{{ site.name }}",
+      "url": "{{ site.url }}"
     },
+    "areaServed": "Worldwide",
+    "url": "https://agent.elevationary.com/{{ product.slug }}/",
     "image": [
       "https://agent.elevationary.com{{ product.og_image }}"
     ],
@@ -19,7 +24,7 @@
       "url": "https://agent.elevationary.com/{{ product.slug }}/",
       "priceCurrency": "{{ product.currency }}",
       "price": "{{ product.price }}",
-"availability": "https://schema.org/InStock",
+      "availability": "https://schema.org/InStock",
       "seller": {
         "@type": "Organization",
         "name": "Elevationary",
