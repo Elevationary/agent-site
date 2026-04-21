@@ -2,7 +2,7 @@
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Product",
+    "@type": "Service",
     "@id": "https://agent.elevationary.com/{{ product.slug }}/#product",
     "name": "{{ product.title }}",
     "description": "{{ product.description | escape }}",
@@ -19,8 +19,7 @@
       "url": "https://agent.elevationary.com/{{ product.slug }}/",
       "priceCurrency": "{{ product.currency }}",
       "price": "{{ product.price }}",
-      "priceValidUntil": "2025-12-31",
-      "availability": "https://schema.org/InStock",
+"availability": "https://schema.org/InStock",
       "seller": {
         "@type": "Organization",
         "name": "Elevationary",

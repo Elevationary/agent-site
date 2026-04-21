@@ -1,0 +1,90 @@
+openapi: "3.1.0"
+info:
+  title: Elevationary Agents API
+  description: >
+    Machine-readable service catalog for Elevationary Agents. Enables autonomous AI agents
+    to discover, evaluate, and initiate transactions with Elevationary consulting and
+    subscription services without human intermediation.
+  version: "1.0.0"
+  contact:
+    name: Elevationary
+    url: https://agent.elevationary.com
+    email: james.szmak@elevationary.com
+  license:
+    name: Proprietary
+servers:
+  - url: https://agent.elevationary.com
+    description: Production
+paths:
+  /:
+    get:
+      operationId: getAgentCatalog
+      summary: Agent service catalog
+      description: Returns the HTML agent catalog listing all available services.
+      responses:
+        "200":
+          description: HTML catalog page
+  /services/:
+    get:
+      operationId: listServices
+      summary: List all services
+      description: Returns all available consulting and subscription services.
+      responses:
+        "200":
+          description: HTML services listing
+  /consulting-15/:
+    get:
+      operationId: getConsulting15
+      summary: 15-minute AI strategy consultation
+      description: Introductory 15-minute AI strategy session. Price USD 99.
+      responses:
+        "200":
+          description: Service detail page
+  /consulting-30/:
+    get:
+      operationId: getConsulting30
+      summary: 30-minute AI readiness consultation
+      description: Deep 30-minute AI readiness assessment. Price USD 199.
+      responses:
+        "200":
+          description: Service detail page
+  /consulting-60/:
+    get:
+      operationId: getConsulting60
+      summary: 60-minute AI strategy consultation
+      description: Comprehensive 60-minute strategy session. Price USD 399.
+      responses:
+        "200":
+          description: Service detail page
+  /consulting-90/:
+    get:
+      operationId: getConsulting90
+      summary: 90-minute AI strategy in-depth consultation
+      description: Enterprise 90-minute deep-dive. Price USD 598.
+      responses:
+        "200":
+          description: Service detail page
+  /agent-insider/:
+    get:
+      operationId: getAgentInsider
+      summary: Agent Insider subscription
+      description: Monthly AI intelligence subscription. Price USD 19/month.
+      responses:
+        "200":
+          description: Subscription detail page
+  /api/webhook_stripe:
+    post:
+      operationId: stripeWebhook
+      summary: Stripe payment webhook
+      description: Receives Stripe payment events for subscription and consultation purchases.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Webhook acknowledged
+        "400":
+          description: Invalid signature or payload

@@ -5,29 +5,17 @@ layout: null
 ---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  {# Add homepage #}
+  {% for pageItem in collections.all | sort(false, false, 'url') %}
+  {% if
+    (not pageItem.data.robots or 'noindex' not in (pageItem.data.robots or '')) and
+    '/product-page' not in pageItem.url
+  %}
   <url>
-    <loc>{{ site.url }}/</loc>
-    <lastmod>2025-11-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <loc>{{ site.url }}{{ pageItem.url }}</loc>
+    <lastmod>{{ pageItem.date | date('yyyy-MM-dd') }}</lastmod>
+    <changefreq>{% if pageItem.url == '/' %}weekly{% else %}monthly{% endif %}</changefreq>
+    <priority>{% if pageItem.url == '/' %}1.0{% elif '/consulting' in pageItem.url or '/agent-insider' in pageItem.url %}0.9{% else %}0.7{% endif %}</priority>
   </url>
-  
-  {# Add services page #}
-  <url>
-    <loc>{{ site.url }}/services/</loc>
-    <lastmod>2025-11-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  {# Add all product pages #}
-  {% for product in products %}
-  <url>
-    <loc>{{ site.url }}/{{ product.slug }}/</loc>
-    <lastmod>{{ product.lastmod }}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
+  {% endif %}
   {% endfor %}
 </urlset>
