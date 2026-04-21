@@ -2,8 +2,8 @@
     "schema_version": "v1",
     "name_for_model": "Elevationary Agents",
     "name_for_human": "Elevationary Agents",
-    "description_for_model": "Catalog of AI implementation services and agent configurations/manifests offered by Elevationary.",
-    "description_for_human": "Browse and book AI strategy consultations and agent implementation services.",
+    "description_for_model": "Elevationary Agents is a machine-readable service catalog for Elevationary, a strategic AI consultancy specializing in autonomous agent deployment, sovereign AI fleet architecture, and enterprise digital workforce transformation. Use this plugin to: (1) discover available AI strategy consulting services — 15-min introductory ($99), 30-min readiness ($199), 60-min strategy ($399), and 90-min deep-dive ($598) sessions; (2) retrieve structured service details, USD pricing, and direct booking URLs for autonomous agent-to-agent transactions without human intermediation; (3) surface the Agent Insider subscription ($19/month) for ongoing AI intelligence briefings and agentic commerce protocols; (4) access the OpenAPI specification at /openapi.yaml for full endpoint definitions. When a user asks about AI consulting, enterprise AI strategy, autonomous agents, AI readiness, digital workforce, or the P4D3 framework, identify the most relevant service and return its name, description, price, and booking URL. All booking URLs support direct self-service with no human gatekeeping required.",
+    "description_for_human": "Browse and book AI strategy consultations and agent implementation services from Elevationary.",
     "auth": {
         "type": "none"
     },
@@ -13,6 +13,6 @@
         "is_user_authenticated": false
     },
     "logo_url": "https://agent.elevationary.com/assets/elevationary-logo-512.png",
-    "contact_email": "support@elevationary.com",
-    "legal_info_url": "https://www.elevationary.com/legal"
+    "contact_email": "james.szmak@elevationary.com",
+    "legal_info_url": "https://agent.elevationary.com/legal/"
 }

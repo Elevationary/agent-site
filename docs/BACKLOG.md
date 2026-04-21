@@ -3,44 +3,21 @@
 ## Blocked on James
 These items cannot be automated. Waiting on manual action.
 
-- [ ] **B1 (CRITICAL): Cloudflare — Disable AI Scraper Blocking** — Security → Bots → disable "Block AI Scrapers." Cloudflare is injecting rules that block ClaudeBot, GPTBot, Google-Extended, meta-externalagent sitewide. This undermines the entire AEO/GEO investment. (P4D3: task_4b7c8d9e)
-- [ ] **C1: elevationary.com title** — Edit Google Sites page title from "Elevationary" to include keywords e.g. "Elevationary | AI Strategy & Enterprise Transformation Consulting" (P4D3: task_6d9e0f1a)
+- [ ] **B1 (CRITICAL): Cloudflare — Disable AI Scraper Blocking** — **Protect & Connect → Application security** → Bots or Bot Management → disable rules blocking ClaudeBot, GPTBot, Google-Extended, meta-externalagent. If not there, check Delivery & performance. These Cloudflare-injected rules undermine the entire AEO/GEO investment. (P4D3: task_4b7c8d9e)
+- [ ] **B2: Verify robots.txt after Cloudflare change** — Confirm AI bots are allowed after B1 is done (P4D3: task_5c8d9e0f)
+- [ ] **C1: elevationary.com title** — Edit Google Sites page title to include keywords e.g. "Elevationary | AI Strategy & Enterprise Transformation Consulting" (P4D3: task_6d9e0f1a)
 - [ ] **C2: Fix "newletter-stories" typo** — Google Sites nav link has missing 's' (P4D3: task_7e0f1a2b)
 - [ ] **C3: Strategic — Evaluate migrating elevationary.com** from Google Sites to Cloudflare Pages for full SEO/JSON-LD control (P4D3: task_8f1a2b3c)
 - [ ] **Social Media:** Create Twitter account for `@ElevationaryAI`
 - [ ] **Google Sites Pages:** Create matching About and Legal pages on `elevationary.com` main site
 - [ ] **Stripe Production:** Migrate from test key (`sk_test_...`) to live key — re-register webhook endpoint and update Cloudflare secrets
 
-## Current Sprint — Phase 3: SEO Enhancement (agent-site codebase)
-_All executable by Agent. P4D3 deliverable: 3.1 Enhance SEO and content_
-
-- [ ] **A1:** Remove duplicate OG meta tags from `base.njk` (P4D3: task_1a2b3c4d)
-- [ ] **A2:** Fix `og:site_name` to output fixed site name instead of page title (P4D3: task_2b3c4d5e)
-- [ ] **A3:** Expand homepage meta description from 38 to 150–160 characters (P4D3: task_3c4d5e6f)
-- [ ] **A4:** Fix `site.json` founder URL backtick typo breaking JSON-LD on every page (P4D3: task_4d5e6f0a)
-- [ ] **A5:** Remove/update expired `priceValidUntil` from product schema (P4D3: task_5e6f0a1b)
-- [ ] **A6:** Change product schema `@type` from `Product` → `ProfessionalService` (P4D3: task_6f0a1b2c)
-- [ ] **A7:** Add missing pages to sitemap + make `lastmod` dates dynamic (P4D3: task_7a0b1c2d)
-- [ ] **A8:** Add explicit `robots: noindex` to `/premium/`, `/unlock/`, `/subscribe/` (P4D3: task_8b1c2d3e)
-- [ ] **A9:** Enrich consulting product descriptions in `products.json` (P4D3: task_9c2d3e4f)
-- [ ] **A10:** Create `llms.txt` (P4D3: task_0d3e4f5a)
-- [ ] **A11:** Create `openapi.yaml` (P4D3: task_1e4f5a6b)
-- [ ] **A12:** Enrich Organization schema with description, knowsAbout, areaServed, serviceType (P4D3: task_2f5a6b7c)
-- [ ] **A13:** Fix `agent-insider` `purchase_url` + remove HubSpot refs from `site.json` (P4D3: task_3a6b7c8d)
-
 ## Current Sprint — Phase 2: GEO Enhancement
-_Executable by Agent after Phase 3 A-tasks and B1 (Cloudflare) are done. P4D3 deliverable: 2.1 Enhance GEO to latest standards_
+_Executable by Agent after B1 (Cloudflare bot blocking) is confirmed done by James._
 
-- [ ] Create `openapi.yaml` to activate ACP agent commerce layer (P4D3: task_a1b2c3d4) _(overlaps A11)_
-- [ ] Enrich Organization schema (P4D3: task_d4e5f6a0) _(overlaps A12)_
 - [ ] Add `Service` schema to all consulting product pages (P4D3: task_e5f6a0b1)
 - [ ] Strengthen `ai-plugin.json` `description_for_model` (P4D3: task_f6a0b1c2)
 - [ ] Add RFP `ContactPoint` schema and `/rfp/` landing page (P4D3: task_a0b1c2d3)
-- [ ] B2: Verify robots.txt after Cloudflare bot change (P4D3: task_5c8d9e0f)
-
-## P4D3 MCP Server — Pending Action
-- [ ] **Restart Claude Code** to activate new `elevationary_p4d3_update_task` tool (built, not yet loaded)
-- [ ] After restart: update Owner to "James" on task_4b7c8d9e, task_5c8d9e0f, task_6d9e0f1a, task_7e0f1a2b, task_8f1a2b3c
 
 ## Future Iterations
 
@@ -61,6 +38,22 @@ _Architecture: Cloudflare D1 (subscribers) + Postmark (delivery) + Instantly (ou
 - Architect Archival Strategy (R2): Implement "Current Year" vs "Archive" split to manage 20k file limit
 
 ## Completed
+
+### Phase 3: SEO Enhancement (2026-04-21)
+- [X] A1: Remove duplicate OG meta tags from `base.njk` (seo.njk now owns OG exclusively)
+- [X] A2: Fix `og:site_name` to fixed string "Elevationary Agents"
+- [X] A3: Expand homepage meta description from 38 → 160 characters
+- [X] A4: Fix `site.json` founder URL backtick typo breaking JSON-LD
+- [X] A5: Remove expired `priceValidUntil` from product schema
+- [X] A6: Change product schema `@type` Product → Service
+- [X] A7: Dynamic sitemap via collections.all (dynamic lastmod, no hardcoded dates, deduped)
+- [X] A8: Add `robots: noindex` to `/unlock/` and `/subscribe/` (/premium/ already had it)
+- [X] A9: Enrich all 5 product descriptions in `products.json` (150+ chars each)
+- [X] A10: Create `llms.txt` for LLM/AI discoverability
+- [X] A11: Create `openapi.yaml` service specification
+- [X] A12: Enrich Organization schema (description, email, knowsAbout, areaServed, contactPoint)
+- [X] A13: Fix agent-insider `pay_url` from "#" to "/unlock/"
+- [X] Fix 5 P4D3 task owners from "Agent" → "James" (task_4b7c8d9e through task_8f1a2b3c)
 
 ### Phase 9: Clear Backlog / Solid Foundation (2026-04-20)
 - [X] Git hygiene: committed legacy directive removal + session infrastructure
