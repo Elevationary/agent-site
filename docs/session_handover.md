@@ -1,30 +1,32 @@
 # Session Handover
 
-**Task:** Phase 2 GEO Enhancement (remaining tasks)
-**Status:** Phase 3 SEO complete and committed. Phase 2 blocked on B1 (James: Cloudflare bot unblock).
+**Task:** Phase 4 Content Pipeline (next sprint) or C1/C2/C3 elevationary.com fixes
+**Status:** Phase 2 GEO + Phase 3 SEO both complete. All A/B tasks done. Only C-tasks (Google Sites) and Stripe production remain as blockers requiring James.
 
 **Last Action:**
-- Completed all 13 Phase 3 SEO tasks (A1–A13): duplicate OG tags removed, og:site_name fixed, homepage description expanded, founder URL typo fixed, product schema updated (Service type, priceValidUntil removed), sitemap made dynamic via collections.all, noindex added to private pages, product descriptions enriched, llms.txt and openapi.yaml created, Organization schema enriched, agent-insider pay_url fixed
-- Fixed 5 P4D3 task owners from "Agent" → "James" (task_4b7c8d9e through task_8f1a2b3c)
-- All committed: `631de08` — clean build (18 files, 0 errors)
+- Phase 2 GEO complete: Service schema enriched (serviceType, provider, areaServed), ai-plugin.json strengthened, /rfp/ page created with ContactPage + ContactPoint schema, Organization schema updated with sales ContactPoint
+- B1/B2 complete: Cloudflare "Block AI bots" disabled (master switch = Do not block), all AI crawlers now allowed, robots.txt verified clean
+- Committed: `de539e9` — clean build (19 files, 0 errors)
+- 21 commits ahead of origin/main — push when ready to deploy
 
-**Next Step:**
-1. **James: B1** — Cloudflare dashboard → **Protect & Connect → Application security** → look for Bots or Bot Management section → disable AI scraper blocking for ClaudeBot, GPTBot, Google-Extended. If not visible there, also check Delivery & performance.
-2. After B1 confirmed: **B2** — Verify robots.txt shows AI bots allowed
-3. **Execute Phase 2 GEO tasks** (after B1):
-   - Add `Service` schema to all consulting product pages (task_e5f6a0b1)
-   - Strengthen `ai-plugin.json` `description_for_model` (task_f6a0b1c2)
-   - Add RFP `ContactPoint` schema and `/rfp/` landing page (task_a0b1c2d3)
-4. **Consider git push** — 19 commits ahead of origin/main; push when ready to deploy
+**Next Step (Agent-executable, no James input needed):**
+- Phase 4 Content Pipeline: Cloudflare D1 → Postmark subscriber sync, newsletter ingestion scripts, draft generation chain
+- OR: Any Phase 2/3 follow-up refinements James requests
+
+**Next Step (Requires James):**
+- **C1:** elevationary.com Google Sites title fix
+- **C2:** Fix "newletter-stories" nav typo on Google Sites
+- **C3:** Strategic decision — migrate elevationary.com to Cloudflare Pages?
+- **Stripe:** Migrate from test key to live key when ready for production
+- **Git push:** 21 commits ahead of origin/main — `git push` to deploy to Cloudflare Pages
 
 **Do Not Re-Try:**
 - Do NOT run `startup.py` or `shutdown.py` — Gemini owns these
 - Do NOT use `wrangler secret put` without confirming the secret value first
-- The Cloudflare bot blocking is injected by Cloudflare, NOT in our robots.txt source — fixing requires Cloudflare dashboard
+- Cloudflare bot blocking is injected by Cloudflare, NOT in robots.txt source — fix requires Cloudflare dashboard
 - HubSpot block in `site.json` is still needed — hubspot-form.njk uses it; do not remove
-- **Cloudflare AI bot architecture:** "Block AI bots" master switch overrides ALL per-bot AI Crawl Control settings. "Block on all pages" = everything blocked. "Do not block" = everything allowed. Per-bot controls only work after master is set to "Do not block." Current state: master = Do not block, all AI bots allowed. To block only training scrapers (CCBot), use per-bot AI Crawl Control individually.
+- **Cloudflare AI bot architecture:** "Block AI bots" master switch overrides ALL per-bot AI Crawl Control settings. Current state: master = "Do not block," all AI bots allowed. To block only training scrapers (CCBot), use per-bot AI Crawl Control individually — do NOT touch the master switch.
 
 **Open Questions:**
 - Should elevationary.com migrate from Google Sites to Cloudflare Pages? (C3 — strategic decision for James)
 - Stripe test vs. live key: webhook and secrets are all in test env — needs live key migration when ready for production
-- A13 partial: HubSpot refs in site.json were intentionally preserved (still in use). Only pay_url was fixed.
