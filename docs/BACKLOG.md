@@ -26,9 +26,17 @@ _Architecture: Cloudflare D1 (subscribers) + Postmark (delivery) + Instantly (ou
 - Legacy Migration: Anything remaining from old Google Sites
 - Architect Archival Strategy (R2): Implement "Current Year" vs "Archive" split to manage 20k file limit
 
-## Completed
 
 ### Phase 9: Clear Backlog / Solid Foundation (2026-04-20)
+
+### Phase 1: Revenue Engine Foundation
+
+### AI Visibility Layer
+
+### Infrastructure
+
+
+## Completed
 - [X] Git hygiene: committed legacy directive removal + session infrastructure
 - [X] `project_state.md` restored and updated to current state
 - [X] `legal.njk` enriched with full ToS, Privacy Policy, AI disclaimer
@@ -36,22 +44,16 @@ _Architecture: Cloudflare D1 (subscribers) + Postmark (delivery) + Instantly (ou
 - [X] BACKLOG.md cleaned up — stale refs removed, blocked items separated
 - [X] P0: Global Skill Directive — no skills published, nothing to document
 - [X] P0: State Sync enforced — `project_state.md` active
-
-### Phase 1: Revenue Engine Foundation
 - [X] Stripe subscription product and checkout (server-side)
 - [X] Cloudflare D1 `subscribers` table deployed
 - [X] `subscribe` and `webhook_stripe` Workers deployed and verified
 - [X] Freemium gating: `/premium/` → `/unlock/` → Stripe (end-to-end verified)
 - [X] Cloudflare environment secrets injected (Stripe, Instantly, Postmark)
-
-### AI Visibility Layer
 - [X] Fix `robots.txt` — allow GPTBot for AI indexing
 - [X] GEO Identity: `Organization` schema in `base.njk`
 - [X] ACP: `public/.well-known/ai-plugin.json`
 - [X] UCP: product catalog manifests
 - [X] AEO: `FAQPage` schema on landing pages
-
-### Infrastructure
 - [X] DNS consolidated to Cloudflare (elevationary.com + elevationary.ai) — ADR-004
 - [X] Email routing for `@elevationary.ai` → `@elevationary.com` — ADR-005
 - [X] HSTS configured
