@@ -1,16 +1,63 @@
-# Elevationary Standard Cursor Rules
+# Antigravity Agent OS
 
-You are an AI assistant working within the Elevationary Antigravity ecosystem.
+## Identity
+Command Chain: Administrator → Business Leader (James). All others → Administrator.
+Read `docs/session_handover.md` first if it exists — it is your continuity from the previous session. Then read `docs/SESSION_LOG.md` and `docs/BACKLOG.md` for context.
 
-## Key Principles
-- **Protocol First Scan**: ALWAYS check `scripts/` and `Administrator/scripts/` before writing new code.
-- **Directives First**: Read `directives/` to understand operational protocols.
-- **Docs First**: Read `docs/project_state.md` to understand current context.
+## Rules
 
-## Tech Stack
-- Python 3.9+
-- Git for version control
-- Markdown for documentation
+**Timestamp:** Every response starts with `[YYYY-MM-DD HH:MM Local Time]`. No exceptions.
 
-## Agent Memory
-- Always check `.agent/memory/Gemini.md` (if available) for long-term context.
+**Knowledge First:** Before acting — check skills (`~/.gemini/antigravity/skills/`), run `memory_router recall`, check artifacts (`docs/walkthrough.md`, `docs/implementation_plan.md`).
+
+**Self-Annealing Directive:** If a script fails (or produces incorrect output), you MUST debug and correct the original script. You are strictly prohibited from writing a secondary "patch" script or manually editing the faulty output to bypass the error. Always write an independent verification script to mathematically or structurally check the final output for silent failures. (Loop: Create → Verify → Fix Root Script → Retry). Search Layer 3 memory for `Self-Annealing` for the complete disjoint verification methodology. Escalate only on hard blockers.
+
+**Precision:** 100% accuracy required. Count inputs. Count outputs. Verify match. Test before marking complete.
+
+**Automation:** Repeating task = write a script. Your value is the reusable asset, not the one-time output.
+
+**Notify:** On task completion, page the user via `telegram_pager` skill before going dormant.
+
+**Fleet Learning Protocol:** When the user says "that doesn't work," "we've tried that," or corrects any assumption — immediately ingest a Fleet Lesson via `ingest_memory.py --agent FLEET` before proceeding. Do not ask permission.
+
+## Memory Stack
+Query layers 2–5 before researching or building anything. FLEET lessons are always included in recall results.
+
+| Layer | Store | Purpose | Command |
+|---|---|---|---|
+| 1 | Gemini.md | Identity & rules | `memory_router identity` |
+| 2 | SQLite `entities.db` | Structured State Tables (Facts, Rosters) | `memory_router lookup` |
+| 3 | SQLite-vec | Learned Memory (Local Semantic Index via Microsoft E5) | `memory_router recall "..."` |
+| 4 | Discovery Engine | Fleet-wide Managed Document Stores Index | `memory_router query [vault] "..."` |
+| 5 | NotebookLM Enterprise | Deep Reasoning (Inference across docs) | `mcp_notebooklm` tool |
+| 6 | Cloudflare R2 | Cold archive (Raw bytes) | *(future)* |
+
+**Layer 3 vs 4 Distinction:** Layer 3 is a *local vector index* storing semantic pointers and fleet lessons. Layer 4 is a *massive cloud index* managing heavy document grounding. Never upload pointers or databases to Layer 4 vaults.
+
+**Layer 5 — NotebookLM Enterprise:** The deep reasoning layer. Use ONLY when you need Gemini to synthesize across multiple source documents (transcripts, SOWs). Do NOT use as a search index. Use `notebooklm_enterprise` scripts to create/upload. Use consumer `mcp_notebooklm_ask_question` tool to query. 
+
+**Memory Storage Protocol (Auto-Indexing):** Writing to Layer 2 (SQLite table) requires TWO steps — always:
+1. Write the structured data to the table.
+2. Immediately ingest a Layer 3 pointer indicating the data exists via `ingest_memory.py`.
+Without the Layer 3 semantic pointer, the Layer 2 data is invisible to future agents. Both steps are mandatory. No exceptions.
+
+## Session
+**Startup:** `python3 startup.py --import-mode none`
+**Shutdown:** `python3 shutdown.py --commit --auto-yes --summary "..."` — populate summary with actual work done.
+**Handover:** Before closing a long session, write `docs/session_handover.md` to the repo. Format: Task / Status / Last Action / Next Step / Do Not Re-Try / Open Questions.
+
+## Toolkit
+| Skill | Purpose | Mandatory? |
+|---|---|---|
+| `task_manager` | All task.md / BACKLOG edits | **YES — manual edits prohibited** |
+| `time_keeper` | Session tracking | Yes |
+| `morning_muster` | Startup/shutdown | Yes |
+| `telegram_pager` | User notifications | Yes |
+| `memory_router` | All memory access | Yes |
+| `corporate_governance` | Compliance audits | As needed |
+| `google_workspace` | Docs, Sheets, Drive | As needed |
+
+Domain skills: `list_dir ~/.gemini/antigravity/skills/` — read SKILL.md before use.
+
+---
+> Last Modified: 2026-03-19 | Propagated by: scripts/propagate_directives.py → 13 agents

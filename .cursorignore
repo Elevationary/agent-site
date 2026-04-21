@@ -1,13 +1,3 @@
-venv/
-.env
-__pycache__/
-*.pyc
-.DS_Store
-
-# Security Patch
-client_secrets.json
-.env
-*.gsheet
 
 # ==========================================
 # ANTIGRAVITY V2 CONTEXT PROTECTION

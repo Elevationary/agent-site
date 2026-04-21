@@ -19,8 +19,18 @@ def main():
     # Execute the global script passing along any arguments
     print(f"🛑 Invoking Global Morning Muster Shutdown: {global_shutdown_script}")
     try:
-        # Use sys.executable to ensure we use the same python interpreter if needed
-        subprocess.check_call([sys.executable, global_shutdown_script] + sys.argv[1:])
+        args = sys.argv[1:]
+        
+        # If the AI Agent is running this, force non-interactive mode to prevent hangs
+        if os.environ.get("ANTIGRAVITY_AGENT") == "1":
+            if "--auto-yes" not in args and "-y" not in args:
+                args.append("-y")
+            if "--commit" not in args and "-c" not in args:
+                args.append("--commit")
+            # We don't force a message, the script might auto-generate one or use a default session log
+            print("🤖 Agent detected: Auto-setting '-y' and '--commit' to prevent interactive hang.")
+
+        subprocess.check_call([sys.executable, global_shutdown_script] + args)
     except subprocess.CalledProcessError as e:
         sys.exit(e.returncode)
     except KeyboardInterrupt:

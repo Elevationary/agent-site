@@ -2,9 +2,17 @@ import os
 import re
 import datetime
 import sys
+import json
 
-sys.path.append(os.path.expanduser("~/.gemini/antigravity/runtime"))
-from global_paths import resolve_path
+# Add global runtime to path
+runtime_path = os.path.expanduser("~/.gemini/antigravity/runtime")
+sys.path.append(runtime_path)
+
+try:
+    from global_paths import resolve_path
+except ImportError:
+    print("❌ Error: Could not import global_paths. Please ensure the Pathing Engine is deployed.")
+    resolve_path = lambda x: x # Fallback
 
 class StateManager:
     """
@@ -14,25 +22,44 @@ class StateManager:
     
     def __init__(self, workspace_dir, task_path=None):
         self.workspace_dir = workspace_dir
-        self.docs_dir = resolve_path("{ANTIGRAVITY_DATA_DIR}/micro-site/agent-site/docs")
         
-        # Determine Task Path
+        # Determine Data Directory
+        # By default, task.md is local to the code (workspace), but state logs are in Data
+        # Let's try to load CLIENT_ROSTER.json to get data_dir
+        data_docs_dir = os.path.join(workspace_dir, "docs") # Fallback
+        roster_path = os.path.join(workspace_dir, "docs", "CLIENT_ROSTER.json")
+        if os.path.exists(roster_path):
+            try:
+                with open(roster_path, "r") as f:
+                    roster = json.load(f)
+                    if "data_dir" in roster:
+                        data_docs_dir = resolve_path(roster["data_dir"]) + "/docs"
+            except Exception as e:
+                print(f"⚠️ Error reading CLIENT_ROSTER.json: {e}")
+        else:
+            # If no roster, try to resolve the workspace dir itself if it was passed generically
+            # We'll assume the local docs dir for now if roster missing
+            pass
+
+        self.local_docs_dir = os.path.join(workspace_dir, "docs")
+        self.docs_dir = self.local_docs_dir # Restore docs_dir logic for backward compatibility
+        
+        # Determine Task Path (Task is always local Execution state)
         if task_path and os.path.exists(task_path):
             self.task_path = task_path
             print(f"🎯 Using explicit task path: {task_path}")
         else:
             # Fallback: Prefer Root for Brain, check Docs for Workspace
-            root_task = resolve_path("{ANTIGRAVITY_CODE_DIR}/micro-site/agent-site/task.md")
-            docs_task = os.path.join(self.docs_dir, "task.md")
+            root_task = os.path.join(self.workspace_dir, "task.md")
+            docs_task = os.path.join(self.local_docs_dir, "task.md")
             
             if os.path.exists(root_task):
                 self.task_path = root_task
             else:
                 self.task_path = docs_task
             
-        self.backlog_path = os.path.join(self.docs_dir, "BACKLOG.md")
-        self.session_log_path = os.path.join(self.docs_dir, "SESSION_LOG.md")
-        self.project_state_path = os.path.join(self.docs_dir, "project_state.md")
+        self.backlog_path = os.path.join(self.local_docs_dir, "BACKLOG.md")
+        self.session_log_path = os.path.join(data_docs_dir, "SESSION_LOG.md")
 
     def _read_file(self, path):
         if not os.path.exists(path):
@@ -103,7 +130,7 @@ class StateManager:
         
         for line in raw_lines:
             stripped = line.strip()
-            if not stripped.startswith("- [ ]") or "PROTOCOL ZERO" in stripped:
+            if not (stripped.startswith("- [ ]") or stripped.startswith("* [ ]")) or "PROTOCOL ZERO" in stripped:
                 continue
                 
             # Date Check: (Date: 2026-02-11)
@@ -130,53 +157,6 @@ class StateManager:
             valid_items.append(stripped)
             
         return valid_items[:limit]
-
-    def update_project_state(self, new_items):
-        """Smart Append: Only adds items NOT already in Recent Log."""
-        if not new_items:
-            return 
-        
-        current_lines = self._read_file(self.project_state_path)
-        
-        # Create a set of existing "clean" tasks for fast lookup
-        existing_fingerprints = set()
-        for line in current_lines:
-            if line.strip().startswith("-"):
-                 existing_fingerprints.add(self.sanitize_task(line))
-        
-        items_to_add = []
-        for item in new_items:
-            fingerprint = self.sanitize_task(item)
-            if fingerprint and fingerprint not in existing_fingerprints:
-                items_to_add.append(item)
-        
-        if not items_to_add:
-            # print(f"✨ Project State is up to date (No new items). Found {len(existing_fingerprints)} existing.")
-            return
-
-        print(f"📝 Appending {len(items_to_add)} new items to Project State...")
-        
-        # Smart Insertion Logic
-        today = datetime.datetime.now().strftime("%Y-%m-%d")
-        new_lines = [f"- [{today}]: {item} <!-- imported -->" for item in items_to_add]
-        
-        log_header = "## 📝 Recent Accomplishments (Log)"
-        insertion_index = -1
-        
-        for i, line in enumerate(current_lines):
-            if log_header in line:
-                insertion_index = i
-                break
-        
-        if insertion_index != -1:
-            # Insert immediately after header
-            # Check if next line is empty, if so, insert after it? No, keep it tight.
-            current_lines[insertion_index+1:insertion_index+1] = new_lines
-        else:
-            # Fallback: Append to end
-            current_lines.extend(new_lines)
-            
-        self._write_file(self.project_state_path, current_lines)
 
     def update_session_log(self, completed_tasks, pending_tasks, duration="0:00", status="Session Closed"):
         """
@@ -265,13 +245,6 @@ class StateManager:
             block.append("- No tasks completed.")
             
         block.append("")
-        block.append("### 🫷 Pending Items")
-        if pending_tasks:
-            block.extend([f"- {task}" for task in pending_tasks])
-        else:
-            block.append("- No pending items.")
-            
-        block.append("")
         block.append("⏱️ Session Stats")
         # Note: We are overwriting duration with the LATEST session's duration.
         # Ideally we'd sum them, but we don't have previous duration easily parsed here yet without more complex regex.
@@ -326,6 +299,29 @@ class StateManager:
             for item in items_to_add:
                 f.write(f"- [ ] {item}\n")
 
+    def mark_completed_in_backlog(self, completed_tasks):
+        """Finds completed tasks in BACKLOG.md and checks them off."""
+        if not completed_tasks or not os.path.exists(self.backlog_path):
+            return
+
+        lines = self._read_file(self.backlog_path)
+        done_fingerprints = {self.sanitize_task(t) for t in completed_tasks}
+        
+        changed = False
+        new_lines = []
+        for line in lines:
+            stripped = line.strip()
+            if stripped.startswith("- [ ]") or stripped.startswith("- [/]"):
+                if self.sanitize_task(line) in done_fingerprints:
+                    # Replace the first occurrence of empty/in-progress checkbox with checked
+                    line = line.replace("- [ ]", "- [x]", 1).replace("- [/]", "- [x]", 1)
+                    changed = True
+            new_lines.append(line)
+            
+        if changed:
+            print("✅ Marked completed tasks in BACKLOG.md")
+            self._write_file(self.backlog_path, new_lines)
+
     def archive_completed_tasks(self):
         """
         Scans BACKLOG.md for completed items (- [x]) in pending sections 
@@ -360,12 +356,12 @@ class StateManager:
                 in_recurring_section = False
             
             # Process Items
-            is_task = stripped.startswith("- [x]") or stripped.startswith("- [ ]")
+            is_task = stripped.lower().startswith("- [x]") or stripped.startswith("- [ ]")
             
             if in_recurring_section and is_task:
                  # Recurring items stay where they are, even if checked (for now, or logic can be refined)
                  pending_lines.append(line)
-            elif stripped.startswith("- [x]"):
+            elif stripped.lower().startswith("- [x]"):
                 completed_lines.append(line) # Move to completed
             elif in_completed_section and stripped.startswith("-") and not stripped.startswith("- [ ]"):
                  # Assume items in "Completed" section are completed even if not marked [x]? 
@@ -397,66 +393,6 @@ class StateManager:
             f.write("\n".join(new_content))
             
         print(f"📦 Archived {len(completed_lines)} items to 'Ordered Completed'.")
-
-    def sync_next_steps(self):
-        """
-        Syncs top pending items from BACKLOG.md to '## Next Steps' in project_state.md.
-        Makes Backlog the Single Source of Truth.
-        """
-        if not os.path.exists(self.project_state_path) or not os.path.exists(self.backlog_path):
-            return
-
-        # 1. Get Top Items from Backlog
-        next_tasks = self.get_next_tasks(limit=5) # Get top 5 actionable
-        
-        # 2. Read Project State
-        lines = self._read_file(self.project_state_path)
-        
-        start_idx = -1
-        end_idx = -1
-        
-        # 3. Find Section
-        for i, line in enumerate(lines):
-            if "## Next Steps" in line:
-                start_idx = i
-                continue
-            if start_idx != -1 and line.startswith("##"):
-                end_idx = i
-                break
-        
-        if start_idx == -1:
-            print("⚠️ '## Next Steps' section not found in project_state.md")
-            return
-            
-        if end_idx == -1:
-            end_idx = len(lines)
-            
-        # 4. Construct New Section
-        new_section = [lines[start_idx]] # Keep Header
-        
-        if next_tasks:
-            for task in next_tasks:
-                # Remove checkbox if present in backlog string (get_next_tasks usually keeps it?)
-                # get_next_tasks returns raw lines like "- [ ] Task" or "- Task"
-                # We want to ensure it looks good.
-                clean_task = task
-                if not "- [ ]" in task and not "- [x]" in task:
-                     clean_task = f"- [ ] {task.lstrip('- ').strip()}"
-                
-                # If it already has - [ ], just ensure indentation?
-                # Let's just use the raw string from backlog which is usually correct
-                new_section.append(clean_task)
-        else:
-            new_section.append("- No immediate next steps (Check Backlog).")
-            
-        # Add a blank line buffer
-        new_section.append("")
-        
-        # 5. Replace
-        print(f"🔄 Syncing {len(next_tasks)} Next Steps from Backlog to Project State...")
-        lines[start_idx:end_idx] = new_section
-        
-        self._write_file(self.project_state_path, lines)
 
 # Usage Example
 if __name__ == "__main__":
