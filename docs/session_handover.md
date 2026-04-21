@@ -1,46 +1,29 @@
 # Session Handover
 
-**Task:** Phase 2 GEO Enhancement + Phase 3 SEO Enhancement + P4D3 MCP update_task tool
-**Status:** In progress — all tasks logged in P4D3, MCP server rebuilt, execution pending
+**Task:** Phase 2 GEO Enhancement (remaining tasks)
+**Status:** Phase 3 SEO complete and committed. Phase 2 blocked on B1 (James: Cloudflare bot unblock).
 
 **Last Action:**
-- Built and deployed `elevationary_p4d3_update_task` tool in `Elevationary_OS/mcp/src/index.ts` + `p4d3Manager.ts` — bundle rebuilt at 32.2kb, server process killed (restart required to activate)
-- Completed full SEO audit of agent.elevationary.com, elevationary.com, elevationary.ai — 18 findings documented
-- Logged 26 P4D3 tasks across 3 phases: Phase 1 AEO (2 tasks, completed), Phase 2 GEO (8 tasks), Phase 3 SEO (18 tasks)
-- Expanded FAQ from 3 placeholders to 11 AEO-optimized Q&As — committed, live
-- Stripe webhook registered against agent.elevationary.com/api/webhook_stripe (test env), signing secret injected into Cloudflare via Wrangler
-- Phase 9 backlog clearance complete: legal.njk enriched, about.njk updated, project_state.md restored, git hygiene committed
+- Completed all 13 Phase 3 SEO tasks (A1–A13): duplicate OG tags removed, og:site_name fixed, homepage description expanded, founder URL typo fixed, product schema updated (Service type, priceValidUntil removed), sitemap made dynamic via collections.all, noindex added to private pages, product descriptions enriched, llms.txt and openapi.yaml created, Organization schema enriched, agent-insider pay_url fixed
+- Fixed 5 P4D3 task owners from "Agent" → "James" (task_4b7c8d9e through task_8f1a2b3c)
+- All committed: `631de08` — clean build (18 files, 0 errors)
 
 **Next Step:**
-1. **Restart Claude Code** to load new `elevationary_p4d3_update_task` MCP tool
-2. **Fix 5 task owners** — update Owner from "Agent" → "James" on these P4D3 task IDs (project: Update_EOs):
-   - `task_4b7c8d9e` — B1: Cloudflare disable AI scraper blocking
-   - `task_5c8d9e0f` — B2: Verify robots.txt after Cloudflare change
-   - `task_6d9e0f1a` — C1: Fix elevationary.com page title
-   - `task_7e0f1a2b` — C2: Fix newletter-stories typo in Google Sites nav
-   - `task_8f1a2b3c` — C3: Evaluate migrating elevationary.com to Cloudflare Pages
-3. **Execute Phase 3 SEO tasks A1–A13** (all in agent-site codebase — no James input needed):
-   - A1: Remove duplicate OG tags from base.njk
-   - A2: Fix og:site_name to fixed string
-   - A3: Expand homepage meta description to 150–160 chars
-   - A4: Fix site.json founder URL backtick typo
-   - A5: Remove expired priceValidUntil from product schema
-   - A6: Change product @type from Product → ProfessionalService
-   - A7: Add missing pages to sitemap + dynamic lastmod
-   - A8: Add robots noindex to /premium/, /unlock/, /subscribe/
-   - A9: Enrich product descriptions in products.json
-   - A10: Create llms.txt
-   - A11: Create openapi.yaml
-   - A12: Enrich Organization schema
-   - A13: Fix agent-insider purchase_url + remove HubSpot refs from site.json
-4. **James: B1** — Cloudflare dashboard → Security → Bots → disable AI scraper blocking (ClaudeBot, GPTBot, Google-Extended currently blocked by Cloudflare-injected robots.txt rules)
-5. **Execute Phase 2 GEO tasks** after B1 is confirmed
+1. **James: B1** — Cloudflare dashboard → Security → Bots → disable AI scraper blocking (ClaudeBot, GPTBot, Google-Extended blocked by Cloudflare)
+2. After B1 confirmed: **B2** — Verify robots.txt shows AI bots allowed
+3. **Execute Phase 2 GEO tasks** (after B1):
+   - Add `Service` schema to all consulting product pages (task_e5f6a0b1)
+   - Strengthen `ai-plugin.json` `description_for_model` (task_f6a0b1c2)
+   - Add RFP `ContactPoint` schema and `/rfp/` landing page (task_a0b1c2d3)
+4. **Consider git push** — 19 commits ahead of origin/main; push when ready to deploy
 
 **Do Not Re-Try:**
 - Do NOT run `startup.py` or `shutdown.py` — Gemini owns these
-- Do NOT use `wrangler secret put` without confirming the secret value first — Stripe generates a new whsec_ per endpoint registration
-- The Cloudflare bot blocking is injected by Cloudflare, NOT in our robots.txt source file — fixing it requires the Cloudflare dashboard, not a code change
+- Do NOT use `wrangler secret put` without confirming the secret value first
+- The Cloudflare bot blocking is injected by Cloudflare, NOT in our robots.txt source — fixing requires Cloudflare dashboard
+- HubSpot block in `site.json` is still needed — hubspot-form.njk uses it; do not remove
 
 **Open Questions:**
 - Should elevationary.com migrate from Google Sites to Cloudflare Pages? (C3 — strategic decision for James)
 - Stripe test vs. live key: webhook and secrets are all in test env — needs live key migration when ready for production
+- A13 partial: HubSpot refs in site.json were intentionally preserved (still in use). Only pay_url was fixed.
