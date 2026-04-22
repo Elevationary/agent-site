@@ -22,10 +22,11 @@
 - C3: Strategic decision — migrate elevationary.com to Cloudflare Pages?
 - Stripe: Migrate test keys to live keys when ready for production
 
-**P4D3 Blocker — Needs James:**
-To complete items 3 and 4 from James's request (mark completed tasks + add C1/C2/C3/Stripe as new tasks), need the P4D3 project hierarchy:
-- `organization_id`, `portfolio_id`, `program_id`, `project_id` for the agent-site Phase 2/3 work
-- The `update_status` calls also need the `projectId` for task IDs: task_1a2b3c4d through task_3a6b7c8d (Phase 3), task_e5f6a0b1, task_f6a0b1c2, task_a0b1c2d3 (Phase 2), task_4b7c8d9e, task_5c8d9e0f (B1/B2)
+**P4D3 — Complete:**
+- 18 tasks marked Completed (date: 2026-04-21): all Phase 3 SEO (A1–A13), Phase 2 GEO (B1, B2, task_e5f6a0b1, task_f6a0b1c2, task_a0b1c2d3)
+- task_9f1a2b3c inserted: "Migrate Stripe from test environment to live production keys" — Owner: James, Status: Future
+- C1/C2/C3 (task_6d9e0f1a, task_7e0f1a2b, task_8f1a2b3c) already exist in P4D3, Owner: James
+- Hierarchy: Elevationary / Operations / Web_Presence / Update_EOs
 
 **Do Not Re-Try:**
 - Do NOT run `startup.py` or `shutdown.py` — Gemini owns these
