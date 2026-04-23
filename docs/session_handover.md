@@ -1,42 +1,58 @@
 # Session Handover
 
-**Task:** Phase 4 Content Pipeline — or C1/C2/C3 elevationary.com fixes (blocked on James)
-**Status:** Phase 2 GEO + Phase 3 SEO complete, ORS passed, walkthrough written, pushed to origin/main. P4D3 task updates pending (need project hierarchy IDs from James — see below).
+_Last updated: 2026-04-22_
 
-**Last Action:**
-- Phase 3 SEO A1–A13: all complete and committed (`631de08`)
-- Phase 2 GEO: Service schema enriched, ai-plugin.json strengthened, /rfp/ page live (`de539e9`)
-- B1/B2: Cloudflare AI bot blocking disabled, robots.txt verified clean
-- Notion legacy_archive scrubbed from git history via filter-branch; pushed (`d8995db`)
-- ORS log written: `docs/ORS_logs/2026-04-21-phase2-phase3-seo-geo.md` — ORS PASS
-- Walkthrough written: `docs/walkthroughs/2026-04-21-phase2-phase3-seo-geo.md`
-- ORS carry-forward: `product-page.njk` needs `eleventyExcludeFromCollections: true` + `robots: noindex`
+---
 
-**Next Step (Agent-executable):**
-1. Fix `product-page.njk` ORS carry-forward (minor, 2 min)
-2. Phase 4: Content pipeline (D1 → Postmark sync, newsletter ingestion, draft generation)
+## Active Project: Migrate_ElevationaryCom (elevationary-main-site)
 
-**Next Step (Requires James):**
-- C1: elevationary.com Google Sites — fix page title
-- C2: elevationary.com Google Sites — fix "newletter-stories" nav typo
-- C3: Strategic decision — migrate elevationary.com to Cloudflare Pages?
-- Stripe: Migrate test keys to live keys when ready for production
+**Repo:** `/Users/jamesszmak/Antigravity/micro-site/elevationary-main-site`
+**Deployed:** Cloudflare Pages → `elevationary.com` (live, DNS cutover complete 2026-04-22)
 
-**P4D3 — Complete:**
-- 18 tasks marked Completed (date: 2026-04-21): all Phase 3 SEO (A1–A13), Phase 2 GEO (B1, B2, task_e5f6a0b1, task_f6a0b1c2, task_a0b1c2d3)
-- task_9f1a2b3c inserted: "Migrate Stripe from test environment to live production keys" — Owner: James, Status: Future
-- C1/C2/C3 (task_6d9e0f1a, task_7e0f1a2b, task_8f1a2b3c) already exist in P4D3, Owner: James
-- Hierarchy: Elevationary / Operations / Web_Presence / Update_EOs
+**Phase 1 Status:** D1.1–D1.5 complete. One task remains for James before Phase 1 is fully closed.
 
-**Do Not Re-Try:**
+### Completed this session (2026-04-22)
+- D1.1: Scaffold (Eleventy 3.1.2, Cloudflare Pages, custom domain)
+- D1.2: All 7 content pages populated from Apify scrape (index, about, services, contact, legal, newsletter-stories, story-viewer)
+- D1.3: SEO/Schema verification — title tags, meta, OG, canonical, ProfessionalService schema, robots.txt, sitemap.xml, llms.txt, ai-plugin.json (all 10 tasks Completed in P4D3)
+- D1.4: Redirect architecture — `_redirects` file (13 rules), www→apex Bulk Redirect in Cloudflare, DNS cutover, SSL verified (tasks ec140001–ec140006 Completed)
+- D1.5: ORS live verification — all 7 pages 200, all 4 AEO files 200, all redirect rules verified on live domain
+
+### Remaining — James-owned
+- **task_ec140007**: Submit `https://elevationary.com/sitemap.xml` to Google Search Console → closes Phase 1
+
+### Phase 2 Gate (blocked)
+- Requires: Elevationary_OS design doc from James (task_ec000004)
+- Requires: Phase 1 fully closed (pending GSC only)
+
+### Open Decisions (James)
+- **task_ec000003**: elevationary.ai — redirect to elevationary.com, or standalone site?
+- **task_ec000005**: Newsletter handoff format for content pipeline
+- **task_ec000004**: Elevationary_OS design doc for Phase 2 visual design
+
+### Key Lesson — Cloudflare Redirect Loop (2026-04-22)
+A pre-existing Single Redirect rule named "Apex → www.elevationary.com" was active in the Cloudflare zone. Combined with our new www→apex Bulk Redirect, this created an infinite 301 loop. Found via **Rules → Trace**. Deleted the Single Redirect rule to resolve. **Before adding any www→apex or apex→www rules to a zone, always run Rules → Trace first to check for conflicting rules.**
+
+---
+
+## Agent Site (agent.elevationary.com)
+
+**Repo:** `/Users/jamesszmak/Antigravity/micro-site/agent-site`
+**Last commit:** `4ed72bb` (interim session handover + backlog update)
+
+### Next Step (Agent-executable)
+1. Fix `product-page.njk` ORS carry-forward: add `eleventyExcludeFromCollections: true` + `robots: noindex` (2 min)
+2. Phase 4: Content pipeline — D1 → Postmark sync, newsletter ingestion, draft generation (blocked on task_ec000005 newsletter handoff format decision)
+
+### Next Step (Requires James)
+- Stripe: Migrate test keys to live keys (task_9f1a2b3c)
+
+---
+
+## Do Not Re-Try (agent-site)
 - Do NOT run `startup.py` or `shutdown.py` — Gemini owns these
 - Do NOT use `wrangler secret put` without confirming the secret value first
 - Cloudflare bot blocking is injected by Cloudflare, NOT in robots.txt source — fix requires Cloudflare dashboard
 - HubSpot block in `site.json` is still needed — hubspot-form.njk uses it; do not remove
-- **Cloudflare AI bot architecture:** "Block AI bots" master switch overrides ALL per-bot AI Crawl Control settings. Current state: master = "Do not block," all AI bots allowed. Per-bot controls only work after master is "Do not block." Do NOT touch master switch to block individual training bots — use per-bot AI Crawl Control only.
-- `git filter-branch` was used to rewrite 24 commits — if Gemini or another agent pulls from origin, they will get the rewritten history. No force pull needed for this repo (solo).
-
-**Open Questions:**
-- P4D3 project hierarchy IDs — needed to complete task status updates
-- Should elevationary.com migrate from Google Sites to Cloudflare Pages? (C3 — strategic)
-- Stripe test vs. live key migration timing
+- **Cloudflare AI bot architecture:** "Block AI bots" master switch overrides ALL per-bot AI Crawl Control settings. Current state: master = "Do not block," all AI bots allowed. Per-bot controls only work after master is "Do not block."
+- `git filter-branch` was used to rewrite 24 commits — rewritten history already on origin/main. No force pull needed (solo repo).

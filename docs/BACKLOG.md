@@ -3,19 +3,19 @@
 ## Blocked on James
 These items cannot be automated. Waiting on manual action.
 
-- [ ] **C1: elevationary.com title** — Edit Google Sites page title to "Elevationary | AI Strategy & Enterprise Transformation Consulting" (P4D3: task_6d9e0f1a)
-- [ ] **C2: Fix "newletter-stories" typo** — Google Sites nav link missing 's' (P4D3: task_7e0f1a2b)
-- [ ] **C3: Strategic — Evaluate migrating elevationary.com** from Google Sites to Cloudflare Pages for full SEO/JSON-LD control (P4D3: task_8f1a2b3c)
+- [ ] **GSC Sitemap (task_ec140007)** — Submit `https://elevationary.com/sitemap.xml` to Google Search Console → closes Phase 1 of Migrate_ElevationaryCom
+- [ ] **elevationary.ai disposition (task_ec000003)** — Redirect to elevationary.com, or build as standalone site?
+- [ ] **Newsletter handoff format (task_ec000005)** — Decide format for content pipeline ingestion (blocks Phase 4 content pipeline on agent-site)
+- [ ] **Elevationary_OS design doc (task_ec000004)** — Required to unlock Phase 2 visual redesign of elevationary.com
 - [ ] **Social Media:** Create Twitter account for `@ElevationaryAI`
-- [ ] **Google Sites Pages:** Create matching About and Legal pages on `elevationary.com` main site
-- [ ] **Stripe Production:** Migrate from test key (`sk_test_...`) to live key — re-register webhook endpoint and update Cloudflare secrets
-- [ ] **P4D3 hierarchy IDs:** Provide `organization_id`, `portfolio_id`, `program_id`, `project_id` for agent-site Phase 2/3 tasks so Claude Code can mark them complete and add C1/C2/C3/Stripe as new tasks
+- [ ] **Stripe Production** — Migrate test keys to live keys (P4D3: task_9f1a2b3c)
 
 ## Minor Cleanup (Agent-executable, low priority)
-- [ ] Add `eleventyExcludeFromCollections: true` + `robots: noindex` to empty `product-page.njk` (ORS carry-forward)
+- [ ] Add `eleventyExcludeFromCollections: true` + `robots: noindex` to empty `product-page.njk` (agent-site ORS carry-forward)
 
-## Current Sprint — Phase 4: Content Pipeline
+## Current Sprint — Phase 4: Content Pipeline (agent-site)
 _Architecture: Cloudflare D1 (subscribers) + Postmark (delivery) + Instantly (outreach)_
+_Blocked on: newsletter handoff format decision (task_ec000005 — James)_
 
 - [ ] **Ingestion Pipeline:** Scripts to fetch and stage newsletter content
 - [ ] **Draft Generation:** LLM prompt chain for "3-2-1" and "Full Story" formats
@@ -31,6 +31,16 @@ _Architecture: Cloudflare D1 (subscribers) + Postmark (delivery) + Instantly (ou
 - Architect Archival Strategy (R2): Implement "Current Year" vs "Archive" split to manage 20k file limit
 
 ## Completed
+
+### Migrate_ElevationaryCom — Phase 1 (2026-04-22)
+- [X] D1.1: Scaffold elevationary-main-site (Eleventy 3.1.2, Cloudflare Pages, custom domain)
+- [X] D1.2: All 7 content pages populated (index, about, services, contact, legal, newsletter-stories, story-viewer)
+- [X] D1.3: SEO/Schema — title tags, meta, OG, canonical, ProfessionalService schema, robots.txt, sitemap.xml, llms.txt, ai-plugin.json
+- [X] D1.4: Redirect architecture — 13-rule `_redirects`, www→apex Bulk Redirect, DNS cutover, SSL verified
+- [X] D1.5: ORS live verification — all 7 pages 200, all 4 AEO files 200, all redirect rules live
+- [X] C1: elevationary.com title — superseded by migration (new site has correct title tag)
+- [X] C2: "newletter-stories" typo — fixed via `_redirects` 301 rules on new site
+- [X] C3: Strategic migration decision — executed (elevationary.com now on Cloudflare Pages)
 
 ### Phase 2: GEO Enhancement (2026-04-21)
 - [X] B1: Cloudflare "Block AI bots" disabled — master switch = Do not block
