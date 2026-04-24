@@ -25,7 +25,12 @@ export const onRequestPost = async (context) => {
             : null;
 
     if (!priceId) {
-        return new Response(JSON.stringify({ error: 'Invalid plan' }), {
+        return new Response(JSON.stringify({
+            error: 'Invalid plan',
+            debug_plan: plan,
+            debug_monthly_set: !!context.env.STRIPE_PRICE_ID_MONTHLY,
+            debug_annual_set: !!context.env.STRIPE_PRICE_ID_ANNUAL,
+        }), {
             status: 400,
             headers: { 'Content-Type': 'application/json' },
         });
