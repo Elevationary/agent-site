@@ -55,13 +55,13 @@ Run in order when James signals end of session ("run wrap-up"):
 2. **Commit** — `git add <files> && git commit -m "..."` for any uncommitted work.
 3. **Write handover** — Read current `docs/session_handover.md` first, then rewrite with What Was Done + Remaining Work.
 4. **Update backlog** — Read current `docs/backlog.md` first, mark completed items `[X]`, add any new pending items.
-5. **Write session log** — Derive achievement list from the "What Was Done" section just written, then run:
+5. **Run wrap-up script** — Handles session log + Telegram page in one command:
    ```bash
-   python3 ~/.gemini/antigravity/skills/morning_muster/scripts/claude_session_log_update.py \
+   python3 ~/.gemini/antigravity/skills/morning_muster/scripts/claude_wrap_up.py \
+     --agent "Agent Site" \
      --workspace ~/Antigravity/micro-site/agent-site \
      --focus "<one-line session theme>" \
      --achievements "Achievement 1" "Achievement 2" \
      --pending "Pending item 1" "Pending item 2"
    ```
    Achievements are tagged `(Claude Code)` automatically. Gemini's entries for the same day are preserved — `StateManager` merges, never overwrites.
-6. **Page complete** — `python3 ~/.gemini/antigravity/skills/telegram_pager/scripts/send_notification.py "Agent Site" "<summary>" --type complete`

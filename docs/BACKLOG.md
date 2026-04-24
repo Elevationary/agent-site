@@ -1,17 +1,18 @@
 # Backlog
 
 ## Blocked on James
-These items cannot be automated. Waiting on manual action.
+These items cannot be automated. Waiting on manual action or decision.
 
-- [ ] **GSC Sitemap (task_ec140007)** — Submit `https://elevationary.com/sitemap.xml` to Google Search Console → closes Phase 1 of Migrate_ElevationaryCom
+- [X] **GSC Sitemap (task_ec140007)** — Submitted 2026-04-24, 7 pages discovered — Phase 1 of Migrate_ElevationaryCom fully closed
+- [X] **Stripe Production (task_9f1a2b3c)** — Live keys deployed 2026-04-24; monthly ($19.95) + annual ($199.95) verified working end-to-end
+- [ ] **Newsletter handoff format (task_ec000005)** — Decide source + format for content pipeline ingestion (blocks entire Phase 4 build)
 - [ ] **elevationary.ai disposition (task_ec000003)** — Redirect to elevationary.com, or build as standalone site?
-- [ ] **Newsletter handoff format (task_ec000005)** — Decide format for content pipeline ingestion (blocks Phase 4 content pipeline on agent-site)
 - [ ] **Elevationary_OS design doc (task_ec000004)** — Required to unlock Phase 2 visual redesign of elevationary.com
 - [ ] **Social Media:** Create Twitter account for `@ElevationaryAI`
-- [ ] **Stripe Production** — Migrate test keys to live keys (P4D3: task_9f1a2b3c)
 
 ## Minor Cleanup (Agent-executable, low priority)
-- [ ] Add `eleventyExcludeFromCollections: true` + `robots: noindex` to empty `product-page.njk` (agent-site ORS carry-forward)
+- [X] Add `eleventyExcludeFromCollections: true` + `robots: noindex` to empty `product-page.njk` — committed e44921c
+- [ ] Delete orphan Cloudflare Pages project `agent-site` (no Git, no custom domain — only `agent-site2` is live)
 
 ## Current Sprint — Phase 4: Content Pipeline (agent-site)
 _Architecture: Cloudflare D1 (subscribers) + Postmark (delivery) + Instantly (outreach)_
@@ -32,15 +33,22 @@ _Blocked on: newsletter handoff format decision (task_ec000005 — James)_
 
 ## Completed
 
+### Session 2026-04-24
+- [X] GSC sitemap submitted for elevationary.com — Phase 1 closed (task_ec140007)
+- [X] Stripe live mode end-to-end — monthly + annual checkout verified (task_9f1a2b3c)
+- [X] Dual pricing UI on /unlock/ — monthly ($19.95) and annual ($199.95) cards
+- [X] config/products.json + scripts/stripe-sync.js — idempotent Stripe product sync infrastructure
+- [X] Cloudflare Pages project naming diagnosed — live project is agent-site2, not agent-site
+
 ### Migrate_ElevationaryCom — Phase 1 (2026-04-22)
 - [X] D1.1: Scaffold elevationary-main-site (Eleventy 3.1.2, Cloudflare Pages, custom domain)
 - [X] D1.2: All 7 content pages populated (index, about, services, contact, legal, newsletter-stories, story-viewer)
 - [X] D1.3: SEO/Schema — title tags, meta, OG, canonical, ProfessionalService schema, robots.txt, sitemap.xml, llms.txt, ai-plugin.json
 - [X] D1.4: Redirect architecture — 13-rule `_redirects`, www→apex Bulk Redirect, DNS cutover, SSL verified
 - [X] D1.5: ORS live verification — all 7 pages 200, all 4 AEO files 200, all redirect rules live
-- [X] C1: elevationary.com title — superseded by migration (new site has correct title tag)
-- [X] C2: "newletter-stories" typo — fixed via `_redirects` 301 rules on new site
-- [X] C3: Strategic migration decision — executed (elevationary.com now on Cloudflare Pages)
+- [X] C1: elevationary.com title — superseded by migration
+- [X] C2: "newletter-stories" typo — fixed via `_redirects` 301 rules
+- [X] C3: Strategic migration decision — executed
 
 ### Phase 2: GEO Enhancement (2026-04-21)
 - [X] B1: Cloudflare "Block AI bots" disabled — master switch = Do not block
@@ -51,20 +59,7 @@ _Blocked on: newsletter handoff format decision (task_ec000005 — James)_
 - [X] Add sales ContactPoint to Organization schema linking to /rfp/
 
 ### Phase 3: SEO Enhancement (2026-04-21)
-- [X] A1: Remove duplicate OG tags from base.njk (task_1a2b3c4d)
-- [X] A2: Fix og:site_name to fixed string "Elevationary Agents" (task_2b3c4d5e)
-- [X] A3: Expand homepage meta description 38 → 160 chars (task_3c4d5e6f)
-- [X] A4: Fix site.json founder URL backtick typo (task_4d5e6f0a)
-- [X] A5: Remove expired priceValidUntil from product schema (task_5e6f0a1b)
-- [X] A6: Change product schema @type Product → Service (task_6f0a1b2c)
-- [X] A7: Dynamic sitemap via collections.all — dynamic lastmod, deduped (task_7a0b1c2d)
-- [X] A8: Add robots noindex to /unlock/ and /subscribe/ (task_8b1c2d3e)
-- [X] A9: Enrich all 5 product descriptions to 150+ chars (task_9c2d3e4f)
-- [X] A10: Create llms.txt (task_0d3e4f5a)
-- [X] A11: Create openapi.yaml (task_1e4f5a6b)
-- [X] A12: Enrich Organization schema (task_2f5a6b7c)
-- [X] A13: Fix agent-insider pay_url from "#" to "/unlock/" (task_3a6b7c8d)
-- [X] Fix 5 P4D3 task owners from Agent → James (task_4b7c8d9e through task_8f1a2b3c)
+- [X] A1–A13: All SEO tasks complete (OG tags, meta descriptions, schema types, sitemap, llms.txt, openapi.yaml, org schema)
 
 ### Phase 9: Clear Backlog / Solid Foundation (2026-04-20)
 - [X] Git hygiene, project_state.md restored, legal.njk + about.njk enriched, BACKLOG cleanup
