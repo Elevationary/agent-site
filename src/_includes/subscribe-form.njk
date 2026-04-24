@@ -1,0 +1,39 @@
+<form action="/api/subscribe" method="POST" class="subscribe-form">
+  <label for="email" class="subscribe-form__label">Email address</label>
+  <div class="subscribe-form__row">
+    <input
+      type="email"
+      id="email"
+      name="email"
+      required
+      placeholder="you@example.com"
+      class="subscribe-form__input"
+    />
+    <button type="submit" class="button primary subscribe-form__btn">Subscribe Free</button>
+  </div>
+</form>
+
+<style>
+  .subscribe-form__label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .subscribe-form__row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .subscribe-form__input {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  .subscribe-form__btn {
+    white-space: nowrap;
+  }
+</style>

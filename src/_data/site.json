@@ -4,11 +4,6 @@
   "logo": "/assets/elevationary-logo-512.png",
   "orgId": "https://agent.elevationary.com/#org",
   "twitter": "@ElevationaryAI",
-  "hubspot": {
-    "portalId": "244586631",
-    "formId": "d4edd30c-32d7-4073-923c-52bbb50074b0",
-    "region": "na2"
-  },
   "founder": {
     "name": "James Szmak",
     "url": "https://www.elevationary.com/about"
