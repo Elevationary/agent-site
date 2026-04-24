@@ -45,7 +45,11 @@ export const onRequestPost = async (context) => {
             headers: { 'Content-Type': 'application/json' },
         });
     } catch (err) {
-        return new Response(JSON.stringify({ error: err.message }), {
+        const key = context.env.STRIPE_SECRET_KEY || '';
+        return new Response(JSON.stringify({
+            error: err.message,
+            debug_key_prefix: key.substring(0, 12),
+        }), {
             status: 400,
             headers: { 'Content-Type': 'application/json' },
         });
