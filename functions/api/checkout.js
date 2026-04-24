@@ -1,6 +1,11 @@
 
 import Stripe from 'stripe';
 
+const PRICE_IDS = {
+    monthly: 'price_1S9FswC5seLx7yR7SztdL6JE',
+    annual:  'price_1S9FswC5seLx7yR7l17qdjXM',
+};
+
 export const onRequestPost = async (context) => {
     const stripe = new Stripe(context.env.STRIPE_SECRET_KEY, {
         apiVersion: '2023-10-16',
@@ -18,19 +23,10 @@ export const onRequestPost = async (context) => {
         });
     }
 
-    const priceId = plan === 'annual'
-        ? context.env.STRIPE_PRICE_ID_ANNUAL
-        : plan === 'monthly'
-            ? context.env.STRIPE_PRICE_ID_MONTHLY
-            : null;
+    const priceId = PRICE_IDS[plan];
 
     if (!priceId) {
-        return new Response(JSON.stringify({
-            error: 'Invalid plan',
-            debug_plan: plan,
-            debug_monthly_set: !!context.env.STRIPE_PRICE_ID_MONTHLY,
-            debug_annual_set: !!context.env.STRIPE_PRICE_ID_ANNUAL,
-        }), {
+        return new Response(JSON.stringify({ error: 'Invalid plan' }), {
             status: 400,
             headers: { 'Content-Type': 'application/json' },
         });
