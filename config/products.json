@@ -1,0 +1,13 @@
+{
+  "products": [
+    {
+      "id": "crm-insights",
+      "name": "CRM Insights (Practical AI Applications)",
+      "description": "Weekly deep-dive intelligence briefings on AI applications in CRM and sales automation.",
+      "prices": {
+        "monthly": { "amount": 1995, "interval": "month" },
+        "annual":  { "amount": 19995, "interval": "year" }
+      }
+    }
+  ]
+}
