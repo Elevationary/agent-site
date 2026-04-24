@@ -12,19 +12,35 @@ robots: noindex, nofollow
   <h1>Unlock the Revenue Engine</h1>
   <p class="lead">You have reached a restricted area. To access our premium agent protocols, deep-dive strategies, and the full "3-2-1" intelligence briefing, you must be an active subscriber.</p>
   
-  <div class="pricing-card">
-    <h2>Agent Insider</h2>
-    <p class="price">$19/mo</p>
-    <ul>
-      <li>✅ Full Access to /premium/ signals</li>
-      <li>✅ Weekly "3-2-1" Deep Dive</li>
-      <li>✅ Agentic Commerce Protocols</li>
-    </ul>
-    
-    <!-- Stripe Checkout -->
-    <button id="checkout-button" class="button primary">Subscribe via Stripe</button>
-    <p class="small">Already a member? <a href="#">Log in</a></p>
+  <div class="pricing-cards">
+
+    <div class="pricing-card">
+      <h2>Agent Insider — Monthly</h2>
+      <p class="price">$19.95<span>/mo</span></p>
+      <ul>
+        <li>✅ Full Access to /premium/ signals</li>
+        <li>✅ Weekly "3-2-1" Deep Dive</li>
+        <li>✅ Agentic Commerce Protocols</li>
+      </ul>
+      <button class="button primary checkout-button" data-plan="monthly">Subscribe Monthly</button>
+    </div>
+
+    <div class="pricing-card pricing-card--featured">
+      <p class="badge">Best Value — Save $39.45/yr</p>
+      <h2>Agent Insider — Annual</h2>
+      <p class="price">$199.95<span>/yr</span></p>
+      <p class="price-note">Equivalent to $16.66/mo</p>
+      <ul>
+        <li>✅ Full Access to /premium/ signals</li>
+        <li>✅ Weekly "3-2-1" Deep Dive</li>
+        <li>✅ Agentic Commerce Protocols</li>
+        <li>✅ 2 months free vs. monthly</li>
+      </ul>
+      <button class="button primary checkout-button" data-plan="annual">Subscribe Annually</button>
+    </div>
+
   </div>
+  <p class="small" style="text-align:center;margin-top:1rem;">Already a member? <a href="#">Log in</a></p>
 
   <hr />
 
@@ -33,30 +49,35 @@ robots: noindex, nofollow
   {% include "hubspot-form.njk" %}
 </div>
 
-<script src="https://js.stripe.com/v3/"></script>
 <script>
-  const checkoutButton = document.getElementById('checkout-button');
+  document.querySelectorAll('.checkout-button').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const plan = btn.dataset.plan;
+      const original = btn.innerText;
+      btn.disabled = true;
+      btn.innerText = 'Redirecting...';
 
-  checkoutButton.addEventListener('click', async () => {
-    checkoutButton.disabled = true;
-    checkoutButton.innerText = "Redirecting...";
+      try {
+        const response = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ plan }),
+        });
+        const data = await response.json();
 
-    try {
-      const response = await fetch('/api/checkout', { method: 'POST' });
-      const data = await response.json();
-
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        alert('Payment setup failed: ' + (data.error || 'Unknown error'));
-        checkoutButton.disabled = false;
-        checkoutButton.innerText = "Subscribe via Stripe";
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          alert('Payment setup failed: ' + (data.error || 'Unknown error'));
+          btn.disabled = false;
+          btn.innerText = original;
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Network error. Please try again.');
+        btn.disabled = false;
+        btn.innerText = original;
       }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Network error. Please try again.');
-        checkoutButton.disabled = false;
-        checkoutButton.innerText = "Subscribe via Stripe";
-    }
+    });
   });
 </script>
