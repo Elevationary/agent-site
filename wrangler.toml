@@ -5,7 +5,11 @@ compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "./_site"
 
 [[d1_databases]]
-binding = "DB" # Using 'DB' as the standard binding name
+binding = "DB"
 database_name = "subscribers"
 database_id = "93daa2c0-715e-4ff8-9801-d8be0e2036b8"
+
+[[r2_buckets]]
+binding = "NEWSLETTER_BUCKET"
+bucket_name = "gemini-content-factory"
 
