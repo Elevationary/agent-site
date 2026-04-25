@@ -27,40 +27,51 @@ A pre-existing Single Redirect rule named "Apex → www.elevationary.com" was ac
 ## Agent Site (agent.elevationary.com)
 
 **Repo:** `/Users/jamesszmak/Antigravity/micro-site/agent-site`
-**Last commit:** `9c805d7` (fix: ORS remediation — subscribe/unsubscribe hardening)
+**Last commit:** `94f5768` (fix: ORS remediation — checkout.js + unlock.njk updated for 3-tier pricing)
 
 ### Completed this session (2026-04-25)
-- HubSpot fully deprecated — native `subscribe-form.njk` replaces embed on `/subscribe/` and `/unlock/`; `hubspot-form.njk` deleted; HubSpot block removed from `site.json`
-- `subscribe.js` — From: "Elevationary Thinking <newsletter@elevationary.com>", ReplyTo: replies@elevationary.com, welcome copy final, List-Unsubscribe header, D1 fail-hard, Postmark response.ok check
+- HubSpot fully deprecated — native `subscribe-form.njk`, `hubspot-form.njk` deleted, HubSpot block removed from `site.json`
+- `subscribe.js` — From: "Elevationary Thinking <newsletter@elevationary.com>", ReplyTo: replies@elevationary.com, welcome copy, List-Unsubscribe header, D1 fail-hard, Postmark response.ok check
 - `functions/api/unsubscribe.js` — HMAC-SHA256 token verification, D1 status update, `?status=invalid` redirect
-- `/success/` and `/unsubscribed/` pages added; `/unsubscribed/` shows distinct message for invalid token
-- `POSTMARK_SERVER_TOKEN` + `UNSUBSCRIBE_SECRET` both deployed to agent-site2 (production)
+- `/success/` and `/unsubscribed/` pages (distinct invalid-token message)
+- `POSTMARK_SERVER_TOKEN` + `UNSUBSCRIBE_SECRET` deployed to agent-site2
 - R2 binding `NEWSLETTER_BUCKET` → `gemini-content-factory` added to wrangler.toml
-- Newsletter manifest spec v1.0 locked with Newsletter Agent
-- Email addresses: `newsletter@elevationary.com` (sender, Postmark verified), `replies@elevationary.com` (reply-to, Gemini monitors via Gmail)
-- ORS PASS — subscribe/unsubscribe + HubSpot removal, log: `docs/ORS_logs/2026-04-25-subscribe-unsubscribe-hubspot-removal.md`
+- Newsletter manifest spec v1.0 locked; ORS test approval no-op convention agreed
+- Postmark broadcast streams created: `nonprofit` (topics 1–10) + `corporate` (topics 11–20)
+- Stripe migrated to canonical 3-tier structure: Individual Access ($29/$290), Functional Bundle ($69/$690), All-Access Corporate Pass ($149/$1,490) — price IDs in `config/stripe-price-ids.json`
+- `checkout.js` updated — 6-key PRICE_IDS map, stale archived IDs removed
+- `unlock.njk` stopgap — Tier 1 pricing/plan keys corrected (full 3-tier UI is next sprint)
+- Master Business Plan updated — §9.4 HubSpot deprecation + D1 replacement architecture documented
+- Memory system initialised — 4 files: HubSpot deprecated, subscription tiers, MBP reference, Cloudflare project names
+- ORS PASS × 2 — subscribe/unsubscribe + Stripe migration (4 total findings remediated)
 
-### Remaining — Phase 4: Content Pipeline (UNBLOCKED)
-_Architecture: Cloudflare D1 (subscribers) + Postmark (delivery) + R2 (content bus via NEWSLETTER_BUCKET)_
-- **Postmark 20 audience lists** — waiting on topic roster from Newsletter Agent (1–10 nonprofit, 11–20 corporate)
-- **Manifest poller Worker** — hourly Cloudflare cron, polls R2 for manifests, checks approval record, orchestrates Postmark send; skip `notes` containing "ORS test"
-- **D1 → Postmark subscriber sync** — push subscribe/unsubscribe events to correct Postmark list
-- **Site publisher** — read premium R2 keys from manifest, publish to site, generate subscriber access URLs
-- **Preview subscribers** — Stripe promo code (100% off, 30-day trial) + seed 100 known contacts
+### Active Sprint — Subscription Flow Redesign (IN PROGRESS)
+_Critical path: blocks preview subscriber seeding, Phase 4 delivery, and all tier-2/3 revenue_
+
+- D1 schema: add `subscriber_topics` + `subscriber_events` tables
+- `/subscribe/` redesign: 20-topic checkboxes (grouped nonprofit/corporate) + optional Stripe SetupIntent CC capture
+- `subscribe.js` Worker update: persist topic selections to `subscriber_topics`, handle SetupIntent
+- Three-path premium gating: (a) not a subscriber → paywall; (b) free, no CC → Stripe checkout; (c) free, CC on file → one-click activate
+- Full 3-tier `unlock.njk` UI (replace Tier 1 stopgap with all three tiers)
+
+### Remaining — Phase 4: Content Pipeline
+_Architecture: D1 + Postmark (nonprofit/corporate streams) + R2 (NEWSLETTER_BUCKET)_
+- **Manifest poller Worker** — hourly cron, R2 poll, approval check, Postmark send orchestrator; skip "ORS test" approvals; Telegram page on failures + completion
+- **D1 → Postmark subscriber sync** — route subscribers to correct stream by topic series
+- **Site publisher** — premium R2 content → published pages + subscriber access URLs
+- **Preview subscribers** — Stripe promo code (100% off, 30-day) + seed 100 contacts (after subscription flow redesign)
 
 ### Phase 5: Homepage Redesign + GUI (separate session)
-- Homepage (`index.njk`) is currently sparse — needs full landing page redesign
-- Subscriber GUI: web-based approve/review UI for newsletter sends
-- Full visual redesign: blocked on Elevationary_OS design doc (task_ec000004)
-- **P4D3 task to create:** James to insert homepage redesign task with correct project hierarchy IDs
+- Homepage redesign, subscriber GUI (approve/review UI), full visual redesign (blocked on task_ec000004)
 
 ### Remaining Queue (in order)
-1. **Phase 4 content pipeline** — start with Postmark audience lists + manifest poller
-2. **Preview subscribers** — Stripe promo code + seed 100 contacts
-3. **Homepage redesign + GUI** (task_ec000004 gate + separate session)
-4. **elevationary.ai disposition** (task_ec000003) — redirect or standalone?
-5. **Twitter @ElevationaryAI** — James creates account
-6. **Elevationary_OS design doc** (task_ec000004) — James writes, unblocks Phase 2 redesign
+1. **Subscription flow redesign** — IN PROGRESS this session
+2. **Phase 4 content pipeline** — manifest poller, subscriber sync, site publisher
+3. **Preview subscribers** — Stripe promo + 100 contacts
+4. **Homepage redesign + GUI** — separate session
+5. **elevationary.ai disposition** (task_ec000003)
+6. **Twitter @ElevationaryAI** — James creates account
+7. **Elevationary_OS design doc** (task_ec000004)
 
 ---
 
@@ -69,6 +80,7 @@ _Architecture: Cloudflare D1 (subscribers) + Postmark (delivery) + R2 (content b
 - **Cloudflare Pages project name:** The live project is `agent-site2` (has Git + `agent.elevationary.com`). `agent-site` is an orphan with no Git integration. Always run `wrangler pages project list` before any wrangler command.
 - Do NOT use `wrangler pages secret put` without first confirming the correct project name via `wrangler pages project list`
 - Cloudflare bot blocking is injected by Cloudflare, NOT in robots.txt source — fix requires Cloudflare dashboard
-- HubSpot is fully deprecated — `hubspot-form.njk` deleted, `site.json` HubSpot block removed. Do not re-add.
+- HubSpot is fully deprecated — `hubspot-form.njk` deleted, `site.json` HubSpot block removed. Do not re-add. See Master Business Plan §9.4.
+- **Stripe product IDs:** Old "Agent Insider" (`prod_Tp6Mt8OpDrOdyH`) and "CRM Insights" products are archived. All checkout code must use price IDs from `config/stripe-price-ids.json` only. Never hardcode old price IDs.
 - **Cloudflare AI bot architecture:** "Block AI bots" master switch overrides ALL per-bot AI Crawl Control settings. Current state: master = "Do not block," all AI bots allowed.
 - `git filter-branch` was used to rewrite 24 commits — rewritten history already on origin/main. No force pull needed (solo repo).
