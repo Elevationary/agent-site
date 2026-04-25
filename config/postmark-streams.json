@@ -1,0 +1,14 @@
+{
+  "nonprofit": {
+    "stream_id": "nonprofit",
+    "name": "Nonprofit Series",
+    "topic_ids": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "description": "Topics 1-10: AI strategies for nonprofit organizations"
+  },
+  "corporate": {
+    "stream_id": "corporate",
+    "name": "Corporate Series",
+    "topic_ids": [11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+    "description": "Topics 11-20: AI strategies for corporate organizations"
+  }
+}
