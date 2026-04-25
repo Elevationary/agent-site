@@ -16,8 +16,8 @@ _Last updated: 2026-04-25_
 
 ### Open Decisions (James)
 - **task_ec000003**: elevationary.ai — redirect to elevationary.com, or standalone site?
-- **task_ec000005**: Newsletter handoff format for content pipeline
 - **task_ec000004**: Elevationary_OS design doc for Phase 2 visual design
+- ~~task_ec000005~~: Resolved — R2 manifest spec v1.0 agreed with Newsletter Agent
 
 ### Key Lesson — Cloudflare Redirect Loop (2026-04-22)
 A pre-existing Single Redirect rule named "Apex → www.elevationary.com" was active in the Cloudflare zone. Combined with our new www→apex Bulk Redirect, this created an infinite 301 loop. Found via **Rules → Trace**. Deleted the Single Redirect rule to resolve. **Before adding any www→apex or apex→www rules to a zone, always run Rules → Trace first to check for conflicting rules.**
@@ -27,26 +27,26 @@ A pre-existing Single Redirect rule named "Apex → www.elevationary.com" was ac
 ## Agent Site (agent.elevationary.com)
 
 **Repo:** `/Users/jamesszmak/Antigravity/micro-site/agent-site`
-**Last commit:** `1b0d13b` (chore: add R2 binding for gemini-content-factory)
+**Last commit:** `9c805d7` (fix: ORS remediation — subscribe/unsubscribe hardening)
 
 ### Completed this session (2026-04-25)
-- HubSpot fully deprecated — native subscribe form (`subscribe-form.njk`) replaces embed; `hubspot-form.njk` deleted; HubSpot block removed from `site.json`
-- `subscribe.js` updated — From: "Elevationary Thinking <newsletter@elevationary.com>", ReplyTo: replies@elevationary.com, welcome copy finalised, List-Unsubscribe header wired
-- `functions/api/unsubscribe.js` — HMAC-SHA256 token verification, D1 status update, redirect to /unsubscribed/
-- `/success/` and `/unsubscribed/` confirmation pages added
-- `POSTMARK_SERVER_TOKEN` deployed to agent-site2 (production)
+- HubSpot fully deprecated — native `subscribe-form.njk` replaces embed on `/subscribe/` and `/unlock/`; `hubspot-form.njk` deleted; HubSpot block removed from `site.json`
+- `subscribe.js` — From: "Elevationary Thinking <newsletter@elevationary.com>", ReplyTo: replies@elevationary.com, welcome copy final, List-Unsubscribe header, D1 fail-hard, Postmark response.ok check
+- `functions/api/unsubscribe.js` — HMAC-SHA256 token verification, D1 status update, `?status=invalid` redirect
+- `/success/` and `/unsubscribed/` pages added; `/unsubscribed/` shows distinct message for invalid token
+- `POSTMARK_SERVER_TOKEN` + `UNSUBSCRIBE_SECRET` both deployed to agent-site2 (production)
 - R2 binding `NEWSLETTER_BUCKET` → `gemini-content-factory` added to wrangler.toml
-- Newsletter manifest spec agreed with Newsletter Agent — R2 schema v1.0 locked
-- Email addresses: newsletter@elevationary.com (sender), replies@elevationary.com (reply-to, Gemini monitors via Gmail)
+- Newsletter manifest spec v1.0 locked with Newsletter Agent
+- Email addresses: `newsletter@elevationary.com` (sender, Postmark verified), `replies@elevationary.com` (reply-to, Gemini monitors via Gmail)
+- ORS PASS — subscribe/unsubscribe + HubSpot removal, log: `docs/ORS_logs/2026-04-25-subscribe-unsubscribe-hubspot-removal.md`
 
 ### Remaining — Phase 4: Content Pipeline (UNBLOCKED)
-Architecture: Cloudflare D1 (subscribers) + Postmark (delivery) + R2 (content bus, via NEWSLETTER_BUCKET)
-- Postmark 20 audience lists — needs topic roster from Newsletter Agent
-- Manifest poller Worker (hourly cron) — R2 → approval check → Postmark send orchestrator
-- D1 → Postmark subscriber sync
-- Site publisher for premium content
-- Preview subscriber promo code (Stripe, 30-day 100% off, 100 contacts)
-- UNSUBSCRIBE_SECRET still needed — add to agent-site2 via wrangler pages secret put
+_Architecture: Cloudflare D1 (subscribers) + Postmark (delivery) + R2 (content bus via NEWSLETTER_BUCKET)_
+- **Postmark 20 audience lists** — waiting on topic roster from Newsletter Agent (1–10 nonprofit, 11–20 corporate)
+- **Manifest poller Worker** — hourly Cloudflare cron, polls R2 for manifests, checks approval record, orchestrates Postmark send; skip `notes` containing "ORS test"
+- **D1 → Postmark subscriber sync** — push subscribe/unsubscribe events to correct Postmark list
+- **Site publisher** — read premium R2 keys from manifest, publish to site, generate subscriber access URLs
+- **Preview subscribers** — Stripe promo code (100% off, 30-day trial) + seed 100 known contacts
 
 ### Phase 5: Homepage Redesign + GUI (separate session)
 - Homepage (`index.njk`) is currently sparse — needs full landing page redesign
