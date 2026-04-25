@@ -1,6 +1,23 @@
 {
-  "crm-insights": {
-    "monthly": "price_1TPn0CC5seLx7yR7QPXo3bUA",
-    "annual": "price_1TPn0DC5seLx7yR7XU0C9Dsz"
+  "individual-access": {
+    "name": "Individual Access",
+    "monthly": "price_1TQFmWC3YEf5bh1ixnbGRNZR",
+    "annual": "price_1TQFmXC3YEf5bh1iAzU159jh",
+    "monthly_amount": 2900,
+    "annual_amount": 29000
+  },
+  "functional-bundle": {
+    "name": "Functional Bundle",
+    "monthly": "price_1TQFmXC3YEf5bh1i5bWCS1DA",
+    "annual": "price_1TQFmXC3YEf5bh1iasqopAOW",
+    "monthly_amount": 6900,
+    "annual_amount": 69000
+  },
+  "all-access-pass": {
+    "name": "All-Access Corporate Pass",
+    "monthly": "price_1TQFmYC3YEf5bh1iOcuJnrAF",
+    "annual": "price_1TQFmYC3YEf5bh1iWoHeU6RP",
+    "monthly_amount": 14900,
+    "annual_amount": 149000
   }
 }
