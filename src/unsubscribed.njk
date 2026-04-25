@@ -7,7 +7,21 @@ robots: noindex, nofollow
 ---
 
 <main style="max-width:600px;margin:4rem auto;padding:2rem 1rem;font-family:system-ui,sans-serif;text-align:center;">
-  <h1>You're unsubscribed.</h1>
-  <p>We've removed you from the list. You won't hear from us again.</p>
-  <p>Changed your mind? <a href="/subscribe/">Subscribe again</a>.</p>
+  <div id="msg-success">
+    <h1>You're unsubscribed.</h1>
+    <p>We've removed you from the list. You won't hear from us again.</p>
+    <p>Changed your mind? <a href="/subscribe/">Subscribe again</a>.</p>
+  </div>
+  <div id="msg-invalid" style="display:none;">
+    <h1>Invalid link.</h1>
+    <p>This unsubscribe link is invalid or has expired. No changes were made.</p>
+    <p>Want to unsubscribe? <a href="mailto:replies@elevationary.com">Contact us</a>.</p>
+  </div>
 </main>
+
+<script>
+  if (new URLSearchParams(location.search).get('status') === 'invalid') {
+    document.getElementById('msg-success').style.display = 'none';
+    document.getElementById('msg-invalid').style.display = 'block';
+  }
+</script>

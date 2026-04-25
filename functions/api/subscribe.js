@@ -36,19 +36,15 @@ export async function onRequestPost(context) {
       customerId = newCustomer.id;
     }
 
-    // 2. D1 write (subscriber registry)
-    try {
-      const existing = await env.DB.prepare(
-        'SELECT * FROM subscribers WHERE email = ?'
-      ).bind(email).first();
+    // 2. D1 write — fail hard if this fails; do not send welcome email to unregistered subscriber
+    const existing = await env.DB.prepare(
+      'SELECT * FROM subscribers WHERE email = ?'
+    ).bind(email).first();
 
-      if (!existing) {
-        await env.DB.prepare(
-          'INSERT INTO subscribers (stripe_customer_id, email, status, tier, marketing_status) VALUES (?, ?, ?, ?, ?)'
-        ).bind(customerId, email, 'active', 'free', 'warm').run();
-      }
-    } catch (dbErr) {
-      console.error('D1 Error:', dbErr);
+    if (!existing) {
+      await env.DB.prepare(
+        'INSERT INTO subscribers (stripe_customer_id, email, status, tier, marketing_status) VALUES (?, ?, ?, ?, ?)'
+      ).bind(customerId, email, 'active', 'free', 'warm').run();
     }
 
     // 3. Postmark welcome email
@@ -80,7 +76,7 @@ export async function onRequestPost(context) {
         `Unsubscribe: ${unsubUrl}`
       ].join('\n');
 
-      await fetch('https://api.postmarkapp.com/email', {
+      const pmRes = await fetch('https://api.postmarkapp.com/email', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -101,6 +97,11 @@ export async function onRequestPost(context) {
           MessageStream: 'outbound'
         })
       });
+
+      if (!pmRes.ok) {
+        const pmErr = await pmRes.text();
+        throw new Error(`Postmark error ${pmRes.status}: ${pmErr}`);
+      }
     }
 
     return Response.redirect(new URL('/success', request.url), 302);
