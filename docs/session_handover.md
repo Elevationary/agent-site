@@ -82,7 +82,7 @@ _Architecture: D1 + Postmark (nonprofit/corporate streams) + R2 (NEWSLETTER_BUCK
 - Cloudflare bot blocking is injected by Cloudflare, NOT in robots.txt source — fix requires Cloudflare dashboard
 - HubSpot is fully deprecated — `hubspot-form.njk` deleted, `site.json` HubSpot block removed. Do not re-add. See Master Business Plan §9.4.
 - **Stripe product IDs:** Old "Agent Insider" (`prod_Tp6Mt8OpDrOdyH`) and "CRM Insights" products are archived. All checkout code must use price IDs from `config/stripe-price-ids.json` only. Never hardcode old price IDs.
-- **Postmark pending approval (OPEN):** Postmark restricts unapproved accounts to same-domain sends only. Welcome emails will fail (500) for any non-@elevationary.com subscriber. James must complete Postmark account approval before seeding real subscribers.
+- **Postmark pending approval (OPEN):** Approval submitted 2026-04-25 (Saturday). Expect response Monday 2026-04-27. Until approved, welcome emails fail for non-@elevationary.com addresses. Do not seed real subscribers until confirmed approved.
 - **Stripe publishable key is `pk_test_`:** Embedded in `/subscribe/` page. Correct for test environment. Must be replaced with `pk_live_` key before real CC capture. Confirm live key with James before updating.
 - **`schema.sql` is now a safe migration** — `CREATE TABLE IF NOT EXISTS` only. For first-time empty-database setup, use `scripts/d1-reset.sql`. Never run `d1-reset.sql` against a live database.
 - **Cloudflare AI bot architecture:** "Block AI bots" master switch overrides ALL per-bot AI Crawl Control settings. Current state: master = "Do not block," all AI bots allowed.
