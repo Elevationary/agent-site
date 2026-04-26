@@ -1,83 +1,221 @@
 ---
 layout: base.njk
 permalink: /unlock/index.html
-title: Unlock Full Access
-description: Subscribe to Elevationary Agents for premium AI intelligence.
+title: "Unlock Full Access — Elevationary Thinking"
+description: "Choose your subscription tier and unlock the full implementation intelligence behind every briefing."
 canonical: https://agent.elevationary.com/unlock/
 og_image: https://agent.elevationary.com/assets/og-consulting-60.png
 robots: noindex, nofollow
 ---
 
-<div class="unlock-container">
-  <h1>Unlock the Revenue Engine</h1>
-  <p class="lead">You have reached a restricted area. To access our premium agent protocols, deep-dive strategies, and the full "3-2-1" intelligence briefing, you must be an active subscriber.</p>
-  
-  <div class="pricing-cards">
+<div class="unlock-page">
 
-    <div class="pricing-card">
-      <h2>Individual Access — Monthly</h2>
-      <p class="price">$29<span>/mo</span></p>
-      <ul>
-        <li>✅ Full premium guides for your swimlane</li>
-        <li>✅ Weekly "3-2-1" deep dive</li>
-        <li>✅ Implementation blueprints</li>
+  <div class="unlock-hero">
+    <h1>The "How" is behind the paywall.</h1>
+    <p class="unlock-lead">Your free briefings show you <em>what</em> is happening and <em>why</em> it matters. To get the full implementation guide — the step-by-step <em>how</em> your team executes it — choose a plan below.</p>
+
+    <!-- Billing toggle -->
+    <div class="billing-toggle" role="group" aria-label="Billing period">
+      <button class="toggle-btn toggle-btn--active" data-billing="monthly" id="toggle-monthly">Monthly</button>
+      <button class="toggle-btn" data-billing="annual" id="toggle-annual">
+        Annual <span class="save-badge">Save 17%</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Pricing cards -->
+  <div class="pricing-grid">
+
+    <!-- Tier 1 -->
+    <div class="pricing-card" data-tier="1">
+      <div class="pricing-card__header">
+        <p class="pricing-card__tier">Tier 1</p>
+        <h2 class="pricing-card__name">Individual Access</h2>
+        <p class="pricing-card__desc">One swimlane. Exactly the depth your role needs.</p>
+      </div>
+      <div class="pricing-card__price">
+        <span class="price-amount" data-monthly="$29" data-annual="$24">$29</span>
+        <span class="price-period">/mo</span>
+      </div>
+      <p class="price-annual-note" style="display:none;">Billed as $290/yr — 2 months free</p>
+      <ul class="pricing-card__features">
+        <li>Full implementation guides for <strong>1 swimlane</strong></li>
+        <li>Weekly "3-2-1" deep dive for your function</li>
+        <li>Step-by-step execution blueprints</li>
+        <li>Vendor-linked source materials</li>
+        <li>Full archive access</li>
       </ul>
-      <button class="button primary checkout-button" data-plan="individual-access-monthly">Subscribe Monthly</button>
+      <button class="button primary checkout-button pricing-card__cta" data-monthly-plan="individual-access-monthly" data-annual-plan="individual-access-annual">
+        Get Individual Access
+      </button>
     </div>
 
-    <div class="pricing-card pricing-card--featured">
-      <p class="badge">Best Value — Save $58/yr</p>
-      <h2>Individual Access — Annual</h2>
-      <p class="price">$290<span>/yr</span></p>
-      <p class="price-note">Equivalent to $24.17/mo</p>
-      <ul>
-        <li>✅ Full premium guides for your swimlane</li>
-        <li>✅ Weekly "3-2-1" deep dive</li>
-        <li>✅ Implementation blueprints</li>
-        <li>✅ ~2 months free vs. monthly</li>
+    <!-- Tier 2 (featured) -->
+    <div class="pricing-card pricing-card--featured" data-tier="2">
+      <p class="featured-badge">Most Popular</p>
+      <div class="pricing-card__header">
+        <p class="pricing-card__tier">Tier 2</p>
+        <h2 class="pricing-card__name">Functional Bundle</h2>
+        <p class="pricing-card__desc">Three related swimlanes. Built for cross-functional leaders.</p>
+      </div>
+      <div class="pricing-card__price">
+        <span class="price-amount" data-monthly="$69" data-annual="$58">$69</span>
+        <span class="price-period">/mo</span>
+      </div>
+      <p class="price-annual-note" style="display:none;">Billed as $690/yr — 2 months free</p>
+      <ul class="pricing-card__features">
+        <li>Full implementation guides for <strong>3 swimlanes</strong></li>
+        <li>Pre-built bundles: Revenue, Operations, Growth, Mission, Impact</li>
+        <li>Weekly "3-2-1" briefings for each selected lane</li>
+        <li>Step-by-step execution blueprints</li>
+        <li>Vendor-linked source materials + full archive</li>
+        <li>HubSpot-tracked engagement for upsell detection</li>
       </ul>
-      <button class="button primary checkout-button" data-plan="individual-access-annual">Subscribe Annually</button>
+      <button class="button primary checkout-button pricing-card__cta" data-monthly-plan="functional-bundle-monthly" data-annual-plan="functional-bundle-annual">
+        Get Functional Bundle
+      </button>
+      <p class="pricing-card__savings">3 lanes individually = $87/mo. You save $18/mo.</p>
+    </div>
+
+    <!-- Tier 3 -->
+    <div class="pricing-card" data-tier="3">
+      <div class="pricing-card__header">
+        <p class="pricing-card__tier">Tier 3</p>
+        <h2 class="pricing-card__name">All-Access Pass</h2>
+        <p class="pricing-card__desc">All 10 swimlanes in your vertical. For executives who need the full picture.</p>
+      </div>
+      <div class="pricing-card__price">
+        <span class="price-amount" data-monthly="$149" data-annual="$124">$149</span>
+        <span class="price-period">/mo</span>
+      </div>
+      <p class="price-annual-note" style="display:none;">Billed as $1,490/yr — 2 months free</p>
+      <ul class="pricing-card__features">
+        <li>Full access to <strong>all 10 swimlanes</strong> in one vertical</li>
+        <li>Leadership AIm C-Suite digest included</li>
+        <li>Share access with up to <strong>5 team members</strong></li>
+        <li>Quarterly Executive Brief PDF</li>
+        <li>Priority access to new swimlanes at launch</li>
+        <li>Full archive across all lanes</li>
+      </ul>
+      <button class="button primary checkout-button pricing-card__cta" data-monthly-plan="all-access-pass-monthly" data-annual-plan="all-access-pass-annual">
+        Get All-Access Pass
+      </button>
+      <p class="pricing-card__savings">10 lanes individually = $290/mo. You save $141/mo.</p>
     </div>
 
   </div>
-  <p class="small" style="text-align:center;margin-top:1rem;">Already a member? <a href="#">Log in</a></p>
 
-  <hr />
+  <p class="unlock-subtext">All plans include a 30-day cancellation window. No contracts. Cancel anytime.</p>
 
-  <h3>Free Updates</h3>
-  <p>Not ready to commit? Get the public summary.</p>
-  {% include "subscribe-form.njk" %}
+  <hr class="unlock-divider" />
+
+  <!-- Free updates -->
+  <div class="unlock-free">
+    <h3>Not ready to commit?</h3>
+    <p>Get the free weekly "3-2-1" summary — the <em>what</em> and <em>why</em>, delivered to your inbox.</p>
+    {% include "subscribe-form.njk" %}
+  </div>
+
 </div>
 
 <script>
-  document.querySelectorAll('.checkout-button').forEach(btn => {
+(function () {
+  let billing = 'monthly';
+
+  const toggleBtns = document.querySelectorAll('.toggle-btn');
+  const priceAmounts = document.querySelectorAll('.price-amount');
+  const annualNotes = document.querySelectorAll('.price-annual-note');
+  const checkoutBtns = document.querySelectorAll('.checkout-button');
+
+  function setBilling(mode) {
+    billing = mode;
+    toggleBtns.forEach(b => b.classList.toggle('toggle-btn--active', b.dataset.billing === mode));
+    priceAmounts.forEach(el => {
+      el.textContent = mode === 'annual' ? el.dataset.annual : el.dataset.monthly;
+    });
+    annualNotes.forEach(el => {
+      el.style.display = mode === 'annual' ? 'block' : 'none';
+    });
+  }
+
+  toggleBtns.forEach(b => b.addEventListener('click', () => setBilling(b.dataset.billing)));
+
+  checkoutBtns.forEach(btn => {
     btn.addEventListener('click', async () => {
-      const plan = btn.dataset.plan;
-      const original = btn.innerText;
+      const plan = billing === 'annual' ? btn.dataset.annualPlan : btn.dataset.monthlyPlan;
+      const original = btn.textContent;
       btn.disabled = true;
-      btn.innerText = 'Redirecting...';
+      btn.textContent = 'Redirecting…';
 
       try {
-        const response = await fetch('/api/checkout', {
+        const res = await fetch('/api/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ plan }),
         });
-        const data = await response.json();
-
+        const data = await res.json();
         if (data.url) {
           window.location.href = data.url;
         } else {
-          alert('Payment setup failed: ' + (data.error || 'Unknown error'));
+          alert('Checkout failed: ' + (data.error || 'Unknown error'));
           btn.disabled = false;
-          btn.innerText = original;
+          btn.textContent = original;
         }
       } catch (err) {
-        console.error(err);
         alert('Network error. Please try again.');
         btn.disabled = false;
-        btn.innerText = original;
+        btn.textContent = original;
       }
     });
   });
+})();
 </script>
+
+<style>
+.unlock-page { max-width: 1060px; margin: 0 auto; padding: 2.5rem 1rem; font-family: system-ui, sans-serif; }
+
+.unlock-hero { text-align: center; margin-bottom: 2.5rem; }
+.unlock-hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.6rem; }
+.unlock-lead { font-size: 1.05rem; color: #4a5568; max-width: 620px; margin: 0 auto 1.5rem; line-height: 1.6; }
+
+/* Billing toggle */
+.billing-toggle { display: inline-flex; border: 1px solid #cbd5e0; border-radius: 8px; overflow: hidden; }
+.toggle-btn { padding: 0.5rem 1.25rem; font-size: 0.9rem; font-weight: 600; background: none; border: none; cursor: pointer; color: #4a5568; display: flex; align-items: center; gap: 0.4rem; }
+.toggle-btn--active { background: #2b6cb0; color: #fff; }
+.save-badge { font-size: 0.7rem; background: #c6f6d5; color: #276749; padding: 0.1rem 0.4rem; border-radius: 4px; font-weight: 700; }
+.toggle-btn--active .save-badge { background: #9ae6b4; }
+
+/* Pricing grid */
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; align-items: start; margin-bottom: 1.5rem; }
+
+.pricing-card { border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.75rem; position: relative; background: #fff; }
+.pricing-card--featured { border-color: #3182ce; border-width: 2px; box-shadow: 0 4px 24px rgba(49,130,206,0.12); }
+
+.featured-badge { position: absolute; top: -0.75rem; left: 50%; transform: translateX(-50%); background: #3182ce; color: #fff; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.9rem; border-radius: 999px; white-space: nowrap; }
+
+.pricing-card__tier { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #718096; margin-bottom: 0.25rem; }
+.pricing-card__name { font-size: 1.25rem; font-weight: 800; margin-bottom: 0.3rem; }
+.pricing-card__desc { font-size: 0.875rem; color: #718096; line-height: 1.4; margin-bottom: 1.25rem; }
+
+.pricing-card__price { display: flex; align-items: baseline; gap: 0.1rem; margin-bottom: 0.25rem; }
+.price-amount { font-size: 2.5rem; font-weight: 800; color: #1a202c; }
+.price-period { font-size: 1rem; color: #718096; }
+.price-annual-note { font-size: 0.8rem; color: #276749; font-weight: 600; margin-bottom: 1.25rem; }
+
+.pricing-card__features { list-style: none; padding: 0; margin: 1.25rem 0; display: flex; flex-direction: column; gap: 0.55rem; }
+.pricing-card__features li { font-size: 0.9rem; color: #2d3748; padding-left: 1.5rem; position: relative; line-height: 1.4; }
+.pricing-card__features li::before { content: "✓"; position: absolute; left: 0; color: #38a169; font-weight: 700; }
+
+.pricing-card__cta { width: 100%; margin-top: 0.5rem; padding: 0.8rem; font-size: 0.95rem; }
+.pricing-card__savings { font-size: 0.78rem; color: #718096; text-align: center; margin-top: 0.6rem; }
+
+.unlock-subtext { text-align: center; font-size: 0.85rem; color: #718096; margin-bottom: 2rem; }
+.unlock-divider { border: none; border-top: 1px solid #e2e8f0; margin: 2rem 0; }
+.unlock-free h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; }
+.unlock-free p { font-size: 0.9rem; color: #4a5568; margin-bottom: 1rem; }
+
+@media (max-width: 640px) {
+  .pricing-grid { grid-template-columns: 1fr; }
+  .unlock-hero h1 { font-size: 1.5rem; }
+}
+</style>
