@@ -27,47 +27,43 @@ A pre-existing Single Redirect rule named "Apex → www.elevationary.com" was ac
 ## Agent Site (agent.elevationary.com)
 
 **Repo:** `/Users/jamesszmak/Antigravity/micro-site/agent-site`
-**Last commit:** `9f559d5` (docs: ORS PASS — 3-tier unlock page)
+**Last commit:** `82dc8da` (docs: ORS PASS — preview promo codes)
 
-### Completed this session (2026-04-25)
-- HubSpot fully deprecated — native `subscribe-form.njk`, `hubspot-form.njk` deleted, HubSpot block removed from `site.json`
-- `subscribe.js` — From/ReplyTo/welcome copy final, D1 fail-hard, Postmark response.ok check, HMAC unsubscribe tokens
-- `functions/api/unsubscribe.js` — HMAC-SHA256 verification, D1 update, `?status=invalid` UX
-- `/success/` + `/unsubscribed/` + `/activate/` pages
-- `POSTMARK_SERVER_TOKEN` + `UNSUBSCRIBE_SECRET` deployed to agent-site2
-- R2 binding `NEWSLETTER_BUCKET` → `gemini-content-factory`; manifest spec v1.0 locked
-- Postmark broadcast streams: `nonprofit` (topics 1–10), `corporate` (topics 11–20)
-- Postmark approval submitted 2026-04-25 — awaiting Monday 2026-04-27
-- Stripe live catalog: 3-tier products + 6 prices created (Individual $29/$290, Bundle $69/$690, All-Access $149/$1,490)
-- Restricted `sk_live_` key deployed to agent-site2; `pk_live_` embedded in `/subscribe/`
-- D1 schema migration: `subscriber_topics` + `subscriber_events` tables live on remote
-- `/subscribe/` — 20-topic checkboxes (nonprofit/corporate), optional Stripe SetupIntent CC capture, `pk_live_`
-- `/unlock/` — full 3-tier pricing page, monthly/annual toggle, all 6 plan keys, live checkout verified (`cs_live_`)
-- `/api/setup-intent`, `/api/gate`, `/api/activate` Workers — SetupIntent, 4-path gating, one-click upgrade
-- Master Business Plan §9.4 — HubSpot deprecation documented for fleet
-- Memory system initialised — 4 files
-- ORS PASS × 4 — subscribe/unsubscribe, Stripe migration, subscription flow, 3-tier unlock (8 total findings remediated)
+### Completed this session (2026-04-25/26)
+- HubSpot fully deprecated — native subscribe form, unsubscribe Worker, confirmation pages
+- Postmark welcome email wired — "Elevationary Thinking", ReplyTo: replies@, List-Unsubscribe, HMAC tokens
+- Postmark broadcast streams live: `nonprofit` (1–10), `corporate` (11–20)
+- Postmark approval submitted 2026-04-25 — awaiting 2026-04-27 (Monday)
+- Stripe live catalog: 3 products × 6 prices; restricted `sk_live_` on agent-site2; `pk_live_` on /subscribe/
+- D1 schema: `subscriber_topics` + `subscriber_events` tables live on remote
+- `/subscribe/` — 20-topic checkboxes, optional CC capture (SetupIntent)
+- `/unlock/` — full 3-tier pricing, monthly/annual toggle, `cs_live_` checkout verified
+- `/api/setup-intent`, `/api/gate`, `/api/activate` Workers — 4-path premium gating, one-click upgrade
+- Preview promo codes: coupon `dTwd1p8S` + 100 `PREVIEW-XXXXXX` codes, `allow_promotion_codes: true` on checkout
+- Master Business Plan §9.4 — HubSpot deprecation documented; memory system initialised (4 files)
+- ORS PASS × 5 — 9 total findings remediated
 
-### Next — Phase 4: Content Pipeline
+### Active — Phase 4: Content Pipeline (IN PROGRESS)
 _Architecture: D1 + Postmark (nonprofit/corporate streams) + R2 (NEWSLETTER_BUCKET)_
-_Gate: Postmark approval expected 2026-04-27 (Monday)_
+_Postmark gate: approval expected 2026-04-27_
 
-- **Manifest poller Worker** — hourly Cloudflare cron, polls R2, checks approval record, orchestrates Postmark send. Requirements: skip "ORS test" approvals; send complete topics, skip failed, Telegram page James on failures; Telegram page on completion with count; notify Newsletter Agent "poller is live" on first deploy
-- **D1 → Postmark subscriber sync** — route subscribers to correct stream (nonprofit/corporate) by `subscriber_topics`
+- **Manifest poller Worker** ← BUILDING NOW — hourly Cloudflare cron, R2 poll, approval check, Postmark send orchestrator. Requirements: skip "ORS test" approvals; send complete topics, skip failed + Telegram page James; Telegram page on completion (count); notify Newsletter Agent "poller is live" on first deploy
+- **D1 → Postmark subscriber sync** — route subscribers to correct stream by `subscriber_topics.topic_id` series
 - **Site publisher** — premium R2 content → published pages + subscriber access URLs
-- **Preview subscribers** — Stripe promo code (100% off, 30-day) + seed 100 contacts. Gate: Postmark approved
+- **Preview subscribers** — send `PREVIEW-XXXXXX` codes to 100 contacts; gate: Postmark approved
 
 ### Phase 5: Homepage Redesign + GUI (separate session)
-- Homepage redesign, subscriber GUI (approve/review UI), full visual redesign (blocked on task_ec000004)
+- Homepage redesign, subscriber GUI, visual redesign (blocked on task_ec000004)
 
 ### Remaining Queue (in order)
-1. **Postmark approval** — await Monday 2026-04-27
-2. **Phase 4 content pipeline** — manifest poller → subscriber sync → site publisher
-3. **Preview subscribers** — Stripe promo + 100 contacts (after Postmark approval)
-4. **Homepage redesign + GUI** — separate session
-5. **elevationary.ai disposition** (task_ec000003)
-6. **Twitter @ElevationaryAI** — James creates account
-7. **Elevationary_OS design doc** (task_ec000004)
+1. **Manifest poller Worker** — IN PROGRESS
+2. **D1 → Postmark sync** — after poller
+3. **Site publisher** — after sync
+4. **Preview subscribers** — after Postmark approval (Monday)
+5. **Homepage redesign + GUI** — separate session
+6. **elevationary.ai disposition** (task_ec000003)
+7. **Twitter @ElevationaryAI** — James creates account
+8. **Elevationary_OS design doc** (task_ec000004)
 
 ---
 
