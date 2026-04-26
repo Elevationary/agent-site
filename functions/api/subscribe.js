@@ -79,14 +79,18 @@ export async function onRequestPost(context) {
       ).bind(email).run();
     }
 
-    // 4. Persist topic subscriptions
-    if (topics.length > 0) {
-      const validTopics = topics.filter(t => t >= 1 && t <= 20);
-      for (const topicId of validTopics) {
-        await env.DB.prepare(
-          `INSERT OR IGNORE INTO subscriber_topics (subscriber_email, topic_id) VALUES (?, ?)`
-        ).bind(email, topicId).run();
-      }
+    // 4. Persist topic subscriptions — require at least one valid topic when topics provided
+    const validTopics = topics.filter(t => t >= 1 && t <= 20);
+    if (topics.length > 0 && validTopics.length === 0) {
+      return new Response(JSON.stringify({ error: 'No valid topics selected. Choose at least one topic (1–20).' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    for (const topicId of validTopics) {
+      await env.DB.prepare(
+        `INSERT OR IGNORE INTO subscriber_topics (subscriber_email, topic_id) VALUES (?, ?)`
+      ).bind(email, topicId).run();
     }
 
     // 5. Postmark welcome email

@@ -1,6 +1,12 @@
+-- ============================================================
+-- SAFE MIGRATION — safe to re-run against live database.
+-- Uses CREATE TABLE IF NOT EXISTS throughout.
+-- No DROP TABLE statements here — see scripts/d1-reset.sql
+-- for first-time empty-database setup only.
+-- ============================================================
+
 -- Core subscriber registry
-DROP TABLE IF EXISTS subscribers;
-CREATE TABLE subscribers (
+CREATE TABLE IF NOT EXISTS subscribers (
     stripe_customer_id TEXT PRIMARY KEY,
     email TEXT NOT NULL UNIQUE,
     status TEXT DEFAULT 'active',          -- active, unsubscribed, cancelled
@@ -13,8 +19,7 @@ CREATE TABLE subscribers (
 );
 
 -- Topic subscriptions (which of the 20 swimlanes each subscriber receives)
-DROP TABLE IF EXISTS subscriber_topics;
-CREATE TABLE subscriber_topics (
+CREATE TABLE IF NOT EXISTS subscriber_topics (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     subscriber_email TEXT NOT NULL,
     topic_id INTEGER NOT NULL,             -- 1–20 per Master Business Plan §3.3
@@ -23,8 +28,7 @@ CREATE TABLE subscriber_topics (
 );
 
 -- Engagement events (opens, clicks, paywall hits — fed by Postmark webhooks)
-DROP TABLE IF EXISTS subscriber_events;
-CREATE TABLE subscriber_events (
+CREATE TABLE IF NOT EXISTS subscriber_events (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     subscriber_email TEXT NOT NULL,
     event_type TEXT NOT NULL,              -- open, click, paywall_click, bounce, unsubscribe
