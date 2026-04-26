@@ -1,0 +1,19 @@
+name = "newsletter-poller"
+main = "src/index.js"
+compatibility_date = "2024-04-05"
+compatibility_flags = ["nodejs_compat"]
+
+workers_dev = true    # keep enabled for manual /poll trigger endpoint
+preview_urls = false
+
+[triggers]
+crons = ["0 * * * *"]   # every hour on the hour (UTC)
+
+[[d1_databases]]
+binding = "DB"
+database_name = "subscribers"
+database_id = "93daa2c0-715e-4ff8-9801-d8be0e2036b8"
+
+[[r2_buckets]]
+binding = "NEWSLETTER_BUCKET"
+bucket_name = "gemini-content-factory"
