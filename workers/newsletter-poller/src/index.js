@@ -96,7 +96,7 @@ async function sendTopic(env, topic, content, date) {
         To: email,
         Subject: subject,
         TextBody: `${content}\n\n---\nYou're receiving this because you subscribed at agent.elevationary.com.\nUnsubscribe: ${unsubUrl}`,
-        HtmlBody: `<pre style="font-family:system-ui,sans-serif;white-space:pre-wrap;max-width:680px;">${content}</pre>
+        HtmlBody: `<pre style="font-family:system-ui,sans-serif;white-space:pre-wrap;max-width:680px;">${escapeHtml(content)}</pre>
           <p style="font-size:0.8em;color:#999;">You're receiving this because you subscribed at agent.elevationary.com.<br>
           <a href="${unsubUrl}">Unsubscribe</a></p>`,
         MessageStream: stream,
@@ -129,7 +129,20 @@ async function checkFirstRun(env) {
 
 // ─── Main poll logic ─────────────────────────────────────────────────────────
 
+function escapeHtml(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 async function poll(env) {
+  try {
+    await _poll(env);
+  } catch (err) {
+    console.error('[poller] unhandled error:', err);
+    await tgPage(env, `❌ <b>Poller crashed</b>\n${err.message}`);
+  }
+}
+
+async function _poll(env) {
   const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD UTC
   console.log(`[poller] running for ${today}`);
 
@@ -143,7 +156,9 @@ async function poll(env) {
     console.log(`[poller] no manifest for ${today}, skipping`);
     return;
   }
-  const manifest = JSON.parse(await manifestObj.text());
+  let manifest;
+  try { manifest = JSON.parse(await manifestObj.text()); }
+  catch (e) { throw new Error(`Malformed manifest JSON for ${today}: ${e.message}`); }
 
   // 2. Read approval record
   const approvalKey = `newsletter/approved/daily/${today}.json`;
@@ -152,7 +167,9 @@ async function poll(env) {
     console.log(`[poller] no approval record for ${today}, skipping`);
     return;
   }
-  const approval = JSON.parse(await approvalObj.text());
+  let approval;
+  try { approval = JSON.parse(await approvalObj.text()); }
+  catch (e) { throw new Error(`Malformed approval JSON for ${today}: ${e.message}`); }
 
   // 3. Skip ORS test approvals
   if (approval.notes && approval.notes.includes('ORS test')) {
