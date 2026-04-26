@@ -19,14 +19,29 @@ export async function onRequestPost(context) {
   const stripe = new Stripe(env.STRIPE_SECRET_KEY);
 
   try {
-    const formData = await request.formData();
-    const email = formData.get('email');
+    // Accept both JSON (full form) and formData (quick inline form on /unlock/)
+    let email, topics = [], paymentMethodId = null;
+    const contentType = request.headers.get('Content-Type') || '';
 
-    if (!email) {
-      return new Response('Email required', { status: 400 });
+    if (contentType.includes('application/json')) {
+      const body = await request.json();
+      email = body.email;
+      topics = Array.isArray(body.topics) ? body.topics.map(Number) : [];
+      paymentMethodId = body.payment_method_id || null;
+    } else {
+      const formData = await request.formData();
+      email = formData.get('email');
+      topics = formData.getAll('topics').map(Number);
     }
 
-    // 1. Stripe customer (source of truth for identity)
+    if (!email) {
+      return new Response(JSON.stringify({ error: 'Email required' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    // 1. Stripe customer (identity anchor)
     const customers = await stripe.customers.list({ email, limit: 1 });
     let customerId;
     if (customers.data.length > 0) {
@@ -36,18 +51,45 @@ export async function onRequestPost(context) {
       customerId = newCustomer.id;
     }
 
-    // 2. D1 write — fail hard if this fails; do not send welcome email to unregistered subscriber
+    // 2. Attach payment method if provided (optional CC capture via SetupIntent)
+    let hasPaymentMethod = 0;
+    if (paymentMethodId) {
+      await stripe.paymentMethods.attach(paymentMethodId, { customer: customerId });
+      await stripe.customers.update(customerId, {
+        invoice_settings: { default_payment_method: paymentMethodId },
+      });
+      hasPaymentMethod = 1;
+    }
+
+    // 3. D1 write — fail hard; do not send welcome email to unregistered subscriber
     const existing = await env.DB.prepare(
-      'SELECT * FROM subscribers WHERE email = ?'
+      'SELECT stripe_customer_id, has_payment_method FROM subscribers WHERE email = ?'
     ).bind(email).first();
 
     if (!existing) {
       await env.DB.prepare(
-        'INSERT INTO subscribers (stripe_customer_id, email, status, tier, marketing_status) VALUES (?, ?, ?, ?, ?)'
-      ).bind(customerId, email, 'active', 'free', 'warm').run();
+        `INSERT INTO subscribers
+         (stripe_customer_id, email, status, tier, marketing_status, has_payment_method)
+         VALUES (?, ?, 'active', 'free', 'warm', ?)`
+      ).bind(customerId, email, hasPaymentMethod).run();
+    } else if (hasPaymentMethod && !existing.has_payment_method) {
+      // Upgrade has_payment_method flag if CC was just added
+      await env.DB.prepare(
+        'UPDATE subscribers SET has_payment_method = 1, updated_at = CURRENT_TIMESTAMP WHERE email = ?'
+      ).bind(email).run();
     }
 
-    // 3. Postmark welcome email
+    // 4. Persist topic subscriptions
+    if (topics.length > 0) {
+      const validTopics = topics.filter(t => t >= 1 && t <= 20);
+      for (const topicId of validTopics) {
+        await env.DB.prepare(
+          `INSERT OR IGNORE INTO subscriber_topics (subscriber_email, topic_id) VALUES (?, ?)`
+        ).bind(email, topicId).run();
+      }
+    }
+
+    // 5. Postmark welcome email
     if (env.POSTMARK_SERVER_TOKEN) {
       const unsubToken = env.UNSUBSCRIBE_SECRET
         ? await generateUnsubToken(email, env.UNSUBSCRIBE_SECRET)
@@ -73,7 +115,7 @@ export async function onRequestPost(context) {
         '',
         '---',
         `You're receiving this because you signed up at agent.elevationary.com.`,
-        `Unsubscribe: ${unsubUrl}`
+        `Unsubscribe: ${unsubUrl}`,
       ].join('\n');
 
       const pmRes = await fetch('https://api.postmarkapp.com/email', {
@@ -81,7 +123,7 @@ export async function onRequestPost(context) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'X-Postmark-Server-Token': env.POSTMARK_SERVER_TOKEN
+          'X-Postmark-Server-Token': env.POSTMARK_SERVER_TOKEN,
         },
         body: JSON.stringify({
           From: 'Elevationary Thinking <newsletter@elevationary.com>',
@@ -92,10 +134,10 @@ export async function onRequestPost(context) {
           TextBody: textBody,
           Headers: [
             { Name: 'List-Unsubscribe', Value: `<${unsubUrl}>` },
-            { Name: 'List-Unsubscribe-Post', Value: 'List-Unsubscribe=One-Click' }
+            { Name: 'List-Unsubscribe-Post', Value: 'List-Unsubscribe=One-Click' },
           ],
-          MessageStream: 'outbound'
-        })
+          MessageStream: 'outbound',
+        }),
       });
 
       if (!pmRes.ok) {
@@ -104,10 +146,22 @@ export async function onRequestPost(context) {
       }
     }
 
+    // JSON callers get a JSON response; form callers get a redirect
+    if (contentType.includes('application/json')) {
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
     return Response.redirect(new URL('/success', request.url), 302);
 
   } catch (err) {
     console.error('Subscribe Error:', err);
+    if ((request.headers.get('Content-Type') || '').includes('application/json')) {
+      return new Response(JSON.stringify({ error: err.message }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
     return new Response(`Error: ${err.message}`, { status: 500 });
   }
 }

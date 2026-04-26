@@ -1,32 +1,220 @@
 ---
 layout: base.njk
 permalink: /subscribe/index.html
-title: "Subscribe to Elevationary Agents"
-description: "Get the latest AI agent strategies, news, and insights delivered to your inbox."
+title: "Choose Your Intelligence Briefings — Elevationary Thinking"
+description: "Select the AI strategy topics you want delivered to your inbox every week. Free."
 robots: noindex, nofollow
 ---
 
-<main class="container">
-  <h1>Subscribe to Elevationary Agents</h1>
-  <p>Join our newsletter to stay ahead of the curve with Agent Experience Optimization and Agentic Commerce.</p>
-  
-  <div class="subscription-form-wrapper">
-    {% include 'subscribe-form.njk' %}
+<main class="sub-page">
+
+  <div class="sub-hero">
+    <h1>Choose your intelligence briefings.</h1>
+    <p class="sub-lead">Every week, your selected topics arrive as a free "3-2-1" briefing — three stories, two insights, one big question. No fluff. No hype. Just the signals that matter for your role.</p>
   </div>
+
+  <form id="subscribe-form" class="sub-form" novalidate>
+
+    <!-- Topic Selection -->
+    <section class="sub-section">
+      <h2 class="sub-section__title">Select your topics <span class="sub-badge">choose as many as you like</span></h2>
+
+      <div class="topic-group">
+        <h3 class="topic-group__label nonprofit">Nonprofit Series — AI That Amplifies Your Mission</h3>
+        <div class="topic-grid">
+          <label class="topic-card"><input type="checkbox" name="topics" value="1"><span class="topic-card__title">AI for Marketing &amp; Outreach</span><span class="topic-card__audience">Comms &amp; development teams</span></label>
+          <label class="topic-card"><input type="checkbox" name="topics" value="2"><span class="topic-card__title">AI for Fundraising Campaigns</span><span class="topic-card__audience">Development leaders</span></label>
+          <label class="topic-card"><input type="checkbox" name="topics" value="3"><span class="topic-card__title">AI for Donor Stewardship</span><span class="topic-card__audience">Donor relations teams</span></label>
+          <label class="topic-card"><input type="checkbox" name="topics" value="4"><span class="topic-card__title">AI for Volunteer Engagement</span><span class="topic-card__audience">Volunteer coordinators</span></label>
+          <label class="topic-card"><input type="checkbox" name="topics" value="5"><span class="topic-card__title">AI for Program Delivery</span><span class="topic-card__audience">Program directors</span></label>
+          <label class="topic-card"><input type="checkbox" name="topics" value="6"><span class="topic-card__title">AI for Advocacy &amp; Awareness</span><span class="topic-card__audience">Policy &amp; comms teams</span></label>
+          <label class="topic-card"><input type="checkbox" name="topics" value="7"><span class="topic-card__title">AI for Grant Prospecting &amp; Reporting</span><span class="topic-card__audience">Grants &amp; institutional giving</span></label>
+          <label class="topic-card"><input type="checkbox" name="topics" value="8"><span class="topic-card__title">AI for Impact Measurement</span><span class="topic-card__audience">Impact &amp; reporting teams</span></label>
+          <label class="topic-card"><input type="checkbox" name="topics" value="9"><span class="topic-card__title">AI for Organizational Readiness</span><span class="topic-card__audience">Executive &amp; operations leaders</span></label>
+          <label class="topic-card topic-card--free"><input type="checkbox" name="topics" value="10"><span class="topic-card__title">Leadership AIm — Nonprofit Edition</span><span class="topic-card__audience">C-Suite &amp; Executive Directors</span><span class="topic-card__free-tag">Always Free</span></label>
+        </div>
+      </div>
+
+      <div class="topic-group">
+        <h3 class="topic-group__label corporate">Corporate Series — AI That Multiplies Your Advantage</h3>
+        <div class="topic-grid">
+          <label class="topic-card"><input type="checkbox" name="topics" value="11"><span class="topic-card__title">AI for Marketing &amp; Demand Generation</span><span class="topic-card__audience">CMOs, growth leaders</span></label>
+          <label class="topic-card"><input type="checkbox" name="topics" value="12"><span class="topic-card__title">AI for Sales &amp; Revenue Operations</span><span class="topic-card__audience">CROs, revenue ops leaders</span></label>
+          <label class="topic-card"><input type="checkbox" name="topics" value="13"><span class="topic-card__title">AI for Customer Success</span><span class="topic-card__audience">CS leaders, account managers</span></label>
+          <label class="topic-card"><input type="checkbox" name="topics" value="14"><span class="topic-card__title">AI for Workforce &amp; Partner Enablement</span><span class="topic-card__audience">HR, partnerships</span></label>
+          <label class="topic-card"><input type="checkbox" name="topics" value="15"><span class="topic-card__title">AI for Product &amp; Service Delivery</span><span class="topic-card__audience">Operations &amp; delivery leaders</span></label>
+          <label class="topic-card"><input type="checkbox" name="topics" value="16"><span class="topic-card__title">AI for Brand Influence &amp; Thought Leadership</span><span class="topic-card__audience">Marketing &amp; comms execs</span></label>
+          <label class="topic-card"><input type="checkbox" name="topics" value="17"><span class="topic-card__title">AI for Strategic Partnerships</span><span class="topic-card__audience">Biz dev, enterprise sales</span></label>
+          <label class="topic-card"><input type="checkbox" name="topics" value="18"><span class="topic-card__title">AI for Business Intelligence &amp; Performance</span><span class="topic-card__audience">Strategy, ops, finance</span></label>
+          <label class="topic-card"><input type="checkbox" name="topics" value="19"><span class="topic-card__title">AI for Digital Transformation</span><span class="topic-card__audience">CIOs, COOs, CEOs</span></label>
+          <label class="topic-card topic-card--free"><input type="checkbox" name="topics" value="20"><span class="topic-card__title">Leadership AIm — Corporate Edition</span><span class="topic-card__audience">C-Suite &amp; Founders</span><span class="topic-card__free-tag">Always Free</span></label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Email -->
+    <section class="sub-section">
+      <h2 class="sub-section__title">Your email address</h2>
+      <input type="email" id="email" name="email" required placeholder="you@yourorg.com" class="sub-input" autocomplete="email">
+    </section>
+
+    <!-- Optional CC -->
+    <section class="sub-section sub-section--cc">
+      <h2 class="sub-section__title">
+        Unlock instant upgrade access
+        <span class="sub-badge sub-badge--optional">Optional — skip if you prefer</span>
+      </h2>
+      <p class="sub-cc-desc">Add a card now and upgrading to premium is one click — no re-entering details when you're ready to go deeper. You will <strong>not</strong> be charged today.</p>
+      <div id="card-element" class="sub-card-element"></div>
+      <p id="card-error" class="sub-card-error" role="alert"></p>
+      <label class="sub-skip-label">
+        <input type="checkbox" id="skip-card" checked> Skip — I'll add a card later
+      </label>
+    </section>
+
+    <!-- Submit -->
+    <div id="topic-warning" class="sub-warning" style="display:none;">Please select at least one topic before subscribing.</div>
+    <button type="submit" id="submit-btn" class="button primary sub-submit">Start receiving briefings →</button>
+    <p class="sub-legal">Free forever on the topics you choose. Unsubscribe anytime.</p>
+
+  </form>
+
 </main>
 
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+(function() {
+  const stripe = Stripe('pk_test_51S9DuBC3YEf5bh1ikeGv0PT34xoCuveN1ovT4D98qxmGO6pMyJmLVfy29fqKEtwE4PFWaQ775m5DWvoQcK8GUIcL00enZJg9oM');
+  const elements = stripe.elements();
+  const cardElement = elements.create('card', {
+    style: {
+      base: { fontSize: '16px', color: '#1a1a1a', '::placeholder': { color: '#aaa' } },
+      invalid: { color: '#e53e3e' },
+    }
+  });
+  cardElement.mount('#card-element');
+
+  const skipCheckbox = document.getElementById('skip-card');
+  const cardWrapper = document.getElementById('card-element');
+
+  skipCheckbox.addEventListener('change', () => {
+    cardWrapper.style.opacity = skipCheckbox.checked ? '0.35' : '1';
+    cardWrapper.style.pointerEvents = skipCheckbox.checked ? 'none' : 'auto';
+    document.getElementById('card-error').textContent = '';
+  });
+  // Start with card hidden (skip checked by default)
+  cardWrapper.style.opacity = '0.35';
+  cardWrapper.style.pointerEvents = 'none';
+
+  document.getElementById('subscribe-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    const errorEl = document.getElementById('card-error');
+    const warningEl = document.getElementById('topic-warning');
+
+    const email = document.getElementById('email').value.trim();
+    const topics = [...document.querySelectorAll('input[name="topics"]:checked')].map(cb => parseInt(cb.value));
+
+    if (topics.length === 0) {
+      warningEl.style.display = 'block';
+      warningEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    warningEl.style.display = 'none';
+
+    btn.disabled = true;
+    btn.textContent = 'Subscribing…';
+    errorEl.textContent = '';
+
+    let paymentMethodId = null;
+
+    // If card entry is active (skip unchecked), capture it
+    if (!skipCheckbox.checked) {
+      try {
+        // Create SetupIntent server-side
+        const siRes = await fetch('/api/setup-intent', { method: 'POST' });
+        if (!siRes.ok) throw new Error('Could not initialise card capture.');
+        const { client_secret } = await siRes.json();
+
+        const { setupIntent, error } = await stripe.confirmCardSetup(client_secret, {
+          payment_method: { card: cardElement },
+        });
+
+        if (error) {
+          errorEl.textContent = error.message;
+          btn.disabled = false;
+          btn.textContent = 'Start receiving briefings →';
+          return;
+        }
+        paymentMethodId = setupIntent.payment_method;
+      } catch (err) {
+        errorEl.textContent = err.message;
+        btn.disabled = false;
+        btn.textContent = 'Start receiving briefings →';
+        return;
+      }
+    }
+
+    // POST to subscribe
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, topics, payment_method_id: paymentMethodId }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || `Server error ${res.status}`);
+      }
+
+      window.location.href = '/success/';
+    } catch (err) {
+      errorEl.textContent = err.message;
+      btn.disabled = false;
+      btn.textContent = 'Start receiving briefings →';
+    }
+  });
+})();
+</script>
+
 <style>
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-    font-family: system-ui, sans-serif;
-  }
-  .subscription-form-wrapper {
-    margin-top: 2rem;
-    padding: 2rem;
-    background: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
+.sub-page { max-width: 860px; margin: 0 auto; padding: 2rem 1rem; font-family: system-ui, sans-serif; }
+.sub-hero { margin-bottom: 2.5rem; }
+.sub-hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+.sub-lead { font-size: 1.05rem; color: #444; max-width: 640px; line-height: 1.6; }
+
+.sub-section { margin-bottom: 2.5rem; }
+.sub-section__title { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.sub-badge { font-size: 0.75rem; font-weight: 500; background: #e8f4fd; color: #2b6cb0; padding: 0.2rem 0.6rem; border-radius: 999px; }
+.sub-badge--optional { background: #f0fff4; color: #276749; }
+
+.topic-group { margin-bottom: 2rem; }
+.topic-group__label { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+.topic-group__label.nonprofit { color: #2b6cb0; }
+.topic-group__label.corporate { color: #744210; }
+
+.topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.6rem; }
+.topic-card { display: flex; flex-direction: column; gap: 0.15rem; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; transition: border-color 0.15s, background 0.15s; position: relative; }
+.topic-card:hover { border-color: #90cdf4; background: #ebf8ff; }
+.topic-card input[type="checkbox"] { position: absolute; top: 0.75rem; right: 0.75rem; width: 1rem; height: 1rem; cursor: pointer; }
+.topic-card input[type="checkbox"]:checked ~ .topic-card__title { color: #2b6cb0; }
+.topic-card:has(input:checked) { border-color: #3182ce; background: #ebf8ff; }
+.topic-card__title { font-size: 0.9rem; font-weight: 600; padding-right: 1.5rem; }
+.topic-card__audience { font-size: 0.78rem; color: #718096; }
+.topic-card--free { border-color: #c6f6d5; }
+.topic-card__free-tag { font-size: 0.7rem; font-weight: 700; color: #276749; background: #f0fff4; padding: 0.1rem 0.4rem; border-radius: 4px; align-self: flex-start; margin-top: 0.2rem; }
+
+.sub-input { display: block; width: 100%; max-width: 400px; padding: 0.7rem 0.9rem; font-size: 1rem; border: 1px solid #cbd5e0; border-radius: 6px; }
+.sub-input:focus { outline: none; border-color: #3182ce; box-shadow: 0 0 0 3px rgba(49,130,206,0.15); }
+
+.sub-section--cc { background: #fffbeb; border: 1px solid #fbd38d; border-radius: 10px; padding: 1.5rem; }
+.sub-cc-desc { font-size: 0.9rem; color: #744210; margin-bottom: 1rem; line-height: 1.5; }
+.sub-card-element { padding: 0.7rem 0.9rem; border: 1px solid #cbd5e0; border-radius: 6px; background: #fff; max-width: 400px; transition: opacity 0.2s; }
+.sub-card-error { color: #e53e3e; font-size: 0.875rem; min-height: 1.25rem; margin-top: 0.4rem; }
+.sub-skip-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: #4a5568; margin-top: 0.75rem; cursor: pointer; }
+
+.sub-warning { background: #fff5f5; border: 1px solid #fc8181; color: #c53030; padding: 0.75rem 1rem; border-radius: 6px; font-size: 0.9rem; margin-bottom: 1rem; }
+.sub-submit { padding: 0.85rem 2rem; font-size: 1rem; }
+.sub-legal { font-size: 0.8rem; color: #718096; margin-top: 0.75rem; }
 </style>

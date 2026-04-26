@@ -1,0 +1,53 @@
+---
+layout: base.njk
+permalink: /activate/index.html
+title: "Activate Premium — Elevationary Agents"
+description: "Activate your paid subscription with one click."
+robots: noindex, nofollow
+---
+
+<main style="max-width:560px;margin:4rem auto;padding:2rem 1rem;font-family:system-ui,sans-serif;text-align:center;">
+  <h1>You're one click away.</h1>
+  <p id="activate-msg">Your card on file will be charged <strong id="tier-price">$29/mo</strong>. You get full access to your subscribed briefings immediately.</p>
+  <p id="error-msg" style="color:#e53e3e;display:none;"></p>
+  <button id="activate-btn" class="button primary" style="margin-top:1.5rem;padding:0.85rem 2rem;font-size:1rem;">Activate Premium Access</button>
+  <p style="margin-top:1rem;"><a href="/unlock/">Choose a different plan</a></p>
+  <p style="margin-top:0.5rem;font-size:0.8rem;color:#718096;">Cancel anytime from your account dashboard.</p>
+</main>
+
+<script>
+(function() {
+  const params = new URLSearchParams(location.search);
+  const email = params.get('email');
+  const next  = params.get('next');
+
+  if (!email) {
+    window.location.href = '/unlock/';
+    return;
+  }
+
+  document.getElementById('activate-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('activate-btn');
+    const errEl = document.getElementById('error-msg');
+    btn.disabled = true;
+    btn.textContent = 'Activating…';
+    errEl.style.display = 'none';
+
+    try {
+      const res = await fetch('/api/activate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, plan: 'individual-access-monthly' }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Activation failed.');
+      window.location.href = next ? '/premium/' + next + '/' : '/premium/';
+    } catch (err) {
+      errEl.textContent = err.message;
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Activate Premium Access';
+    }
+  });
+})();
+</script>
