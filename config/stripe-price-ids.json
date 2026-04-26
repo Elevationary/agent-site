@@ -1,22 +1,22 @@
 {
   "individual-access": {
     "name": "Individual Access",
-    "monthly": "price_1TQFmWC3YEf5bh1ixnbGRNZR",
-    "annual": "price_1TQFmXC3YEf5bh1iAzU159jh",
+    "monthly": "price_1TQO5YC5seLx7yR7Ns5OFTKW",
+    "annual": "price_1TQO5YC5seLx7yR7NHApxJx6",
     "monthly_amount": 2900,
     "annual_amount": 29000
   },
   "functional-bundle": {
     "name": "Functional Bundle",
-    "monthly": "price_1TQFmXC3YEf5bh1i5bWCS1DA",
-    "annual": "price_1TQFmXC3YEf5bh1iasqopAOW",
+    "monthly": "price_1TQO5ZC5seLx7yR75QYkQz4r",
+    "annual": "price_1TQO5ZC5seLx7yR7PqWkPpiD",
     "monthly_amount": 6900,
     "annual_amount": 69000
   },
   "all-access-pass": {
     "name": "All-Access Corporate Pass",
-    "monthly": "price_1TQFmYC3YEf5bh1iOcuJnrAF",
-    "annual": "price_1TQFmYC3YEf5bh1iWoHeU6RP",
+    "monthly": "price_1TQO5ZC5seLx7yR75aIDlqvX",
+    "annual": "price_1TQO5aC5seLx7yR7i21lyVVq",
     "monthly_amount": 14900,
     "annual_amount": 149000
   }

@@ -2,12 +2,12 @@ import Stripe from 'stripe';
 
 // Price IDs sourced from config/stripe-price-ids.json — regenerate via scripts/stripe-migrate-products.js
 const PRICE_IDS = {
-  'individual-access-monthly':  'price_1TQFmWC3YEf5bh1ixnbGRNZR',
-  'individual-access-annual':   'price_1TQFmXC3YEf5bh1iAzU159jh',
-  'functional-bundle-monthly':  'price_1TQFmXC3YEf5bh1i5bWCS1DA',
-  'functional-bundle-annual':   'price_1TQFmXC3YEf5bh1iasqopAOW',
-  'all-access-pass-monthly':    'price_1TQFmYC3YEf5bh1iOcuJnrAF',
-  'all-access-pass-annual':     'price_1TQFmYC3YEf5bh1iWoHeU6RP',
+  'individual-access-monthly':  'price_1TQO5YC5seLx7yR7Ns5OFTKW',
+  'individual-access-annual':   'price_1TQO5YC5seLx7yR7NHApxJx6',
+  'functional-bundle-monthly':  'price_1TQO5ZC5seLx7yR75QYkQz4r',
+  'functional-bundle-annual':   'price_1TQO5ZC5seLx7yR7PqWkPpiD',
+  'all-access-pass-monthly':    'price_1TQO5ZC5seLx7yR75aIDlqvX',
+  'all-access-pass-annual':     'price_1TQO5aC5seLx7yR7i21lyVVq',
 };
 
 export const onRequestPost = async (context) => {
