@@ -39,6 +39,7 @@ export const onRequestPost = async (context) => {
     const session = await stripe.checkout.sessions.create({
       line_items: [{ price: priceId, quantity: 1 }],
       mode: 'subscription',
+      allow_promotion_codes: true,
       success_url: `${new URL(context.request.url).origin}/premium/`,
       cancel_url: `${new URL(context.request.url).origin}/unlock/`,
     });
