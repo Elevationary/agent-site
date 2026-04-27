@@ -27,6 +27,13 @@ CREATE TABLE IF NOT EXISTS subscriber_topics (
     UNIQUE(subscriber_email, topic_id)
 );
 
+-- Vendor URL database for [LINK:] SEO flywheel placeholder resolution
+CREATE TABLE IF NOT EXISTS vendors (
+    name TEXT PRIMARY KEY,                 -- Vendor name as it appears in [LINK: Vendor Name | keyword]
+    url TEXT NOT NULL,                     -- Canonical vendor homepage URL
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Engagement events (opens, clicks, paywall hits — fed by Postmark webhooks)
 CREATE TABLE IF NOT EXISTS subscriber_events (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
