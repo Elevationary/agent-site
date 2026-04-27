@@ -1,6 +1,6 @@
 # Session Handover
 
-_Last updated: 2026-04-25_
+_Last updated: 2026-04-27_
 
 ---
 
@@ -27,38 +27,41 @@ A pre-existing Single Redirect rule named "Apex → www.elevationary.com" was ac
 ## Agent Site (agent.elevationary.com)
 
 **Repo:** `/Users/jamesszmak/Antigravity/micro-site/agent-site`
-**Last commit:** `96b9ce9` (fix+docs: ORS PASS — newsletter poller hardening)
+**Last commit:** `19c15ee` (docs: Postmark approved 2026-04-27)
 
-### Completed this session (2026-04-25/26)
+### Completed this session (2026-04-25/26/27)
 - HubSpot fully deprecated — native subscribe form, unsubscribe Worker, confirmation pages
-- Postmark welcome email, broadcast streams (`nonprofit`/`corporate`), approval submitted 2026-04-25
+- Postmark welcome email, broadcast streams (`nonprofit`/`corporate`) — **APPROVED 2026-04-27**, external sends live
+- Postmark DKIM + Return-Path DNS records added to elevationary.com (Cloudflare)
 - Stripe live catalog: 3 products × 6 prices; restricted `sk_live_`; `pk_live_` on /subscribe/
-- D1 schema: `subscriber_topics` + `subscriber_events` live on remote
+- D1 schema: `subscriber_topics` + `subscriber_events` + `vendors` tables live on remote
 - `/subscribe/` — 20-topic checkboxes, optional CC capture; `/unlock/` — 3-tier, `cs_live_` verified
 - `/api/setup-intent`, `/api/gate`, `/api/activate` — 4-path premium gating, one-click upgrade
 - Preview promo codes: coupon `dTwd1p8S`, 100 `PREVIEW-XXXXXX` codes, `allow_promotion_codes: true`
-- **Manifest poller Worker** — `workers/newsletter-poller/`, hourly cron `0 * * * *`, deployed to Cloudflare
-  - D1 + R2 bound, 5 secrets deployed, first-run fired (R2 marker written, Newsletter Agent notified)
-  - ORS PASS: crash handler, JSON guard, HTML-escape (3 findings)
-  - Carry-forward: Sunday manifest support (Phase 2), full end-to-end test (needs real manifest)
+- **Manifest poller Worker** — hourly cron `0 * * * *`, ORS PASS. Sunday manifest support added. First-run fired; Newsletter Agent notified.
+- **Site publisher** — Markdown renderer, `[LINK:]` resolver (D1 vendors), `{{ARCHIVE_URL}}` substitution, YAML stripping, KV write. ORS PASS (end-to-end: Sunday manifest → KV → /insights/ 200)
+- **`/insights/[slug]/[date]/`** — paid subscriber gating, KV-served HTML, Cache-Control: private
+- KV namespace `PREMIUM_CONTENT` (id: `5e26196157ca450ab036bba33b8d31fa`) — bound to agent-site2 + newsletter-poller
+- Cloudflare API token naming convention established: `CLOUDFLARE_API_TOKEN` = wrangler default; `CF_TOKEN_DNS` = DNS-only; `CF_TOKEN_*` pattern for future tokens
+- Agent Teams enabled: `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` in `~/.claude/settings.json`
 - Memory system initialised (4 files); Master Business Plan §9.4 updated
-- ORS PASS × 6 — 12 total findings remediated across all sprints
+- ORS PASS × 8 — 15+ total findings remediated
 
-### Active — Phase 4: Content Pipeline (IN PROGRESS)
-_Architecture: D1 + Postmark (nonprofit/corporate streams) + R2 (NEWSLETTER_BUCKET)_
-_Postmark gate: approval expected 2026-04-27 (Monday)_
+### Next — Phase 4 Remaining
+_All gates clear. Postmark approved. Preview seeding unblocked._
 
-- **D1 → Postmark subscriber sync** ← NEXT — when a subscriber signs up, add them to the correct Postmark broadcast stream based on `subscriber_topics` series
-- **Site publisher** — premium R2 content → published pages + subscriber access URLs
-- **Preview subscribers** — send `PREVIEW-XXXXXX` codes to 100 contacts; gate: Postmark approved
+- **D1 → Postmark subscriber sync** ← NEXT — on subscribe, add subscriber to correct Postmark broadcast stream by `subscriber_topics` series; on unsubscribe, suppress in Postmark
+- **Preview subscriber seeding** — send 100 `PREVIEW-XXXXXX` codes to known contacts. Codes at `config/preview-promo-codes.csv` (gitignored, local only). Postmark gate: CLEARED.
+- **[LINK:] vendor database** — monitor `newsletter/meta/unresolved-vendors.json` in R2 after first real daily manifest; populate `vendors` D1 table with resolved URLs
+- **Newsletter Agent Monday retry** — daily manifest for 2026-04-27 pending (network failure during travel). Will auto-process on next cron tick once in R2.
 
 ### Phase 5: Homepage Redesign + GUI (separate session)
 - Homepage redesign, subscriber GUI, visual redesign (blocked on task_ec000004)
 
 ### Remaining Queue (in order)
 1. **D1 → Postmark subscriber sync** — NEXT
-2. **Site publisher** — after sync
-3. **Preview subscribers** — after Postmark approval (Monday)
+2. **Preview subscriber seeding** — UNBLOCKED (send promo codes)
+3. **[LINK:] vendor DB** — after first real daily manifest
 4. **Homepage redesign + GUI** — separate session
 5. **elevationary.ai disposition** (task_ec000003)
 6. **Twitter @ElevationaryAI** — James creates account
