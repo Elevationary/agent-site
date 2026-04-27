@@ -27,28 +27,28 @@ A pre-existing Single Redirect rule named "Apex → www.elevationary.com" was ac
 ## Agent Site (agent.elevationary.com)
 
 **Repo:** `/Users/jamesszmak/Antigravity/micro-site/agent-site`
-**Last commit:** `82dc8da` (docs: ORS PASS — preview promo codes)
+**Last commit:** `96b9ce9` (fix+docs: ORS PASS — newsletter poller hardening)
 
 ### Completed this session (2026-04-25/26)
 - HubSpot fully deprecated — native subscribe form, unsubscribe Worker, confirmation pages
-- Postmark welcome email wired — "Elevationary Thinking", ReplyTo: replies@, List-Unsubscribe, HMAC tokens
-- Postmark broadcast streams live: `nonprofit` (1–10), `corporate` (11–20)
-- Postmark approval submitted 2026-04-25 — awaiting 2026-04-27 (Monday)
-- Stripe live catalog: 3 products × 6 prices; restricted `sk_live_` on agent-site2; `pk_live_` on /subscribe/
-- D1 schema: `subscriber_topics` + `subscriber_events` tables live on remote
-- `/subscribe/` — 20-topic checkboxes, optional CC capture (SetupIntent)
-- `/unlock/` — full 3-tier pricing, monthly/annual toggle, `cs_live_` checkout verified
-- `/api/setup-intent`, `/api/gate`, `/api/activate` Workers — 4-path premium gating, one-click upgrade
-- Preview promo codes: coupon `dTwd1p8S` + 100 `PREVIEW-XXXXXX` codes, `allow_promotion_codes: true` on checkout
-- Master Business Plan §9.4 — HubSpot deprecation documented; memory system initialised (4 files)
-- ORS PASS × 5 — 9 total findings remediated
+- Postmark welcome email, broadcast streams (`nonprofit`/`corporate`), approval submitted 2026-04-25
+- Stripe live catalog: 3 products × 6 prices; restricted `sk_live_`; `pk_live_` on /subscribe/
+- D1 schema: `subscriber_topics` + `subscriber_events` live on remote
+- `/subscribe/` — 20-topic checkboxes, optional CC capture; `/unlock/` — 3-tier, `cs_live_` verified
+- `/api/setup-intent`, `/api/gate`, `/api/activate` — 4-path premium gating, one-click upgrade
+- Preview promo codes: coupon `dTwd1p8S`, 100 `PREVIEW-XXXXXX` codes, `allow_promotion_codes: true`
+- **Manifest poller Worker** — `workers/newsletter-poller/`, hourly cron `0 * * * *`, deployed to Cloudflare
+  - D1 + R2 bound, 5 secrets deployed, first-run fired (R2 marker written, Newsletter Agent notified)
+  - ORS PASS: crash handler, JSON guard, HTML-escape (3 findings)
+  - Carry-forward: Sunday manifest support (Phase 2), full end-to-end test (needs real manifest)
+- Memory system initialised (4 files); Master Business Plan §9.4 updated
+- ORS PASS × 6 — 12 total findings remediated across all sprints
 
 ### Active — Phase 4: Content Pipeline (IN PROGRESS)
 _Architecture: D1 + Postmark (nonprofit/corporate streams) + R2 (NEWSLETTER_BUCKET)_
-_Postmark gate: approval expected 2026-04-27_
+_Postmark gate: approval expected 2026-04-27 (Monday)_
 
-- **Manifest poller Worker** ← BUILDING NOW — hourly Cloudflare cron, R2 poll, approval check, Postmark send orchestrator. Requirements: skip "ORS test" approvals; send complete topics, skip failed + Telegram page James; Telegram page on completion (count); notify Newsletter Agent "poller is live" on first deploy
-- **D1 → Postmark subscriber sync** — route subscribers to correct stream by `subscriber_topics.topic_id` series
+- **D1 → Postmark subscriber sync** ← NEXT — when a subscriber signs up, add them to the correct Postmark broadcast stream based on `subscriber_topics` series
 - **Site publisher** — premium R2 content → published pages + subscriber access URLs
 - **Preview subscribers** — send `PREVIEW-XXXXXX` codes to 100 contacts; gate: Postmark approved
 
@@ -56,14 +56,13 @@ _Postmark gate: approval expected 2026-04-27_
 - Homepage redesign, subscriber GUI, visual redesign (blocked on task_ec000004)
 
 ### Remaining Queue (in order)
-1. **Manifest poller Worker** — IN PROGRESS
-2. **D1 → Postmark sync** — after poller
-3. **Site publisher** — after sync
-4. **Preview subscribers** — after Postmark approval (Monday)
-5. **Homepage redesign + GUI** — separate session
-6. **elevationary.ai disposition** (task_ec000003)
-7. **Twitter @ElevationaryAI** — James creates account
-8. **Elevationary_OS design doc** (task_ec000004)
+1. **D1 → Postmark subscriber sync** — NEXT
+2. **Site publisher** — after sync
+3. **Preview subscribers** — after Postmark approval (Monday)
+4. **Homepage redesign + GUI** — separate session
+5. **elevationary.ai disposition** (task_ec000003)
+6. **Twitter @ElevationaryAI** — James creates account
+7. **Elevationary_OS design doc** (task_ec000004)
 
 ---
 
@@ -74,7 +73,7 @@ _Postmark gate: approval expected 2026-04-27_
 - Cloudflare bot blocking is injected by Cloudflare, NOT in robots.txt source — fix requires Cloudflare dashboard
 - HubSpot is fully deprecated — `hubspot-form.njk` deleted, `site.json` HubSpot block removed. Do not re-add. See Master Business Plan §9.4.
 - **Stripe product IDs:** Old "Agent Insider" (`prod_Tp6Mt8OpDrOdyH`) and "CRM Insights" products are archived. All checkout code must use price IDs from `config/stripe-price-ids.json` only. Never hardcode old price IDs.
-- **Postmark pending approval:** Submitted 2026-04-25 (Saturday). Expect Monday 2026-04-27. Welcome emails blocked for non-@elevationary.com until approved. Do not seed real subscribers until approval confirmed.
+- **Postmark APPROVED 2026-04-27** — external sends live. Welcome email format verified (correct From name, copy, unsubscribe link). Bounce from `test@elevationary.com` (non-existent test address, pre-approval) cleared via API. Safe to seed real subscribers.
 - **Stripe live keys:** `pk_live_` embedded in `/subscribe/`; restricted `sk_live_` deployed to agent-site2. Live checkout verified (`cs_live_` sessions). Price IDs in `config/stripe-price-ids.json` — do not hardcode.
 - **`schema.sql` is now a safe migration** — `CREATE TABLE IF NOT EXISTS` only. For first-time empty-database setup, use `scripts/d1-reset.sql`. Never run `d1-reset.sql` against a live database.
 - **Cloudflare AI bot architecture:** "Block AI bots" master switch overrides ALL per-bot AI Crawl Control settings. Current state: master = "Do not block," all AI bots allowed.
