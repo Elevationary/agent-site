@@ -23,7 +23,8 @@ function slugify(title) {
     .replace(/&/g, 'and')
     .replace(/[^a-z0-9\s-]/g, '')
     .trim()
-    .replace(/\s+/g, '-');
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');   // collapse consecutive hyphens (e.g. "AIm - Nonprofit" → no triple dash)
 }
 
 // ─── Markdown → HTML renderer ─────────────────────────────────────────────────
@@ -315,7 +316,7 @@ async function pollDaily(env, today) {
   if (approval.send_at && Date.now() < new Date(approval.send_at).getTime()) { return; }
 
   const sentKey = `newsletter/sent/daily/${today}.json`;
-  if (await env.NEWSLETTER_BUCKET.get(sentKey)) { console.log(`[poller] already sent daily ${today}`); return; }
+  if (!env._FORCE && await env.NEWSLETTER_BUCKET.get(sentKey)) { console.log(`[poller] already sent daily ${today}`); return; }
 
   const results = { sent: [], failed: [], published: [] };
 
@@ -455,8 +456,9 @@ export default {
     if (url.pathname === '/poll' && request.method === 'POST') {
       const auth = request.headers.get('Authorization');
       if (auth !== `Bearer ${env.POLLER_SECRET}`) return new Response('Unauthorized', { status: 401 });
-      ctx.waitUntil(poll(env));
-      return new Response(JSON.stringify({ triggered: true }), { headers: { 'Content-Type': 'application/json' } });
+      const force = url.searchParams.get('force') === 'true';
+      ctx.waitUntil(poll(force ? { ...env, _FORCE: true } : env));
+      return new Response(JSON.stringify({ triggered: true, force }), { headers: { 'Content-Type': 'application/json' } });
     }
     return new Response(JSON.stringify({ status: 'newsletter-poller', cron: '0 * * * *' }), {
       headers: { 'Content-Type': 'application/json' },
