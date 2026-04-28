@@ -3,26 +3,28 @@
 
 const SITE = 'https://agent.elevationary.com';
 
-// Slug → topic_id map (must stay in sync with Master Business Plan §3.3)
+// Slug → topic_id map — uses Newsletter Agent's canonical slugify:
+// title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+// Note: & is dropped (not converted to 'and'), so "Sales & Revenue" → "sales-revenue"
 const SLUG_TO_TOPIC = {
-  'ai-for-marketing-and-outreach': 1,
+  'ai-for-marketing-outreach': 1,
   'ai-for-fundraising-campaigns': 2,
   'ai-for-donor-stewardship': 3,
   'ai-for-volunteer-engagement': 4,
   'ai-for-program-delivery': 5,
-  'ai-for-advocacy-and-awareness': 6,
-  'ai-for-grant-prospecting-and-reporting': 7,
+  'ai-for-advocacy-awareness': 6,
+  'ai-for-grant-prospecting-reporting': 7,
   'ai-for-impact-measurement': 8,
   'ai-for-organizational-readiness': 9,
   'leadership-aim-nonprofit-edition': 10,
-  'ai-for-marketing-and-demand-generation': 11,
-  'ai-for-sales-and-revenue-operations': 12,
+  'ai-for-marketing-demand-generation': 11,
+  'ai-for-sales-revenue-operations': 12,
   'ai-for-customer-success': 13,
-  'ai-for-workforce-and-partner-enablement': 14,
-  'ai-for-product-and-service-delivery': 15,
-  'ai-for-brand-influence-and-thought-leadership': 16,
+  'ai-for-workforce-partner-enablement': 14,
+  'ai-for-product-service-delivery': 15,
+  'ai-for-brand-influence-thought-leadership': 16,
   'ai-for-strategic-partnerships': 17,
-  'ai-for-business-intelligence-and-performance': 18,
+  'ai-for-business-intelligence-performance': 18,
   'ai-for-digital-transformation': 19,
   'leadership-aim-corporate-edition': 20,
 };

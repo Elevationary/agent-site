@@ -147,7 +147,7 @@ async function publishPremiumContent(env, topic, r2Key, date, isWeekEnding = fal
   // Render Markdown → HTML
   const articleHtml = renderMarkdown(substituted);
 
-  const slug = slugify(topic.topic_title);
+  const slug = topic.topic_slug || slugify(topic.topic_title);
   const pageHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -336,7 +336,7 @@ async function pollDaily(env, today) {
       // Publish premium content to KV
       if (topic.premium?.r2_key) {
         const pub = await publishPremiumContent(env, topic, topic.premium.r2_key, today);
-        if (pub) results.published.push({ id: topic.topic_id, slug: pub.slug, unresolved: pub.unresolved });
+        if (pub) results.published.push({ id: topic.topic_id, slug: topic.topic_slug || pub.slug, unresolved: pub.unresolved });
       }
     } catch (err) {
       console.error(`Daily topic ${topic.topic_id} error:`, err);
@@ -404,7 +404,7 @@ async function pollSunday(env, today) {
 
       if (topic.premium?.r2_key) {
         const pub = await publishPremiumContent(env, topic, topic.premium.r2_key, weekEnding, true);
-        if (pub) results.published.push({ id: topic.topic_id, slug: pub.slug, unresolved: pub.unresolved });
+        if (pub) results.published.push({ id: topic.topic_id, slug: topic.topic_slug || pub.slug, unresolved: pub.unresolved });
       }
     } catch (err) {
       console.error(`Sunday topic ${topic.topic_id} error:`, err);
