@@ -140,9 +140,12 @@ async function publishPremiumContent(env, topic, r2Key, date, isWeekEnding = fal
   const { content: linkedBody, unresolved } = await resolveLinks(body, env);
   if (unresolved.length) await logUnresolvedVendors(env, date, topic.topic_id, unresolved);
 
-  // Substitute {{ARCHIVE_URL}}
+  // Substitute template placeholders
   const archiveUrl = `${SITE}/insights/archive/`;
-  const substituted = linkedBody.replace(/\{\{ARCHIVE_URL\}\}/g, archiveUrl);
+  const upgradeUrl = `${SITE}/unlock/`;
+  const substituted = linkedBody
+    .replace(/\{\{ARCHIVE_URL\}\}/g, archiveUrl)
+    .replace(/\{\{PREMIUM_UPGRADE_URL\}\}/g, upgradeUrl);
 
   // Render Markdown → HTML
   const articleHtml = renderMarkdown(substituted);
@@ -267,9 +270,11 @@ async function sendTopic(env, topic, content, date) {
         To: email,
         Subject: subject,
         TextBody: `${content}\n\n---\nYou're receiving this because you subscribed at agent.elevationary.com.\nUnsubscribe: ${unsubUrl}`,
-        HtmlBody: `<pre style="font-family:system-ui,sans-serif;white-space:pre-wrap;max-width:680px;">${escapeHtml(content)}</pre>
-          <p style="font-size:0.8em;color:#999;">You're receiving this because you subscribed at agent.elevationary.com.<br>
-          <a href="${unsubUrl}" style="color:#999;">Unsubscribe</a></p>`,
+        HtmlBody: `<div style="max-width:680px;font-family:system-ui,sans-serif;line-height:1.6;color:#1a202c;">
+          ${renderMarkdown(content.replace(/\{\{PREMIUM_UPGRADE_URL\}\}/g, `${SITE}/unlock/`))}
+          <p style="margin-top:2rem;font-size:0.8em;color:#999;">You're receiving this because you subscribed at agent.elevationary.com.<br>
+          <a href="${unsubUrl}" style="color:#999;">Unsubscribe</a></p>
+          </div>`,
         MessageStream: stream,
         Headers: [
           { Name: 'List-Unsubscribe', Value: `<${unsubUrl}>` },
